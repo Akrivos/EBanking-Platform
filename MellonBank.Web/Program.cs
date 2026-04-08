@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace MellonBank.Web
 {
     public class Program
@@ -8,6 +10,15 @@ namespace MellonBank.Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            //builder.Services
+            //.AddIdentityCore<ApplicationUser>(o =>
+            //{
+            //    o.User.RequireUniqueEmail = true;
+            //})
+            //.AddRoles<IdentityRole>()
+            //.AddEntityFrameworkStores<TaskFlowDbContext>()
+            //.AddSignInManager();
 
             var app = builder.Build();
 

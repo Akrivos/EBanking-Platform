@@ -1,4 +1,4 @@
-﻿using MellonBank.Application.Interfaces;
+﻿using MellonBank.Application.Interfaces.Services;
 
 namespace MellonBank.Application.Services
 {

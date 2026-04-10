@@ -1,4 +1,4 @@
-﻿namespace MellonBank.Application.Interfaces
+﻿namespace MellonBank.Application.Interfaces.Services
 {
     public interface IAccountQueryService
     {

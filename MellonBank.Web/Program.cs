@@ -1,4 +1,7 @@
+using MellonBank.Application;
+using MellonBank.Infrastructure;
 using Microsoft.AspNetCore.Identity;
+using Serilog;
 
 namespace MellonBank.Web
 {
@@ -7,20 +10,26 @@ namespace MellonBank.Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var services = builder.Services;
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.File("logs/app-.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+            builder.Host.UseSerilog();
 
-            //builder.Services
-            //.AddIdentityCore<ApplicationUser>(o =>
-            //{
-            //    o.User.RequireUniqueEmail = true;
-            //})
-            //.AddRoles<IdentityRole>()
-            //.AddEntityFrameworkStores<TaskFlowDbContext>()
-            //.AddSignInManager();
+            services.AddControllersWithViews();
+            services.AddApplication();
+            services.AddInfrastructure(builder.Configuration);
+            services.AddAuthentication();
+            services.AddAuthorization();
+            services.AddRazorPages();
 
             var app = builder.Build();
+
+            app.UseSerilogRequestLogging();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -33,6 +42,7 @@ namespace MellonBank.Web
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();

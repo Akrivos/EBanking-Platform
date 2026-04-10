@@ -1,0 +1,6 @@
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Application\obj\Debug\net10.0\MellonBank.Application.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Application\obj\Debug\net10.0\MellonBank.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Application\obj\Debug\net10.0\MellonBank.Application.AssemblyInfoInputs.cache
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Application\obj\Debug\net10.0\MellonBank.Application.AssemblyInfo.cs
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Application\obj\Debug\net10.0\MellonBank.Application.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Application\obj\Debug\net10.0\MellonBank.Application.sourcelink.json

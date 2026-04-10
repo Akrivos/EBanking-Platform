@@ -1,0 +1,10 @@
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\MellonBank.Web.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\MellonBank.Web.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\MellonBank.Web.AssemblyInfoInputs.cache
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\MellonBank.Web.AssemblyInfo.cs
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\MellonBank.Web.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\MellonBank.Web.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\MellonBank.Web.RazorAssemblyInfo.cache
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\MellonBank.Web.RazorAssemblyInfo.cs
+C:\Users\user\source\repos\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\MellonBank.Web.sourcelink.json

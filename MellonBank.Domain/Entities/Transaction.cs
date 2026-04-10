@@ -1,5 +1,6 @@
 ﻿using MellonBank.Domain.Common;
 using MellonBank.Domain.Enums;
+using MellonBank.Domain.Exceptions;
 
 namespace MellonBank.Domain.Entities
 {
@@ -9,7 +10,6 @@ namespace MellonBank.Domain.Entities
         public BankAccount FromAccount { get; private set; } = default!;
         public int ToAccountId { get; private set; }
         public BankAccount ToAccount { get; private set; } = default!;
-
         public TransactionType Type { get; private set; }
         public decimal Amount { get; private set; }
         public string Description { get; private set; } = string.Empty;
@@ -34,7 +34,7 @@ namespace MellonBank.Domain.Entities
                 throw new ArgumentException("To account id is required.", nameof(toAccountId));
 
             if (fromAccountId == toAccountId)
-                throw new ArgumentException("Source and destination account cannot be the same.");
+                throw new InvalidAccountOperationException("Source and destination account cannot be the same.");
 
             if (!Enum.IsDefined(typeof(TransactionType), type))
                 throw new ArgumentException("Invalid transaction type.", nameof(type));
@@ -90,7 +90,7 @@ namespace MellonBank.Domain.Entities
         public void MarkCompleted()
         {
             if (Status != TransactionStatus.Pending)
-                throw new InvalidOperationException("Only pending transactions can be completed.");
+                throw new BusinessRuleException("Only pending transactions can be completed.");
 
             Status = TransactionStatus.Completed;
         }
@@ -98,7 +98,7 @@ namespace MellonBank.Domain.Entities
         public void MarkFailed()
         {
             if (Status != TransactionStatus.Pending)
-                throw new InvalidOperationException("Only pending transactions can be failed.");
+                throw new BusinessRuleException("Only pending transactions can be failed.");
 
             Status = TransactionStatus.Failed;
         }

@@ -2,6 +2,22 @@
   "version": 3,
   "targets": {
     "net10.0": {
+      "Microsoft.Extensions.DependencyInjection.Abstractions/10.0.5": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
+        }
+      },
       "MellonBank.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
@@ -15,6 +31,37 @@
     }
   },
   "libraries": {
+    "Microsoft.Extensions.DependencyInjection.Abstractions/10.0.5": {
+      "sha512": "iVMtq9eRvzyhx8949EGT0OCYJfXi737SbRVzWXE5GrOgGj5AaZ9eUuxA/BSUfmOMALKn/g8KfFaNQw0eiB3lyA==",
+      "type": "package",
+      "path": "microsoft.extensions.dependencyinjection.abstractions/10.0.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/Microsoft.Extensions.DependencyInjection.Abstractions.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/Microsoft.Extensions.DependencyInjection.Abstractions.targets",
+        "lib/net10.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net10.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/net462/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net462/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "microsoft.extensions.dependencyinjection.abstractions.10.0.5.nupkg.sha512",
+        "microsoft.extensions.dependencyinjection.abstractions.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
     "MellonBank.Domain/1.0.0": {
       "type": "project",
       "path": "../MellonBank.Domain/MellonBank.Domain.csproj",
@@ -23,27 +70,28 @@
   },
   "projectFileDependencyGroups": {
     "net10.0": [
-      "MellonBank.Domain >= 1.0.0"
+      "MellonBank.Domain >= 1.0.0",
+      "Microsoft.Extensions.DependencyInjection.Abstractions >= 10.0.5"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Akis\\.nuget\\packages\\": {},
+    "C:\\Users\\user\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Akis\\Desktop\\MellonBank-Project\\MellonBank.Application\\MellonBank.Application.csproj",
+      "projectUniqueName": "C:\\Users\\user\\source\\repos\\MellonBank-Project\\MellonBank.Application\\MellonBank.Application.csproj",
       "projectName": "MellonBank.Application",
-      "projectPath": "C:\\Users\\Akis\\Desktop\\MellonBank-Project\\MellonBank.Application\\MellonBank.Application.csproj",
-      "packagesPath": "C:\\Users\\Akis\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Akis\\Desktop\\MellonBank-Project\\MellonBank.Application\\obj\\",
+      "projectPath": "C:\\Users\\user\\source\\repos\\MellonBank-Project\\MellonBank.Application\\MellonBank.Application.csproj",
+      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\user\\source\\repos\\MellonBank-Project\\MellonBank.Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Akis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -58,8 +106,8 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Users\\Akis\\Desktop\\MellonBank-Project\\MellonBank.Domain\\MellonBank.Domain.csproj": {
-              "projectPath": "C:\\Users\\Akis\\Desktop\\MellonBank-Project\\MellonBank.Domain\\MellonBank.Domain.csproj"
+            "C:\\Users\\user\\source\\repos\\MellonBank-Project\\MellonBank.Domain\\MellonBank.Domain.csproj": {
+              "projectPath": "C:\\Users\\user\\source\\repos\\MellonBank-Project\\MellonBank.Domain\\MellonBank.Domain.csproj"
             }
           }
         }
@@ -74,11 +122,17 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.200"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net10.0": {
         "targetAlias": "net10.0",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": {
+            "target": "Package",
+            "version": "[10.0.5, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
@@ -95,7 +149,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

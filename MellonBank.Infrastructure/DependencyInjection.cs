@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MellonBank.Infrastructure
 {
-    internal class DependencyInjection
+    public static class DependencyInjection
     {
+        public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        {
+            
+        }
     }
 }

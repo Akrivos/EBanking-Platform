@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace MellonBank.Application
 {
-    internal class DependencyInjection
+    public static class DependencyInjection
     {
+        public static void AddApplication(this IServiceCollection services)
+        {
+           
+        }
     }
 }

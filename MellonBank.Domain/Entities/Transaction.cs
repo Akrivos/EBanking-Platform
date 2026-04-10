@@ -6,9 +6,9 @@ namespace MellonBank.Domain.Entities
 {
     public class Transaction : BaseEntity
     {
-        public int FromAccountId { get; private set; }
+        public Guid FromAccountId { get; private set; }
         public BankAccount FromAccount { get; private set; } = default!;
-        public int ToAccountId { get; private set; }
+        public Guid ToAccountId { get; private set; }
         public BankAccount ToAccount { get; private set; } = default!;
         public TransactionType Type { get; private set; }
         public decimal Amount { get; private set; }
@@ -20,17 +20,17 @@ namespace MellonBank.Domain.Entities
         private Transaction() { }
 
         private Transaction(
-            int fromAccountId,
-            int toAccountId,
+            Guid fromAccountId,
+            Guid toAccountId,
             TransactionType type,
             decimal amount,
             string? description,
             string executedByUserId)
         {
-            if (fromAccountId <= 0)
+            if (fromAccountId == Guid.Empty)
                 throw new ArgumentException("From account id is required.", nameof(fromAccountId));
 
-            if (toAccountId <= 0)
+            if (toAccountId == Guid.Empty)
                 throw new ArgumentException("To account id is required.", nameof(toAccountId));
 
             if (fromAccountId == toAccountId)
@@ -56,8 +56,8 @@ namespace MellonBank.Domain.Entities
         }
 
         public static Transaction CreateOwnTransfer(
-            int fromAccountId,
-            int toAccountId,
+            Guid fromAccountId,
+            Guid toAccountId,
             decimal amount,
             string? description,
             string executedByUserId)
@@ -72,8 +72,8 @@ namespace MellonBank.Domain.Entities
         }
 
         public static Transaction CreateThirdPartyTransfer(
-            int fromAccountId,
-            int toAccountId,
+            Guid fromAccountId,
+            Guid toAccountId,
             decimal amount,
             string? description,
             string executedByUserId)

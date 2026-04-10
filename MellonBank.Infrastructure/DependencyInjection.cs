@@ -10,7 +10,7 @@ namespace MellonBank.Infrastructure
     {
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("AppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AppDbContextConnection' not found.");
+            var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'AppDbContextConnection' not found.");
 
             services.AddDbContext<MellonBankDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -22,7 +22,6 @@ namespace MellonBank.Infrastructure
                 })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<MellonBankDbContext>();
-                
         }
     }
 }

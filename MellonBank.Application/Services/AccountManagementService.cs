@@ -11,9 +11,9 @@ namespace MellonBank.Application.Services
             _accountManagementService = accountManagementService;
         }
 
-        public Task CreateBankAccountAsync(string userId, string branch, string accountType, string currency)
-        {
-            return _accountManagementService.CreateBankAccountAsync(userId, branch, accountType, currency);
-        }
+        //public Task CreateBankAccountAsync(string userId, string branch, string accountType, string currency)
+        //{
+        //    return _accountManagementService.CreateBankAccountAsync(userId, branch, accountType, currency);
+        //}
     }
 }

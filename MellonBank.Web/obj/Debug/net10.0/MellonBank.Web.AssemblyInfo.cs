@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("MellonBank.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+02c25e033b71deeddf150095385de7b0164f52b0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f748b71381e15b0cbacc2f6faddaf8768028393b")]
 [assembly: System.Reflection.AssemblyProductAttribute("MellonBank.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MellonBank.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -6,9 +6,9 @@ namespace MellonBank.Application.Interfaces
 {
     public interface IProfileService
     {
-        Task ChangePasswordAsync(
-        string userId,
-        ChangePasswordRequest request,
-        CancellationToken cancellationToken = default);
+        //Task ChangePasswordAsync(
+        //string userId,
+        //ChangePasswordRequest request,
+        //CancellationToken cancellationToken = default);
     }
 }

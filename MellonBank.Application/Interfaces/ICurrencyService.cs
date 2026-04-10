@@ -6,7 +6,7 @@ namespace MellonBank.Application.Interfaces
 {
     public interface ICurrencyService
     {
-        Task<ExchangeRatesDto> GetRatesAsync(CancellationToken cancellationToken = default);
-        Task<decimal> ConvertEuroToUsdAsync(decimal amountEur, CancellationToken cancellationToken = default);
+        //Task<ExchangeRatesDto> GetRatesAsync(CancellationToken cancellationToken = default);
+        //Task<decimal> ConvertEuroToUsdAsync(decimal amountEur, CancellationToken cancellationToken = default);
     }
 }

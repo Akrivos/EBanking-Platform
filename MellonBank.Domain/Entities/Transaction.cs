@@ -7,14 +7,13 @@ namespace MellonBank.Domain.Entities
     {
         public int FromAccountId { get; private set; }
         public BankAccount FromAccount { get; private set; } = default!;
-
         public int ToAccountId { get; private set; }
         public BankAccount ToAccount { get; private set; } = default!;
 
         public TransactionType Type { get; private set; }
-        public decimal Amount { get; private set; } = 0m;
+        public decimal Amount { get; private set; }
         public string Description { get; private set; } = string.Empty;
-        public TransactionStatus Status { get; private set; } 
+        public TransactionStatus Status { get; private set; }
         public string ExecutedByUserId { get; private set; } = string.Empty;
         public string ReferenceCode { get; private set; } = string.Empty;
 
@@ -34,18 +33,24 @@ namespace MellonBank.Domain.Entities
             if (toAccountId <= 0)
                 throw new ArgumentException("To account id is required.", nameof(toAccountId));
 
+            if (fromAccountId == toAccountId)
+                throw new ArgumentException("Source and destination account cannot be the same.");
+
+            if (!Enum.IsDefined(typeof(TransactionType), type))
+                throw new ArgumentException("Invalid transaction type.", nameof(type));
+
             if (amount <= 0)
                 throw new ArgumentException("Amount must be greater than zero.", nameof(amount));
 
-            if (fromAccountId == toAccountId && type == TransactionType.ThirdPartyTransfer)
-                throw new ArgumentException("Third-party transfer cannot target the same account.");
+            if (string.IsNullOrWhiteSpace(executedByUserId))
+                throw new ArgumentException("Executed by user id is required.", nameof(executedByUserId));
 
             FromAccountId = fromAccountId;
             ToAccountId = toAccountId;
             Type = type;
             Amount = amount;
             Description = description?.Trim() ?? string.Empty;
-            ExecutedByUserId = executedByUserId;
+            ExecutedByUserId = executedByUserId.Trim();
             Status = TransactionStatus.Pending;
             ReferenceCode = GenerateReferenceCode();
         }

@@ -1,10 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace MellonBank.Infrastructure.Persistence
 {
-    internal class MellonBankDbContext
+    public class MellonBankDbContext : DbContext
     {
+        public MellonBankDbContext(DbContextOptions<MellonBankDbContext> options)
+            : base(options)
+        {
+        }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(MellonBankDbContext).Assembly);
+        }
     }
 }

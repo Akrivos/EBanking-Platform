@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "alB4smIUjK4=",
+  "dgSpecHash": "II+Tohe4iyc=",
   "success": true,
   "projectFilePath": "C:\\Users\\user\\source\\repos\\MellonBank-Project\\MellonBank.Application\\MellonBank.Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\12.1.1\\fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.5\\microsoft.extensions.dependencyinjection.abstractions.10.0.5.nupkg.sha512"
   ],
   "logs": []

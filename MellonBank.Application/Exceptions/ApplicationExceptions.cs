@@ -7,37 +7,40 @@
         }
     }
 
-    public sealed class NotFoundException : ApplicationException
+    public sealed class AppNotFoundException : ApplicationException
     {
-        public NotFoundException(string message) : base(message)
+        public AppNotFoundException(string message) : base(message)
         {
         }
     }
 
-    public sealed class ForbiddenException : ApplicationException
+    public sealed class AppForbiddenException : ApplicationException
     {
-        public ForbiddenException(string message) : base(message)
+        public AppForbiddenException(string message) : base(message)
         {
         }
     }
 
-    public sealed class ConflictException : ApplicationException
+    public sealed class AppConflictException : ApplicationException
     {
-        public ConflictException(string message) : base(message)
+        public AppConflictException(string message) : base(message)
         {
         }
     }
 
-    public sealed class ValidationException : ApplicationException
+    public sealed class AppValidationException : ApplicationException
     {
-        public IReadOnlyDictionary<string, string[]> Errors { get; }
+        public IDictionary<string, string[]> Errors { get; }
 
-        public ValidationException(string message) : base(message)
+        public AppValidationException(string message)
+            : base(message)
         {
-            Errors = new Dictionary<string, string[]>();
+            Errors = new Dictionary<string, string[]>
+            {
+                { "General", new[] { message } }
+            };
         }
-
-        public ValidationException(IReadOnlyDictionary<string, string[]> errors)
+        public AppValidationException(IDictionary<string, string[]> errors)
             : base("One or more validation errors occurred.")
         {
             Errors = errors;

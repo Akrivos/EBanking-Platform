@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MellonBank.Application.DTOs.Requests;
+using MellonBank.Application.DTOs.Responses;
 
 namespace MellonBank.Application.Interfaces.Services
 {
     public interface ICustomerManagementService
     {
-        //Task<string> CreateCustomerAsync(CreateCustomerRequest request, CancellationToken cancellationToken = default);
-        //Task UpdateCustomerAsync(UpdateCustomerRequest request, CancellationToken cancellationToken = default);
-        //Task DeleteCustomerAsync(string afm, CancellationToken cancellationToken = default);
-        //Task<CustomerDetailsDto?> GetCustomerByAfmAsync(string afm, CancellationToken cancellationToken = default);
-        //Task<IReadOnlyList<CustomerListItemDto>> GetAllCustomersAsync(CancellationToken cancellationToken = default);
+        Task<Guid> CreateCustomerAsync(CreateUserRequestDto request, CancellationToken ct = default);
+        Task<Guid> CreateStaffAsync(CreateUserRequestDto request, CancellationToken ct = default);
+        Task UpdateCustomerAsync(UpdateCustomerRequestDto request, CancellationToken ct = default);
+        Task DeleteCustomerAsync(string afm, CancellationToken ct = default);
+        Task<CustomerDetailsResponseDto?> GetCustomerByAfmAsync(string afm, CancellationToken ct = default);
+        Task<IReadOnlyList<CustomerDetailsResponseDto?>> GetAllCustomersAsync(CancellationToken ct = default);
     }
 }

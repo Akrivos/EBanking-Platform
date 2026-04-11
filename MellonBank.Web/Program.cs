@@ -1,7 +1,6 @@
 using MellonBank.Application;
 using MellonBank.Application.Interfaces.Services;
 using MellonBank.Infrastructure;
-using MellonBank.Infrastructure.Persistence;
 using MellonBank.Web.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

@@ -1,5 +1,4 @@
-﻿using MellonBank.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace MellonBank.Infrastructure.Identity
 {
@@ -12,11 +11,14 @@ namespace MellonBank.Infrastructure.Identity
             SetUserInfo(firstName, lastName, address, afm);
         }
 
+        [PersonalData]
         public string FirstName { get; private set; } = string.Empty;
+        [PersonalData]
         public string LastName { get; private set; } = string.Empty;
+        [PersonalData]
         public string Address { get; private set; } = string.Empty;
+        [PersonalData]
         public string Afm { get; private set; } = string.Empty;
-        public ICollection<BankAccount> BankAccounts { get; private set; } = new List<BankAccount>();
 
         public void SetUserInfo(string firstName, string lastName, string address, string afm)
         {

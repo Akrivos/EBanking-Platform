@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MellonBank.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c95d183ae8ca9129f17c176b6acdb8eeedfe3835")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3bc4d021af206de52e1e24c8778ae1a59eb8b7fb")]
 [assembly: System.Reflection.AssemblyProductAttribute("MellonBank.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MellonBank.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

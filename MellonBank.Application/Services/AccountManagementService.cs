@@ -16,6 +16,7 @@ namespace MellonBank.Application.Services
         private readonly IValidator<UpdateBankAccountRequestDto> _updateValidator;
         private readonly ICurrentUserService _currentUserService;
         private readonly IIdentityService _identityService;
+        private readonly IRoleService _roleManagerService;
         private readonly IBankAccountRepository _bankAccountRepository;
         private readonly IUnitOfWork _unitOfWork;
         public AccountManagementService(
@@ -23,6 +24,7 @@ namespace MellonBank.Application.Services
             IValidator<UpdateBankAccountRequestDto> updateValidator,
             ICurrentUserService currentUserService,
             IIdentityService identityService,
+            IRoleService roleManagerService,
             IBankAccountRepository bankAccountRepository,
             IUnitOfWork unitOfWork
         )
@@ -31,6 +33,7 @@ namespace MellonBank.Application.Services
             _updateValidator = updateValidator;
             _currentUserService = currentUserService;
             _identityService = identityService;
+            _roleManagerService = roleManagerService;
             _bankAccountRepository = bankAccountRepository;
             _unitOfWork = unitOfWork;
         }
@@ -43,6 +46,28 @@ namespace MellonBank.Application.Services
             var account = await _bankAccountRepository.GetByAccountNumberAsync(accountNumber, ct);
             if (account is null)
                 throw new AppNotFoundException("Account with given number has not found.");
+
+            return new AccountDetailsResponseDto(
+                Id: account.Id,
+                AccountNumber: account.AccountNumber,
+                Balance: account.Balance,
+                Currency: account.Currency,
+                Branch: account.Branch,
+                AccountType: account.AccountType
+            );
+        }
+
+        public async Task<AccountDetailsResponseDto?> GetByAccountNumberAndUserIdAsync(string accountNumber, string userId, CancellationToken ct = default)
+        {
+            if (string.IsNullOrWhiteSpace(accountNumber))
+                throw new AppValidationException("Account number must be provided.");
+
+            if (string.IsNullOrWhiteSpace(userId))
+                throw new AppValidationException("User ID must be provided.");
+
+            var account = await _bankAccountRepository.GetByAccountNumberAndUserIdAsync(accountNumber, userId, ct);
+            if (account is null)
+                throw new AppNotFoundException("Account with given number has not found for the specified user.");
 
             return new AccountDetailsResponseDto(
                 Id: account.Id,
@@ -68,7 +93,7 @@ namespace MellonBank.Application.Services
             if (customer is null)
                 throw new AppNotFoundException("Customer not found.");
 
-            var isCustomer = await _identityService.IsInRoleAsync(customer.Id, RoleType.Customer, ct);
+            var isCustomer = await _roleManagerService.IsInRoleAsync(customer.Id, RoleType.Customer, ct);
             if (!isCustomer)
                 throw new AppConflictException("Bank accounts can only be assigned to customers.");
 

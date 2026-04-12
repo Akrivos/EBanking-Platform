@@ -7,19 +7,19 @@ using MellonBank.Domain.Enums;
 
 namespace MellonBank.Application.Services
 {
-    public class CustomerManagementService : ICustomerManagementService
+    public class StaffUserManagementService : IStaffUserManagementService
     {
         private readonly IValidator<CreateUserRequestDto> _createValidator;
         private readonly IValidator<UpdateUserRequestDto> _updateValidator;
         private readonly IIdentityService _identityService;
-        private readonly IRoleManagerService _roleManagerService;
+        private readonly IRoleService _roleManagerService;
         private readonly ICurrentUserService _currentUserService;
 
-        public CustomerManagementService(
+        public StaffUserManagementService(
             IValidator<CreateUserRequestDto> createValidator, 
             IValidator<UpdateUserRequestDto> updateValidator, 
             IIdentityService identityService,
-            IRoleManagerService roleManagerService,
+            IRoleService roleManagerService,
             ICurrentUserService currentUserService
         )
         {
@@ -43,7 +43,7 @@ namespace MellonBank.Application.Services
             if (user is null)
                 throw new AppNotFoundException($"Customer with AFM {afm} not found.");
 
-            if(! await _identityService.IsInRoleAsync(user.Id, RoleType.Customer))
+            if(! await _roleManagerService.IsInRoleAsync(user.Id, RoleType.Customer))
                 throw new AppNotFoundException($"Customer with AFM {afm} not found.");
 
 
@@ -65,7 +65,7 @@ namespace MellonBank.Application.Services
             if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
                 throw new AppForbiddenException("Only staff users can view customers.");
 
-            var users = await _identityService.GetAllCustomersAsync(ct);
+            var users = await _identityService.GetUsersInRoleAsync(ct);
 
             return users.Any() ? users.Select(user => new UserResponseDto(
                 Id: user.Id,
@@ -100,7 +100,7 @@ namespace MellonBank.Application.Services
             if (userId is null)
                 throw new Exception("An error occurred while creating the customer.");
             
-            await _identityService.AddToRoleAsync(userId, RoleType.Customer, ct);
+            await _roleManagerService.AddToRoleAsync(userId, RoleType.Customer, ct);
 
             return userId;
         }
@@ -122,7 +122,7 @@ namespace MellonBank.Application.Services
             if (userId is null)
                 throw new Exception("An error occurred while creating the staff.");
 
-            await _identityService.AddToRoleAsync(userId, RoleType.Staff, ct);
+            await _roleManagerService.AddToRoleAsync(userId, RoleType.Staff, ct);
             return userId;
         }
 
@@ -135,7 +135,7 @@ namespace MellonBank.Application.Services
             if (user is null)
                 throw new AppNotFoundException($"Customer with AFM {afm} not found.");
 
-            if (!await _identityService.IsInRoleAsync(user.Id, RoleType.Customer))
+            if (!await _roleManagerService.IsInRoleAsync(user.Id, RoleType.Customer))
                 throw new AppNotFoundException($"Customer with AFM {afm} not found.");
 
             var result = await _updateValidator.ValidateAsync(request, ct);
@@ -154,7 +154,7 @@ namespace MellonBank.Application.Services
             if (user is null)
                 throw new AppNotFoundException($"Customer with AFM {afm} not found.");
 
-            if (!await _identityService.IsInRoleAsync(user.Id, RoleType.Customer))
+            if (!await _roleManagerService.IsInRoleAsync(user.Id, RoleType.Customer))
                 throw new AppNotFoundException($"Customer with AFM {afm} not found.");
 
             await _identityService.DeleteUserAsync(afm, ct);

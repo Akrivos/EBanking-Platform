@@ -32,6 +32,7 @@ namespace MellonBank.Infrastructure
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IBankAccountRepository, IBankAccountRepository>();
+            services.AddScoped<ITransactionRepository, ITransactionRepository>();
         }
     }
 }

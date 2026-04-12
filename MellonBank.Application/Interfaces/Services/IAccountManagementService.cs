@@ -9,5 +9,8 @@ namespace MellonBank.Application.Interfaces.Services
         Task UpdateAccountAsync(string accountNumber, UpdateBankAccountRequestDto request, CancellationToken ct = default);
         Task DeleteAccountAsync(string accountNumber, CancellationToken ct = default);
         Task<AccountDetailsResponseDto?> GetByAccountNumberAsync(string accountNumber, CancellationToken ct = default);
+        Task<AccountDetailsResponseDto?> GetByAccountNumberAndUserIdAsync(string accountNumber, string userId, CancellationToken ct = default);
+        //Task<IReadOnlyList<AccountDetailsResponseDto>> GetAccountsByCustomerAfmAsync(string afm, CancellationToken ct = default);
+
     }
 }

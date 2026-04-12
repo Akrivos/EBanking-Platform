@@ -48,16 +48,12 @@ namespace MellonBank.Domain.Entities
             UserId = userId.Trim();
             Branch = branch.Trim();
             AccountType = accountType;
-            //IsActive = true;
         }
 
         public void Credit(decimal amount)
         {
             if (amount <= 0)
                 throw new ArgumentException("Amount must be greater than zero.", nameof(amount));
-
-            //if (!IsActive)
-            //    throw new InvalidAccountOperationException("Inactive account cannot be credited.");
 
             Balance += amount;
         }
@@ -66,9 +62,6 @@ namespace MellonBank.Domain.Entities
         {
             if (amount <= 0)
                 throw new ArgumentException("Amount must be greater than zero.", nameof(amount));
-
-            //if (!IsActive)
-            //    throw new InvalidAccountOperationException("Inactive account cannot be debited.");
 
             if (Balance < amount)
                 throw new InsufficientBalanceException();
@@ -84,27 +77,8 @@ namespace MellonBank.Domain.Entities
             if (!Enum.IsDefined(typeof(AccountType), accountType))
                 throw new ArgumentException("Invalid account type.", nameof(accountType));
 
-            //if (!IsActive)
-            //    throw new InvalidAccountOperationException("Inactive account cannot be updated.");
-
             Branch = branch.Trim();
             AccountType = accountType;
         }
-
-        //public void Deactivate()
-        //{
-        //    if (!IsActive)
-        //        throw new InvalidAccountOperationException("Account is already inactive.");
-
-        //    IsActive = false;
-        //}
-
-        //public void Activate()
-        //{
-        //    if (IsActive)
-        //        throw new InvalidAccountOperationException("Account is already active.");
-
-        //    IsActive = true;
-        //}
     }
 }

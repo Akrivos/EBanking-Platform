@@ -18,6 +18,16 @@ namespace MellonBank.Infrastructure.Persistence.Repositories
             return await _dbContext.BankAccounts.SingleOrDefaultAsync(ba => ba.AccountNumber == accountNumber, ct);
         }
 
+        public async Task<BankAccount?> GetByAccountNumberAndUserIdAsync(string accountNumber, string userId, CancellationToken ct = default)
+        {
+            return await _dbContext.BankAccounts
+                .Where(
+                    ba => ba.AccountNumber == accountNumber && 
+                    ba.UserId == userId
+                )
+                .SingleOrDefaultAsync(ct);
+        }
+
         public async Task AddAsync(BankAccount account, CancellationToken ct = default)
         {
             await _dbContext.BankAccounts.AddAsync(account, ct);
@@ -35,6 +45,11 @@ namespace MellonBank.Infrastructure.Persistence.Repositories
             {
                 _dbContext.BankAccounts.Remove(account);
             }
+        }
+
+        public async Task UpdateAsync(BankAccount account, CancellationToken ct = default)
+        {
+            _dbContext.BankAccounts.Update(account);
         }
     }
 }

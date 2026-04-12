@@ -1,8 +1,4 @@
-﻿using MellonBank.Application.DTOs.Responses;
-using MellonBank.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MellonBank.Domain.Entities;
 
 namespace MellonBank.Application.Interfaces.Repositories
 {
@@ -10,7 +6,9 @@ namespace MellonBank.Application.Interfaces.Repositories
     {
         Task<bool> ExistsByAccountNumberAsync(string accountNumber, CancellationToken ct = default);
         Task AddAsync(BankAccount account, CancellationToken ct = default);
+        Task UpdateAsync(BankAccount account, CancellationToken ct = default);
         Task<BankAccount?> GetByAccountNumberAsync(string accountNumber, CancellationToken ct = default);
+        Task<BankAccount?> GetByAccountNumberAndUserIdAsync(string accountNumber, string userId, CancellationToken ct = default);
         Task DeleteByAccountNumberAsync(string accountNumber, CancellationToken ct = default);
     }
 }

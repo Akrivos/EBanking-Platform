@@ -28,6 +28,13 @@
         }
     }
 
+    public sealed class AppUnauthorizedException : ApplicationException
+    {
+        public AppUnauthorizedException(string message) : base(message)
+        {
+        }
+    }
+
     public sealed class AppValidationException : ApplicationException
     {
         public IDictionary<string, string[]> Errors { get; }
@@ -44,6 +51,20 @@
             : base("One or more validation errors occurred.")
         {
             Errors = errors;
+        }
+    }
+
+    public sealed class ExternalServiceException : ApplicationException
+    {
+        public ExternalServiceException(string message) : base(message)
+        { 
+        }
+    }
+
+    public sealed class AppInternalServerErrorException : ApplicationException
+    {
+        public AppInternalServerErrorException(string message) : base(message)
+        {
         }
     }
 }

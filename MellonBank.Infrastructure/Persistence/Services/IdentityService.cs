@@ -34,7 +34,7 @@ namespace MellonBank.Infrastructure.Persistence.Services
                 .SingleOrDefaultAsync(ct);
         }
 
-        public async Task<IEnumerable<UserIdentityModel>> GetAllCustomersAsync(CancellationToken ct = default)
+        public async Task<IEnumerable<UserIdentityModel>> GetUsersInRoleAsync(CancellationToken ct = default)
         {
             var users = await _userManager.GetUsersInRoleAsync(RoleType.Customer.ToString());
 

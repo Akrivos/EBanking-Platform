@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
+using MellonBank.Application.Interfaces.Repositories;
+using MellonBank.Application.Interfaces.Persistence;
 
 namespace MellonBank.Infrastructure
 {
@@ -19,9 +21,17 @@ namespace MellonBank.Infrastructure
                 {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.User.RequireUniqueEmail = true;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireNonAlphanumeric = true;
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequireLowercase = true;
                 })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<MellonBankDbContext>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IBankAccountRepository, IBankAccountRepository>();
         }
     }
 }

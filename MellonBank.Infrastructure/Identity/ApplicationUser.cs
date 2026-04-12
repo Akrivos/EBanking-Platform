@@ -41,5 +41,25 @@ namespace MellonBank.Infrastructure.Identity
             Address = address.Trim();
             Afm = afm;
         }
+
+        public void UpdateProfile(string firstName, string lastName, string address, string phoneNumber)
+        {
+            if (string.IsNullOrWhiteSpace(firstName))
+                throw new ArgumentException("First name is required.", nameof(firstName));
+
+            if (string.IsNullOrWhiteSpace(lastName))
+                throw new ArgumentException("Last name is required.", nameof(lastName));
+
+            if (string.IsNullOrWhiteSpace(address))
+                throw new ArgumentException("Address is required.", nameof(address));
+
+            if (string.IsNullOrWhiteSpace(phoneNumber))
+                throw new ArgumentException("Phone number is required.", nameof(phoneNumber));
+
+            FirstName = firstName.Trim();
+            LastName = lastName.Trim();
+            Address = address.Trim();
+            PhoneNumber = phoneNumber.Trim();
+        }
     }
 }

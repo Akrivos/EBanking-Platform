@@ -8,8 +8,11 @@
 
   <ItemGroup>
     <Compile Remove="Persistence\Migrations\**" />
+    <Compile Remove="Repositories\**" />
     <EmbeddedResource Remove="Persistence\Migrations\**" />
+    <EmbeddedResource Remove="Repositories\**" />
     <None Remove="Persistence\Migrations\**" />
+    <None Remove="Repositories\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,7 +22,7 @@
 
   <ItemGroup>
     <Folder Include="ExternalServices\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Persistence\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>

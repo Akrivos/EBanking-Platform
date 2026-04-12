@@ -1,7 +1,4 @@
 ﻿using MellonBank.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MellonBank.Application.DTOs.Responses
 {

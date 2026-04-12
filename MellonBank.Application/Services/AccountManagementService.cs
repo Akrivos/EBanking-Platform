@@ -68,7 +68,7 @@ namespace MellonBank.Application.Services
             if (customer is null)
                 throw new AppNotFoundException("Customer not found.");
 
-            var isCustomer = await _identityService.IsInRoleAsync(customer.Id, RoleType.Customer.ToString(), ct);
+            var isCustomer = await _identityService.IsInRoleAsync(customer.Id, RoleType.Customer, ct);
             if (!isCustomer)
                 throw new AppConflictException("Bank accounts can only be assigned to customers.");
 

@@ -3,9 +3,9 @@ using MellonBank.Application.DTOs.Requests;
 
 namespace MellonBank.Application.Validators
 {
-    public class CreateCustomerRequestDtoValidator : AbstractValidator<CreateCustomerRequestDto>
+    public class CreateUserRequestDtoValidator : AbstractValidator<CreateUserRequestDto>
     {
-        public CreateCustomerRequestDtoValidator()
+        public CreateUserRequestDtoValidator()
         {
             RuleFor(x => x.FirstName)
                 .NotEmpty()
@@ -37,7 +37,15 @@ namespace MellonBank.Application.Validators
 
             RuleFor(x => x.Password)
                 .NotEmpty()
-                .MinimumLength(6);
+                .MinimumLength(6)
+                .Matches(@"[A-Z]").WithMessage("Password must contain at least one uppercase letter.")
+                .Matches(@"[a-z]").WithMessage("Password must contain at least one lowercase letter.")
+                .Matches(@"\d").WithMessage("Password must contain at least one number.")
+                .Matches(@"[^a-zA-Z0-9]").WithMessage("Password must contain at least one special character.");
+
+            RuleFor(x => x.Role)
+                .NotEmpty()
+                .IsInEnum();
         }
     }
 }

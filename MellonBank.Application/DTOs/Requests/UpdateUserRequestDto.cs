@@ -1,8 +1,6 @@
-﻿using MellonBank.Domain.Enums;
-
-namespace MellonBank.Application.DTOs.Requests
+﻿namespace MellonBank.Application.DTOs.Requests
 {
-    public record CreateUserRequestDto(
+    public record UpdateUserRequestDto(
         string FirstName,
         string LastName,
         string Afm,
@@ -10,7 +8,6 @@ namespace MellonBank.Application.DTOs.Requests
         string PhoneNumber,
         string Email,
         string UserName,
-        string Password,
-        RoleType Role
+        string Password
     );
 }

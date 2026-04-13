@@ -122,6 +122,17 @@ namespace MellonBank.Infrastructure.Persistence.Services
             return result.Succeeded;
         }
 
+        public async Task<bool> ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken ct = default)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user is null)
+                return false;
+
+            var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+
+            return result.Succeeded;
+        }
+
         private async Task<ApplicationUser?> FindApplicationUserByAfmAsync(string afm, CancellationToken ct = default)
         {
             return await _userManager.Users

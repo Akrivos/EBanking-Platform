@@ -5,10 +5,11 @@ namespace MellonBank.Application.Interfaces.Services
 {
     public interface IIdentityService
     {
-        Task<string> CreateUserAsync(CreateUserRequestDto request, CancellationToken cancellationToken = default);
-        Task<bool> UpdateUserAsync(string afm, UpdateUserRequestDto request, CancellationToken cancellationToken = default);
-        Task<bool> DeleteUserAsync(string userId, CancellationToken cancellationToken = default);
-        Task<UserIdentityModel> GetByAfmAsync(string afm, CancellationToken cancellationToken = default);
-        Task<IEnumerable<UserIdentityModel?>> GetUsersInRoleAsync(CancellationToken cancellationToken = default);
+        Task<string> CreateUserAsync(CreateUserRequestDto request, CancellationToken ct = default);
+        Task<bool> UpdateUserAsync(string afm, UpdateUserRequestDto request, CancellationToken ct = default);
+        Task<bool> DeleteUserAsync(string userId, CancellationToken ct = default);
+        Task<UserIdentityModel> GetByAfmAsync(string afm, CancellationToken ct = default);
+        Task<IEnumerable<UserIdentityModel?>> GetUsersInRoleAsync(CancellationToken ct = default);
+        Task<bool> ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken ct = default);
     }
 }

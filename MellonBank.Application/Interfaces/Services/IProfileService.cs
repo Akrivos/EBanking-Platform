@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MellonBank.Application.DTOs.Requests;
 
 namespace MellonBank.Application.Interfaces.Services
 {
     public interface IProfileService
     {
-        //Task ChangePasswordAsync(ChangePasswordRequestDto request, CancellationToken ct = default);
-        //Task<CustomerProfileResponseDto?> GetMyProfileAsync(CancellationToken ct = default);
+        Task<bool> ChangePasswordAsync(ChangePasswordRequestDto request, CancellationToken ct = default);
     }
 }

@@ -1,4 +1,5 @@
-﻿using MellonBank.Application.DTOs.Requests;
+﻿using FluentValidation;
+using MellonBank.Application.DTOs.Requests;
 using MellonBank.Application.Exceptions;
 using MellonBank.Application.Interfaces.Persistence;
 using MellonBank.Application.Interfaces.Repositories;
@@ -9,18 +10,24 @@ namespace MellonBank.Application.Services
 {
     public class TransferService : ITransferService
     {
+        private readonly IValidator<TransferToOwnAccountRequestDto> _ownAccountValidator;
+        private readonly IValidator<TransferToThirdPartyRequestDto> _thirdPartyValidator;
         private readonly IBankAccountRepository _bankAccountRepository;
         private readonly ICurrentUserService _currentUserService;
         private readonly ITransactionRepository _transactionRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public TransferService(
+            IValidator<TransferToOwnAccountRequestDto> ownAccountValidator,
+            IValidator<TransferToThirdPartyRequestDto> thirdPartyValidator,
             ICurrentUserService currentUserService, 
             IBankAccountRepository bankAccountRepository,
             ITransactionRepository transactionRepository,
             IUnitOfWork unitOfWork
         )
         {
+            _ownAccountValidator = ownAccountValidator;
+            _thirdPartyValidator = thirdPartyValidator;
             _bankAccountRepository = bankAccountRepository;
             _currentUserService = currentUserService;
             _transactionRepository = transactionRepository;
@@ -35,7 +42,9 @@ namespace MellonBank.Application.Services
             var toAccountNumber = request.ToAccountNumber?.Trim();
             var amount = request.Amount;
 
-            ValidateTransferInput(fromAccountNumber, toAccountNumber, amount);
+            var validationResult = await _ownAccountValidator.ValidateAsync(request, ct);
+            if (!validationResult.IsValid)
+                throw new AppValidationException(validationResult.ToDictionary());
 
             var userId = GetCurrentUserIdOrThrow();
 
@@ -71,7 +80,9 @@ namespace MellonBank.Application.Services
             var toAccountNumber = request.ToAccountNumber?.Trim();
             var amount = request.Amount;
 
-            ValidateTransferInput(fromAccountNumber, toAccountNumber, amount);
+            var validationResult = await _thirdPartyValidator.ValidateAsync(request, ct);
+            if (!validationResult.IsValid)
+                throw new AppValidationException(validationResult.ToDictionary());
 
             var userId = GetCurrentUserIdOrThrow();
 
@@ -97,24 +108,6 @@ namespace MellonBank.Application.Services
 
             await _transactionRepository.AddAsync(transaction, ct);
             await _unitOfWork.SaveChangesAsync(ct);
-        }
-
-        private void ValidateTransferInput(
-            string fromAccountNumber,
-            string toAccountNumber,
-            decimal amount)
-        {
-            if (string.IsNullOrWhiteSpace(fromAccountNumber))
-                throw new AppValidationException("Source account number is required.");
-
-            if (string.IsNullOrWhiteSpace(toAccountNumber))
-                throw new AppValidationException("Destination account number is required.");
-
-            if (amount <= 0)
-                throw new AppValidationException("Amount must be greater than zero.");
-
-            if (fromAccountNumber == toAccountNumber)
-                throw new AppValidationException("Cannot transfer to the same account.");
         }
 
         private string GetCurrentUserIdOrThrow()

@@ -33,6 +33,9 @@ namespace MellonBank.Application.Services
         public async Task<UserResponseDto> GetCustomerByAfmAsync(string afm, CancellationToken ct = default)
         {
 
+            if(_currentUserService.UserId is null)
+                throw new AppForbiddenException("User must be authenticated to access customer information.");
+
             if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
                 throw new AppForbiddenException("Only staff users can create customers.");
 
@@ -59,9 +62,11 @@ namespace MellonBank.Application.Services
             );
         }
 
-        public async Task<IReadOnlyList
-            <UserResponseDto>> GetAllCustomersAsync(CancellationToken ct = default)
+        public async Task<IReadOnlyList<UserResponseDto?>> GetAllCustomersAsync(CancellationToken ct = default)
         {
+            if (_currentUserService.UserId is null)
+                throw new AppForbiddenException("User must be authenticated to access customer information.");
+
             if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
                 throw new AppForbiddenException("Only staff users can view customers.");
 
@@ -81,6 +86,9 @@ namespace MellonBank.Application.Services
 
         public async Task<string> CreateCustomerAsync(CreateUserRequestDto request, CancellationToken ct = default)
         {
+            if (_currentUserService.UserId is null)
+                throw new AppForbiddenException("User must be authenticated to access customer information.");
+
             if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
                 throw new AppForbiddenException("Only staff users can create customers.");
 
@@ -107,6 +115,9 @@ namespace MellonBank.Application.Services
 
         public async Task<string> CreateStaffAsync(CreateUserRequestDto request, CancellationToken ct = default)
         {
+            if (_currentUserService.UserId is null)
+                throw new AppForbiddenException("User must be authenticated to access customer information.");
+
             if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
                 throw new AppForbiddenException("Only staff users can create staff members.");
 
@@ -128,6 +139,9 @@ namespace MellonBank.Application.Services
 
         public async Task UpdateCustomerAsync(string afm, UpdateUserRequestDto request, CancellationToken ct = default)
         {
+            if (_currentUserService.UserId is null)
+                throw new AppForbiddenException("User must be authenticated to access customer information.");
+
             if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
                 throw new AppForbiddenException("Only staff users can update customers.");
 
@@ -147,6 +161,9 @@ namespace MellonBank.Application.Services
 
         public async Task DeleteCustomerAsync(string afm, CancellationToken ct = default)
         {
+            if (_currentUserService.UserId is null)
+                throw new AppForbiddenException("User must be authenticated to access customer information.");
+
             if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
                 throw new AppForbiddenException("Only staff users can delete customers.");
 

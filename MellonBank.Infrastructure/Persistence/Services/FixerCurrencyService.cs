@@ -1,15 +1,14 @@
-﻿using MellonBank.Application.Exceptions;
-using MellonBank.Application.Interfaces.Services;
+﻿using MellonBank.Application.Interfaces.Services;
 using MellonBank.Domain.Enums;
 using MellonBank.Infrastructure.Exceptions;
-using MellonBank.Infrastructure.Integrations.Fixer.Models;
+using MellonBank.Infrastructure.Models;
 using MellonBank.Infrastructure.Options;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 
 namespace MellonBank.Infrastructure.Persistence.Services
 {
-    public sealed class FixerCurrencyService : ICurrencyService
+    public sealed class FixerCurrencyService : IExchangeRateProvider
     {
         private readonly HttpClient _httpClient;
         private readonly FixerOptions _options;
@@ -42,7 +41,7 @@ namespace MellonBank.Infrastructure.Persistence.Services
             }
             catch (Exception ex)
             {
-                throw new ExternalServiceException("Failed to communicate with the Fixer API.", ex);
+                throw new ExternalServiceException($"Failed to communicate with the Fixer API. {ex.Message}");
             }
 
             if (response is null)

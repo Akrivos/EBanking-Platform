@@ -28,6 +28,11 @@ namespace MellonBank.Infrastructure.Persistence.Repositories
                 .SingleOrDefaultAsync(ct);
         }
 
+        public async Task<IEnumerable<BankAccount>> GetByUserIdAsync(string userId, CancellationToken ct = default)
+        {
+            return await _dbContext.BankAccounts.Where(ba => ba.UserId == userId).ToListAsync(ct);
+        }
+
         public async Task AddAsync(BankAccount account, CancellationToken ct = default)
         {
             await _dbContext.BankAccounts.AddAsync(account, ct);

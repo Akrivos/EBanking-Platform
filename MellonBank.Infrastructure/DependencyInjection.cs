@@ -3,13 +3,13 @@ using MellonBank.Application.Interfaces.Repositories;
 using MellonBank.Application.Interfaces.Services;
 using MellonBank.Infrastructure.Options;
 using MellonBank.Infrastructure.Persistence;
+using MellonBank.Infrastructure.Persistence.Repositories;
 using MellonBank.Infrastructure.Persistence.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using System.Net.Http
 
 
 namespace MellonBank.Infrastructure
@@ -39,7 +39,7 @@ namespace MellonBank.Infrastructure
             services.Configure<FixerOptions>(
             configuration.GetSection(FixerOptions.SectionName));
 
-            services.AddHttpClient<ICurrencyService, FixerCurrencyService>((sp, client) =>
+            services.AddHttpClient<IExchangeRateProvider, FixerCurrencyService>((sp, client) =>
             {
                 var options = sp.GetRequiredService<IOptions<FixerOptions>>().Value;
 
@@ -48,8 +48,9 @@ namespace MellonBank.Infrastructure
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IBankAccountRepository, IBankAccountRepository>();
-            services.AddScoped<ITransactionRepository, ITransactionRepository>();
+            services.AddScoped<IBankAccountRepository, BankAccountRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<ICurrencyRepository, CurrencyRepository>();
         }
     }
 }

@@ -40,6 +40,12 @@ namespace MellonBank.Application.Services
 
         public async Task<AccountDetailsResponseDto?> GetByAccountNumberAsync(string accountNumber, CancellationToken ct = default)
         {
+            if(_currentUserService.UserId is null)
+                throw new AppForbiddenException("User must be authenticated to access account details.");
+
+            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
+                throw new AppForbiddenException("Only staff users can create bank accounts.");
+
             if (string.IsNullOrWhiteSpace(accountNumber))
                 throw new AppValidationException("Account number must be provided.");
 
@@ -59,6 +65,12 @@ namespace MellonBank.Application.Services
 
         public async Task<AccountDetailsResponseDto?> GetByAccountNumberAndUserIdAsync(string accountNumber, string userId, CancellationToken ct = default)
         {
+            if (_currentUserService.UserId is null)
+                throw new AppForbiddenException("User must be authenticated to access account details.");
+
+            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
+                throw new AppForbiddenException("Only staff users can create bank accounts.");
+
             if (string.IsNullOrWhiteSpace(accountNumber))
                 throw new AppValidationException("Account number must be provided.");
 
@@ -81,6 +93,9 @@ namespace MellonBank.Application.Services
 
         public async Task<Guid> CreateAccountAsync(CreateBankAccountRequestDto request, CancellationToken ct = default)
         {
+            if(_currentUserService.UserId is null)
+                throw new AppForbiddenException("User must be authenticated to create bank accounts.");
+
             if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
                 throw new AppForbiddenException("Only staff users can create bank accounts.");
 
@@ -117,6 +132,9 @@ namespace MellonBank.Application.Services
 
         public async Task UpdateAccountAsync(string accountNumber, UpdateBankAccountRequestDto request, CancellationToken ct = default)
         {
+            if (_currentUserService.UserId is null)
+                throw new AppForbiddenException("User must be authenticated to create bank accounts.");
+
             if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
                 throw new AppForbiddenException("Only staff users can update bank accounts.");
 
@@ -137,6 +155,9 @@ namespace MellonBank.Application.Services
 
         public async Task DeleteAccountAsync(string accountNumber, CancellationToken ct = default)
         {
+            if (_currentUserService.UserId is null)
+                throw new AppForbiddenException("User must be authenticated to create bank accounts.");
+
             if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
                 throw new AppForbiddenException("Only staff users can delete bank accounts.");
 

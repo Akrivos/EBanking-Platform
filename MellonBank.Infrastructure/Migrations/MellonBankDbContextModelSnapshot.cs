@@ -36,9 +36,6 @@ namespace MellonBank.Infrastructure.Migrations
                     b.Property<int>("AccountType")
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<decimal>("Balance")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
@@ -54,9 +51,6 @@ namespace MellonBank.Infrastructure.Migrations
                     b.Property<int>("Currency")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
 
@@ -69,11 +63,45 @@ namespace MellonBank.Infrastructure.Migrations
                     b.HasIndex("AccountNumber")
                         .IsUnique();
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("BankAccounts", (string)null);
+                });
+
+            modelBuilder.Entity("MellonBank.Domain.Entities.Currency", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("AUD")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("CHF")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<decimal>("GBP")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<DateTime>("RetrievedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("USD")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Currencies", (string)null);
                 });
 
             modelBuilder.Entity("MellonBank.Domain.Entities.Transaction", b =>
@@ -356,10 +384,6 @@ namespace MellonBank.Infrastructure.Migrations
             modelBuilder.Entity("MellonBank.Domain.Entities.BankAccount", b =>
                 {
                     b.HasOne("MellonBank.Infrastructure.Identity.ApplicationUser", null)
-                        .WithMany("BankAccounts")
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("MellonBank.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -440,11 +464,6 @@ namespace MellonBank.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MellonBank.Infrastructure.Identity.ApplicationUser", b =>
-                {
-                    b.Navigation("BankAccounts");
                 });
 #pragma warning restore 612, 618
         }

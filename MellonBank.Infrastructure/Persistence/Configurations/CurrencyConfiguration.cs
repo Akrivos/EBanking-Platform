@@ -1,23 +1,24 @@
 ﻿using MellonBank.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MellonBank.Infrastructure.Persistence.Configurations
 {
     public class CurrencyConfiguration : IEntityTypeConfiguration<Currency>
     {
-        public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Currency> builder)
+        public void Configure(EntityTypeBuilder<Currency> builder)
         {
             builder.ToTable("Currencies");
 
             builder.HasKey(c => c.Id);
 
-            builder.Property(c => c.AUD).IsRequired();
+            builder.Property(c => c.AUD).IsRequired().HasPrecision(18, 6);
 
-            builder.Property(c => c.CHF).IsRequired();
+            builder.Property(c => c.CHF).IsRequired().HasPrecision(18, 6);
 
-            builder.Property(c => c.GBP).IsRequired();
+            builder.Property(c => c.GBP).IsRequired().HasPrecision(18, 6);
 
-            builder.Property(c => c.USD).IsRequired();
+            builder.Property(c => c.USD).IsRequired().HasPrecision(18, 6);
 
             builder.Property(c => c.RetrievedAtUtc).IsRequired();
         }

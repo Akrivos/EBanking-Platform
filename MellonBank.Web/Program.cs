@@ -2,8 +2,6 @@ using MellonBank.Application;
 using MellonBank.Application.Interfaces.Services;
 using MellonBank.Infrastructure;
 using MellonBank.Web.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace MellonBank.Web
@@ -50,10 +48,17 @@ namespace MellonBank.Web
             app.UseAuthorization();
 
             app.MapStaticAssets();
+
+            app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
+
+            app.MapRazorPages();
 
             app.Run();
         }

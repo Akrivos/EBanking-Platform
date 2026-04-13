@@ -7,10 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ExternalServices\**" />
     <Compile Remove="Persistence\Migrations\**" />
     <Compile Remove="Repositories\**" />
+    <EmbeddedResource Remove="ExternalServices\**" />
     <EmbeddedResource Remove="Persistence\Migrations\**" />
     <EmbeddedResource Remove="Repositories\**" />
+    <None Remove="ExternalServices\**" />
     <None Remove="Persistence\Migrations\**" />
     <None Remove="Repositories\**" />
   </ItemGroup>
@@ -18,11 +21,6 @@
   <ItemGroup>
     <ProjectReference Include="..\MellonBank.Application\MellonBank.Application.csproj" />
     <ProjectReference Include="..\MellonBank.Domain\MellonBank.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ExternalServices\" />
-    <Folder Include="Persistence\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +34,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.5" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,16 @@
-﻿using MellonBank.Infrastructure.Persistence;
+﻿using MellonBank.Application.Interfaces.Persistence;
+using MellonBank.Application.Interfaces.Repositories;
+using MellonBank.Application.Interfaces.Services;
+using MellonBank.Infrastructure.Options;
+using MellonBank.Infrastructure.Persistence;
+using MellonBank.Infrastructure.Persistence.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity;
-using MellonBank.Application.Interfaces.Repositories;
-using MellonBank.Application.Interfaces.Persistence;
+using Microsoft.Extensions.Options;
+using System.Net.Http
+
 
 namespace MellonBank.Infrastructure
 {
@@ -29,6 +35,17 @@ namespace MellonBank.Infrastructure
                 })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<MellonBankDbContext>();
+
+            services.Configure<FixerOptions>(
+            configuration.GetSection(FixerOptions.SectionName));
+
+            services.AddHttpClient<ICurrencyService, FixerCurrencyService>((sp, client) =>
+            {
+                var options = sp.GetRequiredService<IOptions<FixerOptions>>().Value;
+
+                client.BaseAddress = new Uri(options.BaseUrl);
+                //client.Timeout = TimeSpan.FromSeconds(10);
+            });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IBankAccountRepository, IBankAccountRepository>();

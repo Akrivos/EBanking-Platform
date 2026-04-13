@@ -3,7 +3,7 @@ using MellonBank.Application.DTOs.Responses;
 
 namespace MellonBank.Application.Interfaces.Services
 {
-    public interface ICustomerManagementService
+    public interface IStaffUserManagementService
     {
         Task<string> CreateCustomerAsync(CreateUserRequestDto request, CancellationToken ct = default);
         Task<string> CreateStaffAsync(CreateUserRequestDto request, CancellationToken ct = default);

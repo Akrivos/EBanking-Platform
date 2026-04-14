@@ -1,22 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-namespace MellonBank.Web.Areas.Customer.Controllers
+namespace MellonBank.Web.Areas.Customer.Controllers;
+
+[Area("Customer")]
+[Authorize(Roles = "Customer")]
+public class ProfileController : Controller
 {
-    public class ProfileController : Controller
+    [HttpGet]
+    public IActionResult MyProfile()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult ChangePassword()
-        {
-            return View();
-        }
-
-        public IActionResult MyProfile()
-        {
-            return View();
-        }
+        return View();
     }
 }

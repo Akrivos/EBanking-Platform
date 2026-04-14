@@ -25,10 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Customer\Models\" />
-    <Folder Include="Areas\Customer\Views\" />
+    <Folder Include="Areas\Customer\ViewModels\" />
+    <Folder Include="Areas\Customer\Views\Banking\" />
+    <Folder Include="Areas\Customer\Views\Profile\" />
     <Folder Include="Areas\Staff\ViewModels\Dashboard\" />
-    <Folder Include="Areas\Staff\Views\" />
   </ItemGroup>
 
 </Project>

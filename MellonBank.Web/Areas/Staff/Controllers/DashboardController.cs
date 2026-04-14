@@ -7,6 +7,7 @@ namespace MellonBank.Web.Areas.Staff.Controllers
     [Authorize(Roles = "Staff")]
     public class DashboardController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return View();

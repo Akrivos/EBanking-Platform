@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MellonBank.Web.Areas.Staff.ViewModels.Users
 {
-    public class CreateUserViewModel
+    public class CreateCustomerViewModel
     {
         [Required]
         [StringLength(100)]
@@ -37,7 +37,7 @@ namespace MellonBank.Web.Areas.Staff.ViewModels.Users
         [StringLength(100, MinimumLength = 6)]
         public string Password { get; set; }
 
-        [Required]
-        public RoleType Role { get; set; }
+        //[Required]
+        //public RoleType Role { get; set; }
     }
 }

@@ -1,14 +1,19 @@
 using MellonBank.Application;
 using MellonBank.Application.Interfaces.Services;
 using MellonBank.Infrastructure;
+using MellonBank.Infrastructure.Identity;
+using MellonBank.Infrastructure.Initialization;
+using MellonBank.Infrastructure.Persistence;
 using MellonBank.Web.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace MellonBank.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public async static Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             var services = builder.Services;
@@ -32,6 +37,15 @@ namespace MellonBank.Web
             services.AddRazorPages();
 
             var app = builder.Build();
+
+            // Seed staff user and roles
+            using (var scope = app.Services.CreateScope())
+            {
+                var scopeService = scope.ServiceProvider;
+                var config = scopeService.GetRequiredService<IConfiguration>();
+
+                await ApplicationInitializer.InitializeAsync(scopeService, config);
+            }
 
             app.UseSerilogRequestLogging();
 

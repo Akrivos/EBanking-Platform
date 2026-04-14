@@ -1,0 +1,83 @@
+﻿@model MellonBank.Web.Areas.Staff.ViewModels.Users.CreateCustomerViewModel
+
+@{
+    ViewData["Title"] = "Create Customer";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-1">Create New Customer</h2>
+    <p class="text-muted mb-4">Fill in the details below to register a new customer in the system.</p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="CreateCustomer" method="post">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="FirstName" class="form-label">First Name</label>
+                    <input asp-for="FirstName" class="form-control" placeholder="Enter first name" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="LastName" class="form-label">Last Name</label>
+                    <input asp-for="LastName" class="form-control" placeholder="Enter last name" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Address" class="form-label">Address</label>
+                    <input asp-for="Address" class="form-control" placeholder="Enter address" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Afm" class="form-label">Tax Identification Number (AFM)</label>
+                    <input asp-for="Afm" class="form-control" placeholder="Enter AFM" />
+                    <span asp-validation-for="Afm" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Email Address</label>
+                    <input asp-for="Email" class="form-control" placeholder="example@email.com" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                    <input asp-for="PhoneNumber" class="form-control" placeholder="Enter phone number" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <hr />
+
+                <h5 class="mt-3 mb-3">Login Credentials</h5>
+
+                <div class="mb-3">
+                    <label asp-for="Username" class="form-label">Username</label>
+                    <input asp-for="Username" class="form-control" placeholder="Choose a username" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Enter a secure password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Create Customer</button>
+                    <a asp-area="Staff" asp-controller="Dashboard" asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

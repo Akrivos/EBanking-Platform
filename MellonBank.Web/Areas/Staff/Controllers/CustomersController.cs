@@ -8,9 +8,11 @@ namespace MellonBank.Web.Areas.Staff.Controllers
     public class CustomersController : Controller
     {
         // OLOI OI PELATES
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var customers = await _customerService.GetAllAsync();
+            return View(customers);
         }
 
         // PLirofories pelati

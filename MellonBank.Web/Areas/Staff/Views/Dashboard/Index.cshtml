@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Staff Dashboard";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-1">Staff Dashboard</h2>
+    <p class="text-muted mb-4">Manage customers, staff members and bank accounts.</p>
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Customer Management</h5>
+                    <p class="card-text">Create, search, edit and delete customer records.</p>
+                    <a asp-area="Staff" asp-controller="Users" asp-action="CreateCustomer" class="btn btn-primary mb-2 w-100">Create Customer</a>
+                    <a asp-area="Staff" asp-controller="Customers" asp-action="Index" class="btn btn-outline-primary w-100">View Customers</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Staff Management</h5>
+                    <p class="card-text">Register new staff members with access to the administration panel.</p>
+                    <a asp-area="Staff" asp-controller="Users" asp-action="CreateStaff" class="btn btn-success w-100">Create Staff</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Account Management</h5>
+                    <p class="card-text">Create, edit and manage customer bank accounts.</p>
+                    <a asp-area="Staff" asp-controller="Accounts" asp-action="Create" class="btn btn-warning mb-2 w-100">Create Account</a>
+                    <a asp-area="Staff" asp-controller="Accounts" asp-action="Index" class="btn btn-outline-warning w-100">View Accounts</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

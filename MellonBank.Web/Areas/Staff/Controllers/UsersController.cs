@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MellonBank.Web.Areas.Staff.ViewModels.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MellonBank.Web.Areas.Staff.Controllers
@@ -7,19 +8,36 @@ namespace MellonBank.Web.Areas.Staff.Controllers
     [Authorize(Roles = "Staff")]
     public class UsersController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+        [HttpGet]
         public IActionResult CreateCustomer()
         {
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateCustomer(CreateCustomerViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            // create customer
+            return RedirectToAction("Index", "Customers", new { area = "Staff" });
+        }
+
+        [HttpGet]
         public IActionResult CreateStaff()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateStaff(CreateStaffViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            // create staff
+            return RedirectToAction("Index", "Dashboard", new { area = "Staff" });
         }
     }
 }

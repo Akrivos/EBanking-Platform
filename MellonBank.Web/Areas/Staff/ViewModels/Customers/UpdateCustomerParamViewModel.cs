@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MellonBank.Web.Areas.Staff.ViewModels.Users
+namespace MellonBank.Web.Areas.Staff.ViewModels.Customers
 {
-    public class UpdateUserParamViewModel
+    public class UpdateCustomerParamViewModel
     {
         [Required]
         public string Afm { get; set; }

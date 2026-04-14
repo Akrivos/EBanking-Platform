@@ -1,6 +1,7 @@
 ﻿using MellonBank.Application.Interfaces.Persistence;
 using MellonBank.Application.Interfaces.Repositories;
 using MellonBank.Application.Interfaces.Services;
+using MellonBank.Infrastructure.Identity;
 using MellonBank.Infrastructure.Options;
 using MellonBank.Infrastructure.Persistence;
 using MellonBank.Infrastructure.Persistence.Repositories;
@@ -23,18 +24,18 @@ namespace MellonBank.Infrastructure
             services.AddDbContext<MellonBankDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            services.AddIdentityCore<IdentityUser>(options =>
-                {
-                    options.SignIn.RequireConfirmedAccount = false;
-                    options.User.RequireUniqueEmail = true;
-                    options.Password.RequiredLength = 6;
-                    options.Password.RequireNonAlphanumeric = true;
-                    options.Password.RequireDigit = true;
-                    options.Password.RequireUppercase = true;
-                    options.Password.RequireLowercase = true;
-                })
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<MellonBankDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+            })
+            .AddEntityFrameworkStores<MellonBankDbContext>()
+            .AddDefaultTokenProviders();
 
             services.Configure<FixerOptions>(
             configuration.GetSection(FixerOptions.SectionName));

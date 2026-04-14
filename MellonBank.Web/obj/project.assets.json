@@ -677,10 +677,10 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Identity.UI/10.0.2": {
+      "Microsoft.AspNetCore.Identity.UI/10.0.5": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.FileProviders.Embedded": "10.0.2"
+          "Microsoft.Extensions.FileProviders.Embedded": "10.0.5"
         },
         "compile": {
           "lib/net10.0/Microsoft.AspNetCore.Identity.UI.dll": {
@@ -1609,7 +1609,7 @@
           "buildTransitive/net8.0/_._": {}
         }
       },
-      "Microsoft.Extensions.FileProviders.Embedded/10.0.2": {
+      "Microsoft.Extensions.FileProviders.Embedded/10.0.5": {
         "type": "package",
         "compile": {
           "lib/net10.0/Microsoft.Extensions.FileProviders.Embedded.dll": {
@@ -2788,6 +2788,7 @@
           "MellonBank.Application": "1.0.0",
           "MellonBank.Domain": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "10.0.5",
+          "Microsoft.AspNetCore.Identity.UI": "10.0.5",
           "Microsoft.EntityFrameworkCore.SqlServer": "10.0.5"
         },
         "compile": {
@@ -3632,10 +3633,10 @@
         "microsoft.aspnetcore.identity.entityframeworkcore.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Identity.UI/10.0.2": {
-      "sha512": "DXskKfO8Y5XQw0PV+PJFc38mU99yC//+MIFazEL2eUqEgyRl1m3rGR9+TPOoxoMERpr9KuRGiQXmwb9Vg1EE7w==",
+    "Microsoft.AspNetCore.Identity.UI/10.0.5": {
+      "sha512": "qzYhpJ4Uxng18hmuKqwqydZaPzItrv9WOwNULJ2ka952TZKlOQkERTSkVO8G/19WiRtoznZatrcRyOvppYRGFA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.identity.ui/10.0.2",
+      "path": "microsoft.aspnetcore.identity.ui/10.0.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3653,7 +3654,7 @@
         "buildTransitive/Microsoft.AspNetCore.Identity.UI.targets",
         "lib/net10.0/Microsoft.AspNetCore.Identity.UI.dll",
         "lib/net10.0/Microsoft.AspNetCore.Identity.UI.xml",
-        "microsoft.aspnetcore.identity.ui.10.0.2.nupkg.sha512",
+        "microsoft.aspnetcore.identity.ui.10.0.5.nupkg.sha512",
         "microsoft.aspnetcore.identity.ui.nuspec",
         "staticwebassets/V4/css/site.css",
         "staticwebassets/V4/favicon.ico",
@@ -5447,10 +5448,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.FileProviders.Embedded/10.0.2": {
-      "sha512": "KgfcpgdcDdxuwBp1q/KpBHaT0MpPdu5vmQ6hNTiiwg5pKFQBINSF7muRFsf3A0MRey9RZ1AuS0OTHKKq+uv+nQ==",
+    "Microsoft.Extensions.FileProviders.Embedded/10.0.5": {
+      "sha512": "DQzkbLFNfwmjxErAnWyZTTyBd4cMo6vmGteM4Ayedhk5Pccm2VuKoeKcOZjJG1T+dYK6lMCNk2L7Ftl7dLhgqg==",
       "type": "package",
-      "path": "microsoft.extensions.fileproviders.embedded/10.0.2",
+      "path": "microsoft.extensions.fileproviders.embedded/10.0.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5465,7 +5466,7 @@
         "lib/net462/Microsoft.Extensions.FileProviders.Embedded.xml",
         "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.dll",
         "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.xml",
-        "microsoft.extensions.fileproviders.embedded.10.0.2.nupkg.sha512",
+        "microsoft.extensions.fileproviders.embedded.10.0.5.nupkg.sha512",
         "microsoft.extensions.fileproviders.embedded.nuspec",
         "tasks/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.Manifest.Task.dll"
       ]
@@ -7160,7 +7161,7 @@
     "net10.0": [
       "MellonBank.Application >= 1.0.0",
       "MellonBank.Infrastructure >= 1.0.0",
-      "Microsoft.AspNetCore.Identity.UI >= 10.0.2",
+      "Microsoft.AspNetCore.Identity.UI >= 10.0.5",
       "Microsoft.EntityFrameworkCore.Sqlite >= 10.0.2",
       "Microsoft.EntityFrameworkCore.Tools >= 10.0.2",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 10.0.2",
@@ -7228,7 +7229,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.Identity.UI": {
             "target": "Package",
-            "version": "[10.0.2, )"
+            "version": "[10.0.5, )"
           },
           "Microsoft.EntityFrameworkCore.Sqlite": {
             "target": "Package",

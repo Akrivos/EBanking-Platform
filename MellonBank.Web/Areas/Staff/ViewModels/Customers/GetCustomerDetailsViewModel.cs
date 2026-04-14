@@ -1,8 +1,8 @@
 ﻿using MellonBank.Domain.Enums;
 
-namespace MellonBank.Web.Areas.Staff.ViewModels.Users
+namespace MellonBank.Web.Areas.Staff.ViewModels.Customers
 {
-    public class GetUserDetailsViewModel
+    public class GetCustomerDetailsViewModel
     {
         public string FirstName { get; set; }
 

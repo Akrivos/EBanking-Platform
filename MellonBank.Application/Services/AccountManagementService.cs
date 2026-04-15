@@ -180,7 +180,7 @@ namespace MellonBank.Application.Services
             if (account is null)
                 throw new AppNotFoundException("Account with given number has not found.");
 
-            await _bankAccountRepository.DeleteByAccountNumberAsync(accountNumber, ct);
+            account.Deactivate();
 
             await _unitOfWork.SaveChangesAsync(ct);
         }

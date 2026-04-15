@@ -7,7 +7,7 @@ namespace MellonBank.Web.Areas.Customer.Controllers
     [Authorize(Roles = "Customer")]
     public class DashboardController : Controller
     {
-        // OLOI OI LOGARIASMOS TOU PELATI - epilogi logariasmou
+        [HttpGet]
         public IActionResult Index()
         {
             return View();

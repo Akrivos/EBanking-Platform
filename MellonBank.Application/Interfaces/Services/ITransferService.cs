@@ -6,8 +6,5 @@ namespace MellonBank.Application.Interfaces.Services
     {
         Task TransferToOwnAccountAsync(TransferToOwnAccountRequestDto request, CancellationToken ct = default);
         Task TransferToThirdPartyAsync(TransferToThirdPartyRequestDto request, CancellationToken ct = default);
-        //Task TransferBetweenOwnAccountsAsync(OwnAccountTransferRequestDto request, CancellationToken ct = default);
-        //Task TransferToThirdPartyAsync(ThirdPartyTransferRequestDto request, CancellationToken ct = default);
-        //Task<IReadOnlyList<TransactionResponseDto>> GetAccountTransactionsAsync(string accountNumber, CancellationToken ct = default);
     }
 }

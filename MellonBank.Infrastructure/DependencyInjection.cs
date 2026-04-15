@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 
 namespace MellonBank.Infrastructure
@@ -37,17 +36,10 @@ namespace MellonBank.Infrastructure
             .AddEntityFrameworkStores<MellonBankDbContext>()
             .AddDefaultTokenProviders();
 
-            services.Configure<FixerOptions>(
-            configuration.GetSection(FixerOptions.SectionName));
+            services.Configure<ExchangeRateApiOptions>(
+                configuration.GetSection("ExchangeRateProvider"));
 
-            services.AddHttpClient<IExchangeRateProvider, FixerCurrencyService>((sp, client) =>
-            {
-                var options = sp.GetRequiredService<IOptions<FixerOptions>>().Value;
-
-                client.BaseAddress = new Uri(options.BaseUrl);
-                //client.Timeout = TimeSpan.FromSeconds(10);
-            });
-
+            services.AddHttpClient<IExchangeRateProviderService, ExchangeRateProviderService>();
 
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IRoleService, RoleService>();

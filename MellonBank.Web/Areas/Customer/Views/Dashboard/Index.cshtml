@@ -3,16 +3,23 @@
 }
 
 <div class="container mt-4">
+    @if (TempData["SuccessMessage"] is not null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
     <h2 class="mb-1">Customer Dashboard</h2>
-    <p class="text-muted mb-4">Access your accounts, balances and transfer options.</p>
+    <p class="text-muted mb-4">Access your bank accounts, balances and transfer options.</p>
 
     <div class="row g-3">
 
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title">My Accounts</h5>
-                    <p class="card-text">View and select one of your available bank accounts.</p>
+                    <p class="card-text">View and select your available bank accounts.</p>
                     <a asp-area="Customer" asp-controller="Banking" asp-action="MyAccounts" class="btn btn-outline-primary w-100">
                         View My Accounts
                     </a>
@@ -20,25 +27,13 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Balance</h5>
+                    <h5 class="card-title">Check Balance</h5>
                     <p class="card-text">Check your account balance in euro and dollar.</p>
                     <a asp-area="Customer" asp-controller="Banking" asp-action="Balance" class="btn btn-outline-success w-100">
                         Check Balance
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Account Details</h5>
-                    <p class="card-text">View detailed information about your selected account.</p>
-                    <a asp-area="Customer" asp-controller="Banking" asp-action="AccountDetails" class="btn btn-outline-secondary w-100">
-                        View Details
                     </a>
                 </div>
             </div>
@@ -60,7 +55,7 @@
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title">Transfer to Third Party</h5>
-                    <p class="card-text">Send money to another account after balance validation.</p>
+                    <p class="card-text">Transfer money to another bank account.</p>
                     <a asp-area="Customer" asp-controller="Banking" asp-action="TransferToThirdParty" class="btn btn-warning w-100">
                         Transfer to Third Party
                     </a>
@@ -71,21 +66,9 @@
         <div class="col-md-4">
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Profile</h5>
-                    <p class="card-text">View your personal information.</p>
-                    <a asp-area="Customer" asp-controller="Profile" asp-action="MyProfile" class="btn btn-outline-dark w-100">
-                        View Profile
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
                     <h5 class="card-title">Change Password</h5>
                     <p class="card-text">Update your account password securely.</p>
-                    <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="btn btn-outline-danger w-100">
+                    <a asp-area="Customer" asp-controller="Profile" asp-action="ChangePassword" class="btn btn-outline-danger w-100">
                         Change Password
                     </a>
                 </div>

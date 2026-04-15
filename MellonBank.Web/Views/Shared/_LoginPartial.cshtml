@@ -28,22 +28,16 @@
                     Dashboard
                 </a>
             </li>
+        }
 
+        @if (User.IsInRole("Customer"))
+        {
             <li class="nav-item">
                 <a class="nav-link text-dark"
-                       asp-area="Staff"
-                       asp-controller="Users"
-                       asp-action="CreateCustomer">
-                    Register Customer
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link text-dark"
-                       asp-area="Staff"
-                       asp-controller="Users"
-                       asp-action="CreateStaff">
-                    Register Staff
+                       asp-area="Customer"
+                       asp-controller="Dashboard"
+                       asp-action="Index">
+                    Customer Dashboard
                 </a>
             </li>
         }

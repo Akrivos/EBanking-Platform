@@ -14,13 +14,18 @@ namespace MellonBank.Application.Services
             _currencyRepository = currencyRepository;
         }
 
-        public async Task<CurrencyResponseDto> GetLatestRatesAsync(CancellationToken ct)
+        public async Task<CurrencyResponseDto?> GetRatesAsync(CancellationToken ct)
         {
-            var rates = await _currencyRepository.GetLatestRatesAsync(ct);
-            if(rates is null)
+            var result = await _currencyRepository.GetRatesAsync(ct);
+            if (result is null) 
                 throw new AppNotFoundException("Currency rates not found.");
 
-            return new CurrencyResponseDto(rates.AUD, rates.CHF, rates.GBP, rates.USD);
+            return new CurrencyResponseDto(
+                result.AUD,
+                result.CHF,
+                result.GBP,
+                result.USD
+            );
         }
     }
 }

@@ -51,6 +51,9 @@ namespace MellonBank.Infrastructure.Migrations
                     b.Property<int>("Currency")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
 

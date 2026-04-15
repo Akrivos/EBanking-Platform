@@ -1,0 +1,61 @@
+﻿@model IEnumerable<MellonBank.Web.Areas.Customer.ViewModels.MyAccountListItemViewModel>
+
+@{
+    ViewData["Title"] = "Select Account";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-1">Select an Account</h2>
+    <p class="text-muted mb-4">Choose one of your bank accounts to check its balance.</p>
+
+    @if (Model is null || !Model.Any())
+    {
+        <div class="alert alert-info">
+            You do not have any bank accounts available.
+        </div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var account in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@account.AccountNumber</h5>
+
+                            <p class="card-text mb-1">
+                                <strong>Type:</strong> @account.AccountType
+                            </p>
+
+                            <p class="card-text mb-1">
+                                <strong>Branch:</strong> @account.Branch
+                            </p>
+
+                            <p class="card-text mb-3">
+                                <strong>Balance:</strong> @account.Balance.ToString("N2") €
+                            </p>
+
+                            <a asp-area="Customer"
+                                   asp-controller="Banking"
+                                   asp-action="Balance"
+                                   asp-route-accountNumber="@account.AccountNumber"
+                                   class="btn btn-success w-100">
+                                Check Balance
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <div class="mt-4">
+        <a asp-area="Customer"
+               asp-controller="Dashboard"
+               asp-action="Index"
+               class="btn btn-outline-secondary">
+            Back to Dashboard
+        </a>
+    </div>
+</div>

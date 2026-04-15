@@ -50,8 +50,7 @@ namespace MellonBank.Application.Services
 
             var fromAccount = await GetSourceAccountAsync(fromAccountNumber, userId, ct);
 
-            var toAccount = await _bankAccountRepository
-                .GetByAccountNumberAndUserIdAsync(toAccountNumber, userId, ct);
+            var toAccount = await _bankAccountRepository.GetByAccountNumberAndUserIdAsync(toAccountNumber, userId, ct);
 
             if (toAccount is null)
                 throw new AppNotFoundException("Destination account not found.");

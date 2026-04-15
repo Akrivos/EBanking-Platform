@@ -16,7 +16,9 @@ namespace MellonBank.Infrastructure.Persistence.Repositories
 
         public async Task<IEnumerable<AccountDetailsResponseDto>> GetAllAsync(CancellationToken ct = default)
         {
-            return await _dbContext.BankAccounts.Join(
+            return await _dbContext.BankAccounts
+                    .Where(ba => ba.IsActive)   
+                    .Join(
                      _dbContext.Users,
                      ba => ba.UserId,
                      u => u.Id,
@@ -33,7 +35,7 @@ namespace MellonBank.Infrastructure.Persistence.Repositories
 
         public async Task<AccountDetailsResponseDto?> GetDetailsByAccountNumberAsync(string accountNumber, CancellationToken ct = default)
         {
-            return await _dbContext.BankAccounts.Where(ba => ba.AccountNumber == accountNumber)
+            return await _dbContext.BankAccounts.Where(ba => ba.AccountNumber == accountNumber && ba.IsActive)
                 .Join(
                     _dbContext.Users,
                     ba => ba.UserId,
@@ -51,7 +53,7 @@ namespace MellonBank.Infrastructure.Persistence.Repositories
 
         public async Task<BankAccount?> GetByAccountNumberAsync(string accountNumber, CancellationToken ct = default)
         {
-            return await _dbContext.BankAccounts.Where(ba => ba.AccountNumber == accountNumber).SingleOrDefaultAsync(ct);
+            return await _dbContext.BankAccounts.Where(ba => ba.AccountNumber == accountNumber && ba.IsActive).SingleOrDefaultAsync(ct);
         }
 
         public async Task<BankAccount?> GetByAccountNumberAndUserIdAsync(string accountNumber, string userId, CancellationToken ct = default)
@@ -66,7 +68,7 @@ namespace MellonBank.Infrastructure.Persistence.Repositories
 
         public async Task<IEnumerable<BankAccount>> GetByUserIdAsync(string userId, CancellationToken ct = default)
         {
-            return await _dbContext.BankAccounts.Where(ba => ba.UserId == userId).ToListAsync(ct);
+            return await _dbContext.BankAccounts.Where(ba => ba.UserId == userId && ba.IsActive).ToListAsync(ct);
         }
 
         public async Task AddAsync(BankAccount account, CancellationToken ct = default)

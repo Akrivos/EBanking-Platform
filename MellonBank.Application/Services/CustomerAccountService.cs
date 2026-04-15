@@ -8,11 +8,11 @@ namespace MellonBank.Application.Services
 {
     public class CustomerAccountService : ICustomerAccountService
     {
-        private readonly IExchangeRateProvider _exchangeRateProvider;
+        private readonly IExchangeRateProviderService _exchangeRateProvider;
         private readonly IBankAccountRepository _bankAccountRepository;
         private readonly ICurrentUserService _currentUserService;
         public CustomerAccountService(
-            IExchangeRateProvider exchangeRateProvider,
+            IExchangeRateProviderService exchangeRateProvider,
             IBankAccountRepository bankAccountRepository,
             ICurrentUserService currentUserService
             )
@@ -22,7 +22,7 @@ namespace MellonBank.Application.Services
             _currentUserService = currentUserService;
         }
 
-        public async Task<BalanceInCurrenciesResponseDto?> GetBalanceInCurrenciesAsync(string accountNumber, CancellationToken ct = default)
+        public async Task<ConversionResponseDto?> GetConvertedBalanceAsync(string accountNumber, CancellationToken ct = default)
         {
             if (string.IsNullOrWhiteSpace(accountNumber))
                 throw new AppValidationException("Account number is required.");
@@ -35,18 +35,12 @@ namespace MellonBank.Application.Services
             if (bankAccount is null)
                 throw new AppNotFoundException("Account has not found or does not belong to the specified user.");
 
-            var euroToUsdRate = await _exchangeRateProvider.GetExchangeRateAsync(CurrencyType.EUR, CurrencyType.USD, ct);
+            var convertedResult = await _exchangeRateProvider.GetConvertedRatesAsync(CurrencyType.EUR.ToString(), CurrencyType.USD.ToString(), bankAccount.Balance, ct);
 
-            if (euroToUsdRate <= 0)
-                throw new ExternalServiceException("Failed to retrieve exchange rate from the currency service.");
+            if(convertedResult is null)
+                throw new AppNotFoundException("Conversion rates not found for the specified currencies.");
 
-            var balanceUsd = Math.Round(bankAccount.Balance * euroToUsdRate,2, MidpointRounding.AwayFromZero);
-
-            return new BalanceInCurrenciesResponseDto(
-                AccountNumber: bankAccount.AccountNumber,
-                BalanceEuro: bankAccount.Balance,
-                EuroToUsdRate: euroToUsdRate,
-                BalanceUsd: balanceUsd);
+            return convertedResult;
         }
 
         public async Task<IEnumerable<CustomerAccountDetailsResponseDto>> GetAccountsAsync(CancellationToken ct)

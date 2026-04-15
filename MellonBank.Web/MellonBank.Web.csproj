@@ -24,11 +24,4 @@
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Customer\ViewModels\" />
-    <Folder Include="Areas\Customer\Views\Banking\" />
-    <Folder Include="Areas\Customer\Views\Profile\" />
-    <Folder Include="Areas\Staff\ViewModels\Dashboard\" />
-  </ItemGroup>
-
 </Project>

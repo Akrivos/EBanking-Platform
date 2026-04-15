@@ -1,0 +1,89 @@
+﻿@model IEnumerable<MellonBank.Web.Areas.Customer.ViewModels.MyAccountListItemViewModel>
+
+@{
+    ViewData["Title"] = "My Accounts";
+}
+
+<div class="container mt-4">
+    @if (TempData["SuccessMessage"] is not null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["InfoMessage"] is not null)
+    {
+        <div class="alert alert-info">
+            @TempData["InfoMessage"]
+        </div>
+    }
+
+    <h2 class="mb-1">My Accounts</h2>
+    <p class="text-muted mb-4">View and manage your available bank accounts.</p>
+
+    @if (Model is null || !Model.Any())
+    {
+        <div class="alert alert-info">
+            You do not have any bank accounts yet.
+        </div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var account in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@account.AccountNumber</h5>
+                            <p class="card-text mb-1">
+                                <strong>Type:</strong> @account.AccountType
+                            </p>
+                            <p class="card-text mb-1">
+                                <strong>Branch:</strong> @account.Branch
+                            </p>
+                            <p class="card-text mb-3">
+                                <strong>Balance:</strong> @account.Balance.ToString("N2") €
+                            </p>
+
+                            <div class="d-grid gap-2">
+                                <a asp-area="Customer"
+                                       asp-controller="Banking"
+                                       asp-action="AccountDetails"
+                                       asp-route-accountNumber="@account.AccountNumber"
+                                       class="btn btn-outline-secondary">
+                                    View Details
+                                </a>
+
+                                <a asp-area="Customer"
+                                       asp-controller="Banking"
+                                       asp-action="Balance"
+                                       asp-route-accountNumber="@account.AccountNumber"
+                                       class="btn btn-outline-success">
+                                    Check Balance
+                                </a>
+
+                                <a asp-area="Customer"
+                                       asp-controller="Banking"
+                                       asp-action="TransferToOwn"
+                                       asp-route-accountNumber="@account.AccountNumber"
+                                       class="btn btn-outline-primary">
+                                    Transfer to My Account
+                                </a>
+
+                                <a asp-area="Customer"
+                                       asp-controller="Banking"
+                                       asp-action="TransferToThirdParty"
+                                       asp-route-accountNumber="@account.AccountNumber"
+                                       class="btn btn-outline-warning">
+                                    Transfer to Third Party
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

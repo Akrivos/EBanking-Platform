@@ -13,7 +13,7 @@ namespace MellonBank.Infrastructure.Persistence.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Currency?> GetLatestRatesAsync(CancellationToken ct = default)
+        public async Task<Currency?> GetRatesAsync(CancellationToken ct = default)
         {
             return await _dbContext.Currencies.OrderByDescending(c => c.RetrievedAtUtc).SingleOrDefaultAsync(ct);
         }

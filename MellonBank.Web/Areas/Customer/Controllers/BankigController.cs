@@ -31,11 +31,6 @@ public class BankingController : Controller
     [HttpGet]
     public async Task<IActionResult> MyAccounts()
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (string.IsNullOrWhiteSpace(userId))
-            return Unauthorized();
-
         var myAccounts = await _customerAccountService.GetAccountsAsync();
 
         var myAccountListViewModel = myAccounts.Select(a => new MyAccountListItemViewModel

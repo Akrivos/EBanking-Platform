@@ -1,5 +1,7 @@
 ﻿using MellonBank.Application.DTOs.Requests;
+using MellonBank.Application.Exceptions;
 using MellonBank.Application.Interfaces.Services;
+using MellonBank.Domain.Exceptions;
 using MellonBank.Infrastructure.Persistence.Services;
 using MellonBank.Web.Areas.Customer.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -169,7 +171,7 @@ public class BankingController : Controller
 
         if (model.FromAccountNumber == model.ToAccountNumber)
         {
-            ModelState.AddModelError(string.Empty, "Cannot transfer to the same account.");
+            ModelState.AddModelError(string.Empty, "Source and destination account must be different.");
         }
 
         if (!ModelState.IsValid)
@@ -178,18 +180,27 @@ public class BankingController : Controller
         try
         {
             await _transferService.TransferToThirdPartyAsync(new TransferToThirdPartyRequestDto(
-                FromAccountNumber: model.FromAccountNumber,
-                ToAccountNumber: model.ToAccountNumber,
-                Amount: model.Amount
-                ));
+                model.FromAccountNumber,
+                model.ToAccountNumber,
+                model.Amount
+            ));
 
-            TempData["SuccessMessage"] = "Third party transfer completed successfully!";
-
+            TempData["SuccessMessage"] = "Transfer completed successfully.";
             return RedirectToAction(nameof(MyAccounts));
+        }
+        catch (InsufficientBalanceException)
+        {
+            ModelState.AddModelError(string.Empty, "The amount is not available in the selected account.");
+            return View(model);
+        }
+        catch (AppNotFoundException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return View(model);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error during transfer to third party.");
+            _logger.LogError(ex, "Error during third-party transfer.");
 
             ModelState.AddModelError(string.Empty, "An error occurred during the transfer.");
             return View(model);

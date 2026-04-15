@@ -1,0 +1,48 @@
+﻿using System.Text.Json;
+
+namespace MellonBank.Web.ErrorHandling
+{
+    public sealed class GlobalExceptionMiddleware
+    {
+        private readonly RequestDelegate _next;
+        private readonly ILogger<GlobalExceptionMiddleware> _logger;
+        private readonly IHostEnvironment _env;
+
+        public GlobalExceptionMiddleware(
+            RequestDelegate next,
+            ILogger<GlobalExceptionMiddleware> logger,
+            IHostEnvironment env)
+        {
+            _next = next;
+            _logger = logger;
+            _env = env;
+        }
+
+        public async Task InvokeAsync(HttpContext context)
+        {
+            try
+            {
+                await _next(context);
+            }
+            catch (Exception ex)
+            {
+                var problem = ExceptionToProblemDetailsMapper.Map(ex);
+
+                if (problem.Status >= StatusCodes.Status500InternalServerError)
+                    _logger.LogError(ex, "Server error");
+                else
+                    _logger.LogWarning(ex, "Client error");
+
+                context.Response.StatusCode = problem.Status ?? StatusCodes.Status500InternalServerError;
+                context.Response.ContentType = "application/json";
+
+                var json = JsonSerializer.Serialize(problem, new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+
+                await context.Response.WriteAsync(json);
+            }
+        }
+    }
+}

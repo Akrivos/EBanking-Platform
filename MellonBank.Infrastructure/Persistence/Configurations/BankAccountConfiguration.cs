@@ -27,9 +27,6 @@ namespace MellonBank.Infrastructure.Persistence.Configurations
                 .IsRequired()
                 .HasConversion<int>();
 
-            //builder.Property(x => x.IsActive)
-            //    .IsRequired();
-
             builder.Property(x => x.Branch)
                 .IsRequired()
                 .HasMaxLength(100);

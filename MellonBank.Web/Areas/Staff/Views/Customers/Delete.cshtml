@@ -1,0 +1,51 @@
+﻿@model MellonBank.Web.Areas.Staff.ViewModels.Customers.DeleteCustomerViewModel
+
+@{
+    ViewData["Title"] = "Delete Customer";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-1">Delete Customer</h2>
+    <p class="text-muted mb-4">Please confirm that you want to delete this customer.</p>
+
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+    <div class="card border-danger shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title text-danger">Warning</h5>
+            <p class="card-text">
+                This action will permanently remove the selected customer.
+            </p>
+
+            <dl class="row mt-4">
+                <dt class="col-sm-4">First Name</dt>
+                <dd class="col-sm-8">@Model.FirstName</dd>
+
+                <dt class="col-sm-4">Last Name</dt>
+                <dd class="col-sm-8">@Model.LastName</dd>
+
+                <dt class="col-sm-4">AFM</dt>
+                <dd class="col-sm-8">@Model.Afm</dd>
+
+                <dt class="col-sm-4">Email</dt>
+                <dd class="col-sm-8">@Model.Email</dd>
+
+                <dt class="col-sm-4">Phone Number</dt>
+                <dd class="col-sm-8">@Model.PhoneNumber</dd>
+            </dl>
+
+            <form asp-action="DeleteConfirmed" method="post" class="mt-4">
+                <input asp-for="Afm" type="hidden" />
+                <input asp-for="FirstName" type="hidden" />
+                <input asp-for="LastName" type="hidden" />
+                <input asp-for="Email" type="hidden" />
+                <input asp-for="PhoneNumber" type="hidden" />
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-danger">Delete Customer</button>
+                    <a asp-area="Staff" asp-controller="Customers" asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

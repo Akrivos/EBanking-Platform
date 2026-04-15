@@ -48,6 +48,9 @@ namespace MellonBank.Infrastructure
                 //client.Timeout = TimeSpan.FromSeconds(10);
             });
 
+
+            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IBankAccountRepository, BankAccountRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();

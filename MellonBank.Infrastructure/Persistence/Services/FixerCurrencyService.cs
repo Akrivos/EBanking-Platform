@@ -1,6 +1,6 @@
-﻿using MellonBank.Application.Interfaces.Services;
+﻿using MellonBank.Application.Exceptions;
+using MellonBank.Application.Interfaces.Services;
 using MellonBank.Domain.Enums;
-using MellonBank.Infrastructure.Exceptions;
 using MellonBank.Infrastructure.Models;
 using MellonBank.Infrastructure.Options;
 using Microsoft.Extensions.Options;

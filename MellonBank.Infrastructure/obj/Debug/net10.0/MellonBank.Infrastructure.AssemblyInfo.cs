@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MellonBank.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+41cd3b6ea8bfdee0027e024a41507d8f68cc2cb0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4961206af7beac1f44d2f9645087869b0a7e163f")]
 [assembly: System.Reflection.AssemblyProductAttribute("MellonBank.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MellonBank.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

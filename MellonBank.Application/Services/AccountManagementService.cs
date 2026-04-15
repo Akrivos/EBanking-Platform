@@ -38,6 +38,17 @@ namespace MellonBank.Application.Services
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<IEnumerable<AccountDetailsResponseDto>> GetAllAsync(CancellationToken ct = default)
+        {
+            if(_currentUserService.UserId is null)
+                throw new AppForbiddenException("User must be authenticated to access account details.");
+
+            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
+                throw new AppForbiddenException("Only staff users can create bank accounts.");
+
+            return await _bankAccountRepository.GetAllAsync(ct);
+        }
+
         public async Task<AccountDetailsResponseDto?> GetByAccountNumberAsync(string accountNumber, CancellationToken ct = default)
         {
             if(_currentUserService.UserId is null)
@@ -49,7 +60,7 @@ namespace MellonBank.Application.Services
             if (string.IsNullOrWhiteSpace(accountNumber))
                 throw new AppValidationException("Account number must be provided.");
 
-            var account = await _bankAccountRepository.GetByAccountNumberAsync(accountNumber, ct);
+            var account = await _bankAccountRepository.GetDetailsByAccountNumberAsync(accountNumber, ct);
             if (account is null)
                 throw new AppNotFoundException("Account with given number has not found.");
 
@@ -59,7 +70,8 @@ namespace MellonBank.Application.Services
                 Balance: account.Balance,
                 Currency: account.Currency,
                 Branch: account.Branch,
-                AccountType: account.AccountType
+                AccountType: account.AccountType,
+                CustomerAfm: account.CustomerAfm
             );
         }
 

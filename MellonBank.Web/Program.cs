@@ -1,12 +1,9 @@
 using MellonBank.Application;
 using MellonBank.Application.Interfaces.Services;
 using MellonBank.Infrastructure;
-using MellonBank.Infrastructure.Identity;
 using MellonBank.Infrastructure.Initialization;
-using MellonBank.Infrastructure.Persistence;
+using MellonBank.Web.ErrorHandling;
 using MellonBank.Web.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace MellonBank.Web
@@ -38,7 +35,8 @@ namespace MellonBank.Web
 
             var app = builder.Build();
 
-            // Seed staff user and roles
+            app.UseMiddleware<GlobalExceptionMiddleware>();
+
             using (var scope = app.Services.CreateScope())
             {
                 var scopeService = scope.ServiceProvider;

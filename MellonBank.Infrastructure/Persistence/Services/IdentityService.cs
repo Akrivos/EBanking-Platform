@@ -84,6 +84,8 @@ namespace MellonBank.Infrastructure.Persistence.Services
                 request.PhoneNumber
             );
 
+            user.Email = request.Email;
+
             var result = await _userManager.UpdateAsync(user);
             return result.Succeeded;
         }

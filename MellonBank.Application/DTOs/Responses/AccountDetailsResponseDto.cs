@@ -8,6 +8,7 @@ namespace MellonBank.Application.DTOs.Responses
         decimal Balance,
         CurrencyType Currency,
         string Branch,
-        AccountType AccountType
+        AccountType AccountType,
+        string? CustomerAfm = null
     );
 }

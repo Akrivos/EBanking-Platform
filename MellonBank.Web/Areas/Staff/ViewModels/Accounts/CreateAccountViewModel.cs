@@ -3,29 +3,25 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MellonBank.Web.Areas.Staff.ViewModels.Accounts
 {
-    public class CreateAccountViewModel
+    public class CreateBankAccountViewModel
     {
-        //[Required]
-        //public string CustomerAfm { get; set; }
+        [Required]
+        [StringLength(9)]
+        [RegularExpression(@"^\d{9}$", ErrorMessage = "Customer AFM must be exactly 9 digits.")]
+        public string CustomerAfm { get; set; } = string.Empty;
 
         [Required]
-        [StringLength(20)]
-        public string AccountNumber { get; set; }
+        [StringLength(20, ErrorMessage = "Account number cannot exceed 20 characters.")]
+        public string AccountNumber { get; set; } = string.Empty;
+
+        [Range(0, double.MaxValue, ErrorMessage = "Initial balance cannot be negative.")]
+        public decimal InitialBalance { get; set; }
 
         [Required]
-        [Range(0, double.MaxValue, ErrorMessage = "Initial balance must be a non-negative number.")]
-        public decimal InitialBalance { get; set; } = 0;
+        [StringLength(100, ErrorMessage = "Branch cannot exceed 100 characters.")]
+        public string Branch { get; set; } = string.Empty;
 
         [Required]
-        [EnumDataType(typeof(CurrencyType), ErrorMessage = "Invalid currency type.")]
-        public CurrencyType Currency { get; set; } = CurrencyType.EUR;
-
-        [Required]
-        [StringLength(100)]
-        public string Branch { get; set; }
-
-        [Required]
-        [EnumDataType(typeof(AccountType), ErrorMessage = "Invalid account type.")]
         public AccountType AccountType { get; set; }
     }
 }

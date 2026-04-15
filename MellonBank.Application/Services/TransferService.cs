@@ -135,8 +135,7 @@ namespace MellonBank.Application.Services
             string accountNumber,
             CancellationToken ct)
         {
-            var account = await _bankAccountRepository
-                .GetByAccountNumberAsync(accountNumber, ct);
+            var account = await _bankAccountRepository.GetByAccountNumberAsync(accountNumber, ct);
 
             if (account is null)
                 throw new AppNotFoundException("Destination account not found.");

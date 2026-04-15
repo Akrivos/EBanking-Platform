@@ -1,0 +1,41 @@
+﻿@model MellonBank.Web.Areas.Staff.ViewModels.Customers.GetCustomerDetailsViewModel
+
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-1">Customer Details</h2>
+    <p class="text-muted mb-4">View detailed information about the selected customer.</p>
+
+    <div class="card p-4 shadow-sm">
+
+        <dl class="row">
+
+            <dt class="col-sm-4">First Name</dt>
+            <dd class="col-sm-8">@Model.FirstName</dd>
+
+            <dt class="col-sm-4">Last Name</dt>
+            <dd class="col-sm-8">@Model.LastName</dd>
+
+            <dt class="col-sm-4">AFM</dt>
+            <dd class="col-sm-8">@Model.Afm</dd>
+
+            <dt class="col-sm-4">Phone Number</dt>
+            <dd class="col-sm-8">@Model.PhoneNumber</dd>
+
+            <dt class="col-sm-4">Email</dt>
+            <dd class="col-sm-8">@Model.Email</dd>
+
+            <dt class="col-sm-4">Username</dt>
+            <dd class="col-sm-8">@Model.Username</dd>
+
+        </dl>
+
+        <div class="mt-4 d-flex gap-2">
+            <a asp-action="Edit" asp-route-afm="@Model.Afm" class="btn btn-primary">Edit</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+        </div>
+
+    </div>
+</div>

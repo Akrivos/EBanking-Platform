@@ -19,6 +19,7 @@ namespace MellonBank.Web.Areas.Staff.ViewModels.Users
 
         [Required]
         [StringLength(9)]
+        [RegularExpression(@"^\d{9}$", ErrorMessage = "AFM must be exactly 9 digits.")]
         public string Afm { get; set; }
 
         [Required]
@@ -35,9 +36,8 @@ namespace MellonBank.Web.Areas.Staff.ViewModels.Users
 
         [Required]
         [StringLength(100, MinimumLength = 6)]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$",
+            ErrorMessage = "Password must contain uppercase, lowercase, number and special character.")]
         public string Password { get; set; }
-
-        //[Required]
-        //public RoleType Role { get; set; }
     }
 }

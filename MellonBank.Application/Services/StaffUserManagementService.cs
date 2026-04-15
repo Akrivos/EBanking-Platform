@@ -51,18 +51,17 @@ namespace MellonBank.Application.Services
 
 
             return new UserResponseDto(
-                Id: user.Id,
                 FirstName: user.FirstName,
                 LastName: user.LastName,
-                Address: user.Address,
                 Afm: user.Afm,
                 PhoneNumber: user.PhoneNumber,
                 Email: user.Email,
-                UserName: user.UserName
+                UserName: user.UserName,
+                Address: user.Address
             );
         }
 
-        public async Task<IReadOnlyList<UserResponseDto?>> GetAllCustomersAsync(CancellationToken ct = default)
+        public async Task<IEnumerable<UserResponseDto?>> GetAllCustomersAsync(CancellationToken ct = default)
         {
             if (_currentUserService.UserId is null)
                 throw new AppForbiddenException("User must be authenticated to access customer information.");
@@ -73,14 +72,13 @@ namespace MellonBank.Application.Services
             var users = await _identityService.GetUsersInRoleAsync(ct);
 
             return users.Any() ? users.Select(user => new UserResponseDto(
-                Id: user.Id,
                 FirstName: user.FirstName,
                 LastName: user.LastName,
-                Address: user.Address,
                 Afm: user.Afm,
                 PhoneNumber: user.PhoneNumber,
                 Email: user.Email,
-                UserName: user.UserName
+                UserName: user.UserName,
+                Address: user.Address
             )).ToList() : new List<UserResponseDto>();
         }
 
@@ -92,12 +90,12 @@ namespace MellonBank.Application.Services
             if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
                 throw new AppForbiddenException("Only staff users can create customers.");
 
+            if (request.Role != RoleType.Customer)
+                throw new AppValidationException("Invalid role specified for customer creation.");
+
             var result = await _createValidator.ValidateAsync(request, ct);
             if (!result.IsValid)
                 throw new AppValidationException(result.ToDictionary());
-
-            if(request.Role != RoleType.Customer)
-                throw new AppValidationException("Invalid role specified for customer creation.");
 
             bool roleExists = await _roleManagerService.RoleExistsAsync(request.Role, ct);
             if (!roleExists)
@@ -121,12 +119,12 @@ namespace MellonBank.Application.Services
             if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
                 throw new AppForbiddenException("Only staff users can create staff members.");
 
+            if (request.Role != RoleType.Staff)
+                throw new AppValidationException("Invalid role specified for staff creation.");
+
             var result = await _createValidator.ValidateAsync(request, ct);
             if (!result.IsValid)
                 throw new AppValidationException(result.ToDictionary());
-
-            if (request.Role != RoleType.Staff)
-                throw new AppValidationException("Invalid role specified for staff creation.");
 
             var userId = await _identityService.CreateUserAsync(request, ct);
 

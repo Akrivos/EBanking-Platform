@@ -1,4 +1,5 @@
-﻿using MellonBank.Application.Interfaces.Repositories;
+﻿using MellonBank.Application.DTOs.Responses;
+using MellonBank.Application.Interfaces.Repositories;
 using MellonBank.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,9 +14,44 @@ namespace MellonBank.Infrastructure.Persistence.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task<IEnumerable<AccountDetailsResponseDto>> GetAllAsync(CancellationToken ct = default)
+        {
+            return await _dbContext.BankAccounts.Join(
+                     _dbContext.Users,
+                     ba => ba.UserId,
+                     u => u.Id,
+                     (ba, u) => new AccountDetailsResponseDto(
+                         ba.Id,
+                         ba.AccountNumber,
+                         ba.Balance,
+                         ba.Currency,
+                         ba.Branch,
+                         ba.AccountType,
+                         u.Afm
+                     )).ToListAsync(ct);
+        }
+
+        public async Task<AccountDetailsResponseDto?> GetDetailsByAccountNumberAsync(string accountNumber, CancellationToken ct = default)
+        {
+            return await _dbContext.BankAccounts.Where(ba => ba.AccountNumber == accountNumber)
+                .Join(
+                    _dbContext.Users,
+                    ba => ba.UserId,
+                    u => u.Id,
+                    (ba, u) => new AccountDetailsResponseDto(
+                        ba.Id,
+                        ba.AccountNumber,
+                        ba.Balance,
+                        ba.Currency,
+                        ba.Branch,
+                        ba.AccountType,
+                        u.Afm
+                    )).SingleOrDefaultAsync(ct);
+        }
+
         public async Task<BankAccount?> GetByAccountNumberAsync(string accountNumber, CancellationToken ct = default)
         {
-            return await _dbContext.BankAccounts.SingleOrDefaultAsync(ba => ba.AccountNumber == accountNumber, ct);
+            return await _dbContext.BankAccounts.Where(ba => ba.AccountNumber == accountNumber).SingleOrDefaultAsync(ct);
         }
 
         public async Task<BankAccount?> GetByAccountNumberAndUserIdAsync(string accountNumber, string userId, CancellationToken ct = default)

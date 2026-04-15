@@ -17,7 +17,7 @@ namespace MellonBank.Application.Validators
 
             RuleFor(x => x.Afm)
                 .NotEmpty()
-                .Length(9);
+                .Matches(@"^\d{9}$").WithMessage("AFM must be exactly 9 digits.");
 
             RuleFor(x => x.Address)
                 .NotEmpty()

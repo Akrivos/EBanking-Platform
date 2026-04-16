@@ -1,5 +1,5 @@
-﻿using MellonBank.Infrastructure.Identity;
-using MellonBank.Infrastructure.Persistence;
+﻿using MellonBank.Infrastructure.Persistence;
+using MellonBank.Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +13,9 @@ namespace MellonBank.Infrastructure.Initialization
             var dbContext = services.GetRequiredService<MellonBankDbContext>();
 
             await dbContext.Database.MigrateAsync();
+
             await IdentitySeeder.SeedAsync(services, config);
+            await CurrencySeeder.SeedAsync(dbContext);
         }
     }
 }

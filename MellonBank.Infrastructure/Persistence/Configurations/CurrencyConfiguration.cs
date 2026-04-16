@@ -18,7 +18,9 @@ namespace MellonBank.Infrastructure.Persistence.Configurations
 
             builder.Property(c => c.GBP).IsRequired().HasPrecision(18, 6);
 
-            builder.Property(c => c.USD).IsRequired().HasPrecision(18, 6);
+            builder.Property(c => c.USD)
+                .IsRequired()
+                .HasPrecision(18, 6);
 
             builder.Property(c => c.RetrievedAtUtc).IsRequired();
         }

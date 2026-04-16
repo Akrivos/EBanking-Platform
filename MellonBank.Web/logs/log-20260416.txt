@@ -19,3 +19,826 @@
 2026-04-16 10:12:31.517 +03:00 [INF] HTTP GET /api/currency/getrates responded 307 in 0.0666 ms
 2026-04-16 10:16:08.936 +03:00 [WRN] Failed to determine the https port for redirect.
 2026-04-16 10:16:09.183 +03:00 [INF] HTTP GET /api/currency/getrates responded 200 in 250.1505 ms
+2026-04-16 10:31:03.733 +03:00 [ERR] Failed executing DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Transactions] ADD CONSTRAINT [FK_Transactions_BankAccounts_ToAccountId] FOREIGN KEY ([ToAccountId]) REFERENCES [BankAccounts] ([Id]) ON DELETE CASCADE;
+2026-04-16 10:32:56.265 +03:00 [ERR] Failed executing DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Transactions] (
+    [Id] uniqueidentifier NOT NULL,
+    [FromAccountId] uniqueidentifier NOT NULL,
+    [ToAccountId] uniqueidentifier NOT NULL,
+    [Type] int NOT NULL,
+    [Amount] decimal(18,2) NOT NULL,
+    [Description] nvarchar(250) NOT NULL,
+    [Status] int NOT NULL,
+    [ExecutedByUserId] nvarchar(450) NOT NULL,
+    [ReferenceCode] nvarchar(20) NOT NULL,
+    [CreatedAt] datetimeoffset NOT NULL,
+    [UpdatedAt] datetimeoffset NULL,
+    CONSTRAINT [PK_Transactions] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Transactions_AspNetUsers_ExecutedByUserId] FOREIGN KEY ([ExecutedByUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Transactions_BankAccounts_FromAccountId] FOREIGN KEY ([FromAccountId]) REFERENCES [BankAccounts] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Transactions_BankAccounts_ToAccountId] FOREIGN KEY ([ToAccountId]) REFERENCES [BankAccounts] ([Id]) ON DELETE CASCADE
+);
+2026-04-16 10:34:22.569 +03:00 [ERR] Failed executing DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Transactions] (
+    [Id] uniqueidentifier NOT NULL,
+    [FromAccountId] uniqueidentifier NOT NULL,
+    [ToAccountId] uniqueidentifier NOT NULL,
+    [Type] int NOT NULL,
+    [Amount] decimal(18,2) NOT NULL,
+    [Description] nvarchar(250) NOT NULL,
+    [Status] int NOT NULL,
+    [ExecutedByUserId] nvarchar(450) NOT NULL,
+    [ReferenceCode] nvarchar(20) NOT NULL,
+    [CreatedAt] datetimeoffset NOT NULL,
+    [UpdatedAt] datetimeoffset NULL,
+    CONSTRAINT [PK_Transactions] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Transactions_AspNetUsers_ExecutedByUserId] FOREIGN KEY ([ExecutedByUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Transactions_BankAccounts_FromAccountId] FOREIGN KEY ([FromAccountId]) REFERENCES [BankAccounts] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Transactions_BankAccounts_ToAccountId] FOREIGN KEY ([ToAccountId]) REFERENCES [BankAccounts] ([Id]) ON DELETE CASCADE
+);
+2026-04-16 10:42:25.543 +03:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+2026-04-16 10:42:26.308 +03:00 [INF] HTTP GET / responded 200 in 135.3290 ms
+2026-04-16 10:42:26.474 +03:00 [INF] HTTP GET /js/site.js responded 200 in 157.9642 ms
+2026-04-16 10:42:26.474 +03:00 [INF] HTTP GET /css/site.css responded 200 in 157.9640 ms
+2026-04-16 10:42:26.474 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 157.9656 ms
+2026-04-16 10:42:26.481 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 164.3467 ms
+2026-04-16 10:42:26.483 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 165.9990 ms
+2026-04-16 10:42:26.484 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 167.3380 ms
+2026-04-16 10:42:28.115 +03:00 [INF] HTTP GET /Identity/Account/Login responded 200 in 88.4263 ms
+2026-04-16 10:42:28.122 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.7875 ms
+2026-04-16 10:42:28.124 +03:00 [INF] HTTP GET /js/site.js responded 200 in 1.9350 ms
+2026-04-16 10:42:28.125 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 7.0059 ms
+2026-04-16 10:42:28.124 +03:00 [INF] HTTP GET /css/site.css responded 200 in 3.6162 ms
+2026-04-16 10:42:28.134 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 11.7091 ms
+2026-04-16 10:42:28.154 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 32.1023 ms
+2026-04-16 10:42:28.161 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 37.8557 ms
+2026-04-16 10:42:28.185 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 62.4462 ms
+2026-04-16 10:44:11.839 +03:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+2026-04-16 10:44:12.626 +03:00 [INF] HTTP GET / responded 200 in 132.9229 ms
+2026-04-16 10:44:12.786 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 149.5805 ms
+2026-04-16 10:44:12.786 +03:00 [INF] HTTP GET /css/site.css responded 200 in 149.1852 ms
+2026-04-16 10:44:12.786 +03:00 [INF] HTTP GET /js/site.js responded 200 in 115.2932 ms
+2026-04-16 10:44:12.792 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 154.5530 ms
+2026-04-16 10:44:12.793 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 155.9237 ms
+2026-04-16 10:44:12.794 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 156.2964 ms
+2026-04-16 10:44:14.482 +03:00 [INF] HTTP GET /Identity/Account/Login responded 200 in 89.8755 ms
+2026-04-16 10:44:14.490 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 3.7264 ms
+2026-04-16 10:44:14.490 +03:00 [INF] HTTP GET /css/site.css responded 200 in 4.2624 ms
+2026-04-16 10:44:14.530 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 44.3315 ms
+2026-04-16 10:44:14.530 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 41.1556 ms
+2026-04-16 10:44:14.530 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 39.5561 ms
+2026-04-16 10:44:14.530 +03:00 [INF] HTTP GET /js/site.js responded 200 in 41.6036 ms
+2026-04-16 10:44:14.531 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 41.6726 ms
+2026-04-16 10:44:14.531 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 43.9252 ms
+2026-04-16 10:44:22.485 +03:00 [INF] HTTP POST /Identity/Account/Login responded 302 in 153.3046 ms
+2026-04-16 10:44:22.511 +03:00 [INF] HTTP GET /Staff/Dashboard responded 200 in 21.3385 ms
+2026-04-16 10:44:22.527 +03:00 [INF] HTTP GET /js/site.js responded 200 in 1.8212 ms
+2026-04-16 10:44:22.527 +03:00 [INF] HTTP GET /css/site.css responded 200 in 2.2249 ms
+2026-04-16 10:44:22.528 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 2.3856 ms
+2026-04-16 10:44:22.528 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 3.6834 ms
+2026-04-16 10:44:22.528 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 3.3009 ms
+2026-04-16 10:44:22.529 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 3.5037 ms
+2026-04-16 10:44:24.912 +03:00 [INF] HTTP GET /Staff/Customers responded 200 in 91.0375 ms
+2026-04-16 10:44:24.928 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.0538 ms
+2026-04-16 10:44:24.928 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.5357 ms
+2026-04-16 10:44:24.929 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.8107 ms
+2026-04-16 10:44:24.929 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 3.1362 ms
+2026-04-16 10:44:24.928 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.0561 ms
+2026-04-16 10:44:24.930 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 3.1603 ms
+2026-04-16 10:45:08.468 +03:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+2026-04-16 10:45:09.611 +03:00 [INF] HTTP GET / responded 200 in 146.4802 ms
+2026-04-16 10:45:09.871 +03:00 [INF] HTTP GET /js/site.js responded 200 in 219.9864 ms
+2026-04-16 10:45:09.872 +03:00 [INF] HTTP GET /css/site.css responded 200 in 249.9639 ms
+2026-04-16 10:45:09.872 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 250.0824 ms
+2026-04-16 10:45:09.880 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 258.8573 ms
+2026-04-16 10:45:09.880 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 258.8707 ms
+2026-04-16 10:45:09.880 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 258.5654 ms
+2026-04-16 10:45:09.946 +03:00 [INF] HTTP GET /favicon.ico responded 200 in 19.8983 ms
+2026-04-16 10:45:12.012 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.6847 ms
+2026-04-16 10:45:12.012 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.9504 ms
+2026-04-16 10:45:12.012 +03:00 [INF] HTTP GET /js/site.js responded 200 in 1.4636 ms
+2026-04-16 10:45:12.017 +03:00 [INF] HTTP GET /Staff/Dashboard responded 200 in 42.8818 ms
+2026-04-16 10:45:12.017 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 9.8835 ms
+2026-04-16 10:45:12.021 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 10.2324 ms
+2026-04-16 10:45:12.038 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 27.6862 ms
+2026-04-16 10:45:13.298 +03:00 [INF] HTTP GET /Staff/Users/CreateCustomer responded 200 in 51.8567 ms
+2026-04-16 10:45:13.313 +03:00 [INF] HTTP GET /js/site.js responded 200 in 1.2884 ms
+2026-04-16 10:45:13.315 +03:00 [INF] HTTP GET /css/site.css responded 200 in 3.2755 ms
+2026-04-16 10:45:13.315 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 3.1901 ms
+2026-04-16 10:45:13.316 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 1.0372 ms
+2026-04-16 10:45:13.313 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.6968 ms
+2026-04-16 10:45:13.314 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 4.0515 ms
+2026-04-16 10:45:13.314 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 2.4367 ms
+2026-04-16 10:45:13.321 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 4.7920 ms
+2026-04-16 10:45:55.145 +03:00 [INF] HTTP POST /Staff/Users/CreateCustomer responded 302 in 211.7579 ms
+2026-04-16 10:45:55.245 +03:00 [INF] HTTP GET /Staff/Customers responded 200 in 95.0293 ms
+2026-04-16 10:45:55.260 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 1.8520 ms
+2026-04-16 10:45:55.270 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 8.8595 ms
+2026-04-16 10:45:55.264 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 2.9569 ms
+2026-04-16 10:45:55.264 +03:00 [INF] HTTP GET /css/site.css responded 200 in 3.8137 ms
+2026-04-16 10:45:55.266 +03:00 [INF] HTTP GET /js/site.js responded 200 in 1.9182 ms
+2026-04-16 10:45:55.298 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 33.7874 ms
+2026-04-16 10:45:57.990 +03:00 [INF] HTTP GET /Staff/Customers/Edit responded 200 in 48.0327 ms
+2026-04-16 10:45:58.004 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.7870 ms
+2026-04-16 10:45:58.005 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.1664 ms
+2026-04-16 10:45:58.005 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.7307 ms
+2026-04-16 10:45:58.005 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.6198 ms
+2026-04-16 10:45:58.006 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 2.2580 ms
+2026-04-16 10:45:58.006 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.5874 ms
+2026-04-16 10:45:58.042 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 35.1346 ms
+2026-04-16 10:45:58.076 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 69.8707 ms
+2026-04-16 10:46:16.482 +03:00 [INF] HTTP POST /Staff/Customers/Edit responded 302 in 34.1225 ms
+2026-04-16 10:46:16.493 +03:00 [INF] HTTP GET /Staff/Customers responded 200 in 5.6933 ms
+2026-04-16 10:46:16.507 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.3945 ms
+2026-04-16 10:46:16.510 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 4.8112 ms
+2026-04-16 10:46:16.511 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.5847 ms
+2026-04-16 10:46:16.512 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 6.4663 ms
+2026-04-16 10:46:16.512 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.3621 ms
+2026-04-16 10:46:16.512 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.7461 ms
+2026-04-16 10:46:19.182 +03:00 [INF] HTTP GET /Staff/Customers/Details responded 200 in 16.2106 ms
+2026-04-16 10:46:19.196 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.0685 ms
+2026-04-16 10:46:19.200 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.0213 ms
+2026-04-16 10:46:19.200 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.4515 ms
+2026-04-16 10:46:19.200 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.4824 ms
+2026-04-16 10:46:19.200 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.7669 ms
+2026-04-16 10:46:19.198 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.8628 ms
+2026-04-16 10:46:21.534 +03:00 [INF] HTTP GET /Staff/Customers/Edit responded 200 in 7.5690 ms
+2026-04-16 10:46:21.550 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.5348 ms
+2026-04-16 10:46:21.552 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.8087 ms
+2026-04-16 10:46:21.553 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.8639 ms
+2026-04-16 10:46:21.553 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.2187 ms
+2026-04-16 10:46:21.553 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.4353 ms
+2026-04-16 10:46:21.555 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.7395 ms
+2026-04-16 10:46:21.555 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 0.8503 ms
+2026-04-16 10:46:21.557 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 1.9808 ms
+2026-04-16 10:46:35.341 +03:00 [INF] HTTP POST /Staff/Customers/Edit responded 302 in 9.4370 ms
+2026-04-16 10:46:35.352 +03:00 [INF] HTTP GET /Staff/Customers responded 200 in 3.7793 ms
+2026-04-16 10:46:35.368 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.7248 ms
+2026-04-16 10:46:35.368 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.7592 ms
+2026-04-16 10:46:35.369 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.2945 ms
+2026-04-16 10:46:35.369 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.5146 ms
+2026-04-16 10:46:35.370 +03:00 [INF] HTTP GET /js/site.js responded 200 in 1.2323 ms
+2026-04-16 10:46:35.371 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 3.7702 ms
+2026-04-16 10:46:38.815 +03:00 [INF] HTTP GET /Staff/Customers/Details responded 200 in 7.5566 ms
+2026-04-16 10:46:38.830 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 1.7644 ms
+2026-04-16 10:46:38.832 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.7454 ms
+2026-04-16 10:46:38.833 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.0959 ms
+2026-04-16 10:46:38.833 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.1618 ms
+2026-04-16 10:46:38.833 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.5672 ms
+2026-04-16 10:46:38.834 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.8196 ms
+2026-04-16 10:46:39.785 +03:00 [INF] HTTP GET /Staff/Customers responded 200 in 7.3998 ms
+2026-04-16 10:46:39.803 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 4.5347 ms
+2026-04-16 10:46:39.804 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.5633 ms
+2026-04-16 10:46:39.804 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.9694 ms
+2026-04-16 10:46:39.805 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.6798 ms
+2026-04-16 10:46:39.805 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.2299 ms
+2026-04-16 10:46:39.805 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.1737 ms
+2026-04-16 10:46:41.346 +03:00 [INF] HTTP GET /Staff/Customers/Delete responded 200 in 19.0286 ms
+2026-04-16 10:46:41.360 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.7500 ms
+2026-04-16 10:46:41.361 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.3834 ms
+2026-04-16 10:46:41.361 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.2289 ms
+2026-04-16 10:46:41.361 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.4309 ms
+2026-04-16 10:46:41.362 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.5702 ms
+2026-04-16 10:46:41.360 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.8653 ms
+2026-04-16 10:46:42.228 +03:00 [INF] HTTP POST /Staff/Customers/DeleteConfirmed responded 302 in 30.7423 ms
+2026-04-16 10:46:42.234 +03:00 [INF] HTTP GET /Staff/Customers responded 200 in 1.9565 ms
+2026-04-16 10:46:42.250 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.7467 ms
+2026-04-16 10:46:42.252 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 3.3999 ms
+2026-04-16 10:46:42.252 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 3.0491 ms
+2026-04-16 10:46:42.252 +03:00 [INF] HTTP GET /js/site.js responded 200 in 1.3517 ms
+2026-04-16 10:46:42.253 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 3.5068 ms
+2026-04-16 10:46:42.251 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 2.2473 ms
+2026-04-16 10:46:44.481 +03:00 [INF] HTTP GET / responded 200 in 1.3077 ms
+2026-04-16 10:46:44.497 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.0907 ms
+2026-04-16 10:46:44.499 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.5688 ms
+2026-04-16 10:46:44.500 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 0.8249 ms
+2026-04-16 10:46:44.500 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.0933 ms
+2026-04-16 10:46:44.499 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.4894 ms
+2026-04-16 10:46:44.501 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.5837 ms
+2026-04-16 10:46:46.382 +03:00 [INF] HTTP GET /Staff/Dashboard responded 200 in 1.9994 ms
+2026-04-16 10:46:46.396 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 1.5045 ms
+2026-04-16 10:46:46.399 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.3119 ms
+2026-04-16 10:46:46.399 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.4717 ms
+2026-04-16 10:46:46.399 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.5281 ms
+2026-04-16 10:46:46.398 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.6813 ms
+2026-04-16 10:46:46.398 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.3368 ms
+2026-04-16 10:46:48.653 +03:00 [INF] HTTP GET /Staff/Users/CreateCustomer responded 200 in 3.5186 ms
+2026-04-16 10:46:48.669 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.9034 ms
+2026-04-16 10:46:48.671 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.6193 ms
+2026-04-16 10:46:48.671 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.8056 ms
+2026-04-16 10:46:48.672 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.2501 ms
+2026-04-16 10:46:48.671 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.1048 ms
+2026-04-16 10:46:48.672 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 0.4620 ms
+2026-04-16 10:46:48.672 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 0.7074 ms
+2026-04-16 10:46:48.671 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.4790 ms
+2026-04-16 10:47:25.773 +03:00 [INF] HTTP POST /Staff/Users/CreateCustomer responded 302 in 56.4294 ms
+2026-04-16 10:47:25.784 +03:00 [INF] HTTP GET /Staff/Customers responded 200 in 4.5013 ms
+2026-04-16 10:47:25.800 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.4755 ms
+2026-04-16 10:47:25.800 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.4098 ms
+2026-04-16 10:47:25.800 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.7452 ms
+2026-04-16 10:47:25.843 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 43.5142 ms
+2026-04-16 10:47:25.807 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 8.6024 ms
+2026-04-16 10:47:25.843 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 42.9060 ms
+2026-04-16 10:47:31.984 +03:00 [INF] HTTP GET /Staff/Users/CreateCustomer responded 200 in 1.7473 ms
+2026-04-16 10:47:31.998 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.4609 ms
+2026-04-16 10:47:31.999 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.6004 ms
+2026-04-16 10:47:32.000 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.8286 ms
+2026-04-16 10:47:32.000 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.7638 ms
+2026-04-16 10:47:32.000 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 1.2861 ms
+2026-04-16 10:47:32.000 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.4573 ms
+2026-04-16 10:47:32.000 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.1698 ms
+2026-04-16 10:47:32.000 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 1.2327 ms
+2026-04-16 10:47:57.704 +03:00 [INF] HTTP POST /Staff/Users/CreateCustomer responded 302 in 53.0702 ms
+2026-04-16 10:47:57.713 +03:00 [INF] HTTP GET /Staff/Customers responded 200 in 4.1507 ms
+2026-04-16 10:47:57.728 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.0356 ms
+2026-04-16 10:47:57.729 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.8255 ms
+2026-04-16 10:47:57.767 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 37.9929 ms
+2026-04-16 10:47:57.730 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.3808 ms
+2026-04-16 10:47:57.729 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.5380 ms
+2026-04-16 10:47:57.733 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 4.0316 ms
+2026-04-16 10:48:01.975 +03:00 [INF] HTTP GET /Staff/Customers responded 200 in 6.2176 ms
+2026-04-16 10:48:01.990 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.5920 ms
+2026-04-16 10:48:01.991 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.2982 ms
+2026-04-16 10:48:01.991 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.9573 ms
+2026-04-16 10:48:01.991 +03:00 [INF] HTTP GET /js/site.js responded 200 in 1.3571 ms
+2026-04-16 10:48:01.991 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.1635 ms
+2026-04-16 10:48:01.991 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.9448 ms
+2026-04-16 10:48:04.663 +03:00 [INF] HTTP GET /Staff/Customers responded 200 in 8.1759 ms
+2026-04-16 10:48:04.680 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.7189 ms
+2026-04-16 10:48:04.681 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 2.0112 ms
+2026-04-16 10:48:04.683 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 7.4468 ms
+2026-04-16 10:48:04.682 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 5.0671 ms
+2026-04-16 10:48:04.676 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.6165 ms
+2026-04-16 10:48:04.681 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 4.3673 ms
+2026-04-16 10:48:08.690 +03:00 [INF] HTTP GET /Staff/Dashboard responded 200 in 1.7141 ms
+2026-04-16 10:48:08.709 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.7405 ms
+2026-04-16 10:48:08.709 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.0006 ms
+2026-04-16 10:48:08.710 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.3205 ms
+2026-04-16 10:48:08.710 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.1360 ms
+2026-04-16 10:48:08.710 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 0.9787 ms
+2026-04-16 10:48:08.710 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.1971 ms
+2026-04-16 10:48:09.942 +03:00 [INF] HTTP GET /Staff/Users/CreateStaff responded 200 in 25.1988 ms
+2026-04-16 10:48:09.954 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.5014 ms
+2026-04-16 10:48:09.955 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 1.6651 ms
+2026-04-16 10:48:09.957 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.9698 ms
+2026-04-16 10:48:09.957 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.8739 ms
+2026-04-16 10:48:09.957 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.1477 ms
+2026-04-16 10:48:09.958 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 0.9717 ms
+2026-04-16 10:48:09.958 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.6608 ms
+2026-04-16 10:48:09.957 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 0.7925 ms
+2026-04-16 10:48:50.736 +03:00 [INF] HTTP POST /Staff/Users/CreateStaff responded 302 in 64.0477 ms
+2026-04-16 10:48:50.742 +03:00 [INF] HTTP GET /Staff/Dashboard responded 200 in 0.7892 ms
+2026-04-16 10:48:50.759 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.6187 ms
+2026-04-16 10:48:50.759 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.5235 ms
+2026-04-16 10:48:50.759 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.5724 ms
+2026-04-16 10:48:50.765 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 7.5009 ms
+2026-04-16 10:48:50.802 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 42.7891 ms
+2026-04-16 10:48:50.802 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 42.3276 ms
+2026-04-16 10:48:53.954 +03:00 [INF] HTTP GET /Staff/BankAccounts responded 200 in 33.0339 ms
+2026-04-16 10:48:53.967 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.8746 ms
+2026-04-16 10:48:53.967 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.8862 ms
+2026-04-16 10:48:53.968 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.5349 ms
+2026-04-16 10:48:53.969 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.8381 ms
+2026-04-16 10:48:53.969 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.4004 ms
+2026-04-16 10:48:53.968 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.3640 ms
+2026-04-16 10:48:55.401 +03:00 [INF] HTTP GET /Staff/BankAccounts/Create responded 200 in 30.0427 ms
+2026-04-16 10:48:55.414 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.8547 ms
+2026-04-16 10:48:55.415 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.3184 ms
+2026-04-16 10:48:55.415 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.2209 ms
+2026-04-16 10:48:55.416 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.3657 ms
+2026-04-16 10:48:55.416 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 0.8142 ms
+2026-04-16 10:48:55.415 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.0073 ms
+2026-04-16 10:48:55.416 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.1647 ms
+2026-04-16 10:48:55.416 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 0.4105 ms
+2026-04-16 10:49:17.167 +03:00 [INF] HTTP POST /Staff/BankAccounts/Create responded 302 in 77.6048 ms
+2026-04-16 10:49:17.179 +03:00 [INF] HTTP GET /Staff/BankAccounts responded 200 in 8.3100 ms
+2026-04-16 10:49:17.194 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.6724 ms
+2026-04-16 10:49:17.227 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 32.4502 ms
+2026-04-16 10:49:17.226 +03:00 [INF] HTTP GET /js/site.js responded 200 in 31.4346 ms
+2026-04-16 10:49:17.226 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 33.4230 ms
+2026-04-16 10:49:17.254 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 59.5765 ms
+2026-04-16 10:49:17.194 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.8635 ms
+2026-04-16 10:49:22.206 +03:00 [INF] HTTP GET /Staff/BankAccounts/Details responded 200 in 20.7412 ms
+2026-04-16 10:49:22.222 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 1.5787 ms
+2026-04-16 10:49:22.225 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.1338 ms
+2026-04-16 10:49:22.226 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.6334 ms
+2026-04-16 10:49:22.225 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.2289 ms
+2026-04-16 10:49:22.225 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 2.0973 ms
+2026-04-16 10:49:22.226 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.4318 ms
+2026-04-16 10:49:23.965 +03:00 [INF] HTTP GET /Staff/BankAccounts/Edit responded 200 in 21.5318 ms
+2026-04-16 10:49:23.980 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.4628 ms
+2026-04-16 10:49:23.980 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.5850 ms
+2026-04-16 10:49:23.983 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 1.2909 ms
+2026-04-16 10:49:23.980 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 1.7538 ms
+2026-04-16 10:49:23.981 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 0.6196 ms
+2026-04-16 10:49:23.981 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.4913 ms
+2026-04-16 10:49:23.981 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.0661 ms
+2026-04-16 10:49:23.982 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 0.5152 ms
+2026-04-16 10:49:27.896 +03:00 [INF] HTTP POST /Staff/BankAccounts/Edit responded 302 in 22.2542 ms
+2026-04-16 10:49:27.904 +03:00 [INF] HTTP GET /Staff/BankAccounts responded 200 in 2.4993 ms
+2026-04-16 10:49:27.920 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.6826 ms
+2026-04-16 10:49:27.921 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.9170 ms
+2026-04-16 10:49:27.921 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 1.7435 ms
+2026-04-16 10:49:27.921 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.4775 ms
+2026-04-16 10:49:27.921 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.3938 ms
+2026-04-16 10:49:27.921 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.3979 ms
+2026-04-16 10:49:30.231 +03:00 [INF] HTTP GET /Staff/BankAccounts/Edit responded 200 in 3.4817 ms
+2026-04-16 10:49:30.248 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.5600 ms
+2026-04-16 10:49:30.249 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 3.2056 ms
+2026-04-16 10:49:30.250 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.7787 ms
+2026-04-16 10:49:30.252 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 4.4357 ms
+2026-04-16 10:49:30.253 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 5.8059 ms
+2026-04-16 10:49:30.253 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 1.5117 ms
+2026-04-16 10:49:30.253 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 1.4971 ms
+2026-04-16 10:49:30.248 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.7301 ms
+2026-04-16 10:49:33.410 +03:00 [INF] HTTP POST /Staff/BankAccounts/Edit responded 302 in 5.0021 ms
+2026-04-16 10:49:33.422 +03:00 [INF] HTTP GET /Staff/BankAccounts responded 200 in 4.0480 ms
+2026-04-16 10:49:33.436 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.4311 ms
+2026-04-16 10:49:33.437 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.6620 ms
+2026-04-16 10:49:33.437 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 1.4054 ms
+2026-04-16 10:49:33.437 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.0528 ms
+2026-04-16 10:49:33.437 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 0.9514 ms
+2026-04-16 10:49:33.438 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.4687 ms
+2026-04-16 10:49:40.621 +03:00 [INF] HTTP GET /Staff/BankAccounts/Delete responded 200 in 26.7458 ms
+2026-04-16 10:49:40.635 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.4358 ms
+2026-04-16 10:49:40.635 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.5949 ms
+2026-04-16 10:49:40.636 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.3270 ms
+2026-04-16 10:49:40.636 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.1688 ms
+2026-04-16 10:49:40.636 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 0.9344 ms
+2026-04-16 10:49:40.636 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.3011 ms
+2026-04-16 10:49:42.552 +03:00 [INF] HTTP GET /Staff/BankAccounts responded 200 in 11.1509 ms
+2026-04-16 10:49:42.571 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.8605 ms
+2026-04-16 10:49:42.572 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.3353 ms
+2026-04-16 10:49:42.572 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.5605 ms
+2026-04-16 10:49:42.572 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.5659 ms
+2026-04-16 10:49:42.572 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.1409 ms
+2026-04-16 10:49:42.573 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.8174 ms
+2026-04-16 10:49:43.307 +03:00 [INF] HTTP GET /Staff/BankAccounts/Delete responded 200 in 2.8745 ms
+2026-04-16 10:49:43.323 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.9325 ms
+2026-04-16 10:49:43.324 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.4447 ms
+2026-04-16 10:49:43.325 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.0257 ms
+2026-04-16 10:49:43.325 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.0053 ms
+2026-04-16 10:49:43.328 +03:00 [INF] HTTP GET /js/site.js responded 200 in 1.5060 ms
+2026-04-16 10:49:43.324 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.5525 ms
+2026-04-16 10:49:44.185 +03:00 [INF] HTTP POST /Staff/BankAccounts/DeleteConfirmed responded 302 in 12.4880 ms
+2026-04-16 10:49:44.191 +03:00 [INF] HTTP GET /Staff/BankAccounts responded 200 in 1.2670 ms
+2026-04-16 10:49:44.205 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.4595 ms
+2026-04-16 10:49:44.206 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.5612 ms
+2026-04-16 10:49:44.206 +03:00 [INF] HTTP GET /js/site.js responded 200 in 1.1371 ms
+2026-04-16 10:49:44.206 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.9324 ms
+2026-04-16 10:49:44.207 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 3.2333 ms
+2026-04-16 10:49:44.212 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 7.7817 ms
+2026-04-16 10:49:45.127 +03:00 [INF] HTTP GET /Staff/BankAccounts/Create responded 200 in 1.9161 ms
+2026-04-16 10:49:45.140 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.6237 ms
+2026-04-16 10:49:45.141 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.9123 ms
+2026-04-16 10:49:45.144 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 3.8563 ms
+2026-04-16 10:49:45.144 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.6132 ms
+2026-04-16 10:49:45.144 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 2.8568 ms
+2026-04-16 10:49:45.144 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.0142 ms
+2026-04-16 10:49:45.144 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 0.8880 ms
+2026-04-16 10:49:45.144 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 0.8170 ms
+2026-04-16 10:50:05.255 +03:00 [ERR] Error creating bank account.
+MellonBank.Application.Exceptions.AppConflictException: An account with the same account number already exists.
+   at MellonBank.Application.Services.AccountManagementService.CreateAccountAsync(CreateBankAccountRequestDto request, CancellationToken ct) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Application\Services\AccountManagementService.cs:line 129
+   at MellonBank.Web.Areas.Staff.Controllers.BankAccountsController.Create(CreateBankAccountViewModel model) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Web\Areas\Staff\Controllers\BankAccountsController.cs:line 52
+2026-04-16 10:50:05.266 +03:00 [INF] HTTP POST /Staff/BankAccounts/Create responded 200 in 85.8253 ms
+2026-04-16 10:50:05.282 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.5921 ms
+2026-04-16 10:50:05.318 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 38.2822 ms
+2026-04-16 10:50:05.351 +03:00 [INF] HTTP GET /js/site.js responded 200 in 32.0811 ms
+2026-04-16 10:50:05.381 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 98.8113 ms
+2026-04-16 10:50:05.282 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.6501 ms
+2026-04-16 10:50:05.380 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 97.5292 ms
+2026-04-16 10:50:05.380 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 60.9116 ms
+2026-04-16 10:50:05.380 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 61.1687 ms
+2026-04-16 10:52:20.580 +03:00 [INF] HTTP POST /Staff/BankAccounts/Create responded 302 in 11.8544 ms
+2026-04-16 10:52:20.589 +03:00 [INF] HTTP GET /Staff/BankAccounts responded 200 in 2.7323 ms
+2026-04-16 10:52:20.603 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.7114 ms
+2026-04-16 10:52:20.661 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 57.5299 ms
+2026-04-16 10:52:20.666 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 36.1437 ms
+2026-04-16 10:52:20.662 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.6272 ms
+2026-04-16 10:52:20.662 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 59.0104 ms
+2026-04-16 10:52:20.666 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 63.9656 ms
+2026-04-16 10:52:32.977 +03:00 [INF] HTTP GET /Staff/BankAccounts/Details responded 200 in 5.7792 ms
+2026-04-16 10:52:32.994 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.7417 ms
+2026-04-16 10:52:32.994 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.9209 ms
+2026-04-16 10:52:32.995 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.5341 ms
+2026-04-16 10:52:32.995 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 3.9246 ms
+2026-04-16 10:52:32.996 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 2.4633 ms
+2026-04-16 10:52:32.996 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 2.1997 ms
+2026-04-16 10:52:34.210 +03:00 [INF] HTTP GET /Staff/BankAccounts/Edit responded 200 in 4.7717 ms
+2026-04-16 10:52:34.224 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.8830 ms
+2026-04-16 10:52:34.229 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 1.2823 ms
+2026-04-16 10:52:34.224 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.5379 ms
+2026-04-16 10:52:34.229 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 6.4612 ms
+2026-04-16 10:52:34.229 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 3.8920 ms
+2026-04-16 10:52:34.229 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 3.5204 ms
+2026-04-16 10:52:34.226 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.2669 ms
+2026-04-16 10:52:34.229 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 2.2621 ms
+2026-04-16 10:52:37.844 +03:00 [INF] HTTP GET /Staff/BankAccounts responded 200 in 5.7679 ms
+2026-04-16 10:52:37.861 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.3798 ms
+2026-04-16 10:52:37.861 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.9355 ms
+2026-04-16 10:52:37.862 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 3.4587 ms
+2026-04-16 10:52:37.862 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.5760 ms
+2026-04-16 10:52:37.863 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 2.1229 ms
+2026-04-16 10:52:37.862 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.6774 ms
+2026-04-16 10:52:39.335 +03:00 [INF] HTTP GET /Staff/BankAccounts/Edit responded 200 in 2.0736 ms
+2026-04-16 10:52:39.352 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.9140 ms
+2026-04-16 10:52:39.352 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.9830 ms
+2026-04-16 10:52:39.352 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.2309 ms
+2026-04-16 10:52:39.352 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 3.9896 ms
+2026-04-16 10:52:39.353 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.4077 ms
+2026-04-16 10:52:39.353 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 0.6384 ms
+2026-04-16 10:52:39.353 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.4106 ms
+2026-04-16 10:52:39.355 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 1.0849 ms
+2026-04-16 10:52:44.352 +03:00 [INF] HTTP POST /Staff/BankAccounts/Edit responded 302 in 4.1798 ms
+2026-04-16 10:52:44.358 +03:00 [INF] HTTP GET /Staff/BankAccounts responded 200 in 1.9582 ms
+2026-04-16 10:52:44.374 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.4782 ms
+2026-04-16 10:52:44.375 +03:00 [INF] HTTP GET /js/site.js responded 200 in 1.1463 ms
+2026-04-16 10:52:44.375 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 3.2835 ms
+2026-04-16 10:52:44.375 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 2.1038 ms
+2026-04-16 10:52:44.376 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 2.3712 ms
+2026-04-16 10:52:44.376 +03:00 [INF] HTTP GET /css/site.css responded 200 in 2.4816 ms
+2026-04-16 10:52:46.489 +03:00 [INF] HTTP GET /Staff/BankAccounts/Create responded 200 in 1.9687 ms
+2026-04-16 10:52:46.505 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.7278 ms
+2026-04-16 10:52:46.506 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 1.3684 ms
+2026-04-16 10:52:46.510 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 2.3303 ms
+2026-04-16 10:52:46.509 +03:00 [INF] HTTP GET /js/site.js responded 200 in 2.5550 ms
+2026-04-16 10:52:46.506 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.3901 ms
+2026-04-16 10:52:46.506 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.7825 ms
+2026-04-16 10:52:46.512 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 5.0774 ms
+2026-04-16 10:52:46.510 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 0.6786 ms
+2026-04-16 10:53:09.613 +03:00 [INF] HTTP POST /Staff/BankAccounts/Create responded 302 in 14.1354 ms
+2026-04-16 10:53:09.621 +03:00 [INF] HTTP GET /Staff/BankAccounts responded 200 in 2.9443 ms
+2026-04-16 10:53:09.638 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.6861 ms
+2026-04-16 10:53:09.638 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.5611 ms
+2026-04-16 10:53:09.639 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.5816 ms
+2026-04-16 10:53:09.669 +03:00 [INF] HTTP GET /js/site.js responded 200 in 2.8593 ms
+2026-04-16 10:53:09.667 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 28.9426 ms
+2026-04-16 10:53:09.669 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 31.1941 ms
+2026-04-16 10:54:59.951 +03:00 [INF] HTTP GET / responded 200 in 0.6934 ms
+2026-04-16 10:54:59.966 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.5738 ms
+2026-04-16 10:55:00.007 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 36.2317 ms
+2026-04-16 10:54:59.967 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.8569 ms
+2026-04-16 10:54:59.974 +03:00 [INF] HTTP GET /js/site.js responded 200 in 2.4725 ms
+2026-04-16 10:54:59.975 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 9.4411 ms
+2026-04-16 10:55:00.009 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 41.5049 ms
+2026-04-16 10:55:01.503 +03:00 [INF] HTTP GET /Staff/Dashboard responded 200 in 1.8382 ms
+2026-04-16 10:55:01.519 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.6731 ms
+2026-04-16 10:55:01.520 +03:00 [INF] HTTP GET /css/site.css responded 200 in 2.6792 ms
+2026-04-16 10:55:01.521 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 4.0708 ms
+2026-04-16 10:55:01.521 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.3710 ms
+2026-04-16 10:55:01.521 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 3.0094 ms
+2026-04-16 10:55:01.521 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.5824 ms
+2026-04-16 10:55:08.923 +03:00 [INF] HTTP GET /Staff/Customers responded 200 in 8.3245 ms
+2026-04-16 10:55:08.938 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 1.4039 ms
+2026-04-16 10:55:08.941 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.0215 ms
+2026-04-16 10:55:08.941 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.3253 ms
+2026-04-16 10:55:08.942 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 1.7359 ms
+2026-04-16 10:55:08.942 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 2.1297 ms
+2026-04-16 10:55:08.942 +03:00 [INF] HTTP GET /js/site.js responded 200 in 1.3578 ms
+2026-04-16 10:56:01.974 +03:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+2026-04-16 10:56:03.199 +03:00 [INF] HTTP GET / responded 200 in 140.0755 ms
+2026-04-16 10:56:03.442 +03:00 [INF] HTTP GET /js/site.js responded 200 in 178.4152 ms
+2026-04-16 10:56:03.442 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 210.0321 ms
+2026-04-16 10:56:03.442 +03:00 [INF] HTTP GET /css/site.css responded 200 in 209.8415 ms
+2026-04-16 10:56:03.449 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 216.9949 ms
+2026-04-16 10:56:03.449 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 217.2583 ms
+2026-04-16 10:56:03.450 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 217.4723 ms
+2026-04-16 10:56:04.917 +03:00 [INF] HTTP GET /Staff/Dashboard responded 200 in 42.4018 ms
+2026-04-16 10:56:04.927 +03:00 [INF] HTTP GET /js/site.js responded 200 in 2.5915 ms
+2026-04-16 10:56:04.927 +03:00 [INF] HTTP GET /css/site.css responded 200 in 2.7978 ms
+2026-04-16 10:56:04.927 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 3.8776 ms
+2026-04-16 10:56:04.930 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 9.8381 ms
+2026-04-16 10:56:04.934 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 10.1127 ms
+2026-04-16 10:56:04.951 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 26.4283 ms
+2026-04-16 10:56:06.906 +03:00 [INF] HTTP GET /Staff/Users/CreateCustomer responded 200 in 56.7011 ms
+2026-04-16 10:56:06.920 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.0523 ms
+2026-04-16 10:56:06.920 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.7178 ms
+2026-04-16 10:56:06.920 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.4136 ms
+2026-04-16 10:56:06.923 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 4.5463 ms
+2026-04-16 10:56:06.923 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 3.2036 ms
+2026-04-16 10:56:06.923 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 3.3586 ms
+2026-04-16 10:56:06.924 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 2.7568 ms
+2026-04-16 10:56:06.924 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 2.8377 ms
+2026-04-16 10:59:26.740 +03:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+2026-04-16 10:59:27.168 +03:00 [INF] HTTP GET / responded 200 in 141.7651 ms
+2026-04-16 10:59:27.414 +03:00 [INF] HTTP GET /css/site.css responded 200 in 236.2559 ms
+2026-04-16 10:59:27.414 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 236.0820 ms
+2026-04-16 10:59:27.414 +03:00 [INF] HTTP GET /js/site.js responded 200 in 235.4221 ms
+2026-04-16 10:59:27.420 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 242.2243 ms
+2026-04-16 10:59:27.420 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 242.3164 ms
+2026-04-16 10:59:27.422 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 243.9520 ms
+2026-04-16 10:59:29.140 +03:00 [INF] HTTP GET /Staff/Dashboard responded 200 in 43.4436 ms
+2026-04-16 10:59:29.142 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.7755 ms
+2026-04-16 10:59:29.144 +03:00 [INF] HTTP GET /js/site.js responded 200 in 3.4849 ms
+2026-04-16 10:59:29.145 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 5.5474 ms
+2026-04-16 10:59:29.143 +03:00 [INF] HTTP GET /css/site.css responded 200 in 2.7474 ms
+2026-04-16 10:59:29.184 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 44.2975 ms
+2026-04-16 10:59:29.185 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 44.0377 ms
+2026-04-16 10:59:30.779 +03:00 [INF] HTTP GET /Staff/Users/CreateCustomer responded 200 in 55.9370 ms
+2026-04-16 10:59:30.796 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.7734 ms
+2026-04-16 10:59:30.796 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.6767 ms
+2026-04-16 10:59:30.797 +03:00 [INF] HTTP GET /js/site.js responded 200 in 1.7424 ms
+2026-04-16 10:59:30.799 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 4.3928 ms
+2026-04-16 10:59:30.799 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 3.7517 ms
+2026-04-16 10:59:30.799 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 3.6368 ms
+2026-04-16 10:59:30.799 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 3.9856 ms
+2026-04-16 10:59:30.799 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 3.8596 ms
+2026-04-16 11:01:52.130 +03:00 [ERR] Error creating customer
+System.Exception: An error occurred while creating the customer.
+   at MellonBank.Application.Services.StaffUserManagementService.CreateCustomerAsync(CreateUserRequestDto request, CancellationToken ct) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Application\Services\StaffUserManagementService.cs:line 107
+   at MellonBank.Web.Areas.Staff.Controllers.UsersController.CreateCustomer(CreateCustomerViewModel model) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Web\Areas\Staff\Controllers\UsersController.cs:line 37
+2026-04-16 11:01:52.147 +03:00 [INF] HTTP POST /Staff/Users/CreateCustomer responded 200 in 202.6592 ms
+2026-04-16 11:01:52.159 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.0761 ms
+2026-04-16 11:01:52.196 +03:00 [INF] HTTP GET /js/site.js responded 200 in 33.5391 ms
+2026-04-16 11:01:52.159 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.1921 ms
+2026-04-16 11:01:52.197 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 38.3175 ms
+2026-04-16 11:01:52.243 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 47.5221 ms
+2026-04-16 11:01:52.205 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 42.4362 ms
+2026-04-16 11:01:52.202 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 44.7921 ms
+2026-04-16 11:01:52.243 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 46.9057 ms
+2026-04-16 11:02:18.136 +03:00 [ERR] Error creating customer
+System.Exception: An error occurred while creating the customer.
+   at MellonBank.Application.Services.StaffUserManagementService.CreateCustomerAsync(CreateUserRequestDto request, CancellationToken ct) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Application\Services\StaffUserManagementService.cs:line 107
+   at MellonBank.Web.Areas.Staff.Controllers.UsersController.CreateCustomer(CreateCustomerViewModel model) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Web\Areas\Staff\Controllers\UsersController.cs:line 37
+2026-04-16 11:02:18.175 +03:00 [INF] HTTP POST /Staff/Users/CreateCustomer responded 200 in 165.4088 ms
+2026-04-16 11:02:18.236 +03:00 [INF] HTTP GET /css/site.css responded 200 in 60.4050 ms
+2026-04-16 11:02:18.297 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 91.0755 ms
+2026-04-16 11:02:18.236 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 60.0928 ms
+2026-04-16 11:02:18.297 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 121.3512 ms
+2026-04-16 11:02:18.297 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 58.9997 ms
+2026-04-16 11:02:18.266 +03:00 [INF] HTTP GET /js/site.js responded 200 in 29.8387 ms
+2026-04-16 11:02:18.267 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 91.2079 ms
+2026-04-16 11:02:18.297 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 59.2857 ms
+2026-04-16 11:02:37.131 +03:00 [ERR] Error creating customer
+System.Exception: An error occurred while creating the customer.
+   at MellonBank.Application.Services.StaffUserManagementService.CreateCustomerAsync(CreateUserRequestDto request, CancellationToken ct) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Application\Services\StaffUserManagementService.cs:line 107
+   at MellonBank.Web.Areas.Staff.Controllers.UsersController.CreateCustomer(CreateCustomerViewModel model) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Web\Areas\Staff\Controllers\UsersController.cs:line 37
+2026-04-16 11:02:37.137 +03:00 [INF] HTTP POST /Staff/Users/CreateCustomer responded 200 in 93.4771 ms
+2026-04-16 11:02:37.154 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.1109 ms
+2026-04-16 11:02:37.154 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.1299 ms
+2026-04-16 11:02:37.189 +03:00 [INF] HTTP GET /js/site.js responded 200 in 35.5046 ms
+2026-04-16 11:02:37.189 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 36.0707 ms
+2026-04-16 11:02:37.189 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 35.8885 ms
+2026-04-16 11:02:37.190 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 38.3114 ms
+2026-04-16 11:02:37.190 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 36.7085 ms
+2026-04-16 11:02:37.190 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 37.6274 ms
+2026-04-16 11:03:00.711 +03:00 [ERR] Error creating customer
+System.Exception: An error occurred while creating the customer.
+   at MellonBank.Application.Services.StaffUserManagementService.CreateCustomerAsync(CreateUserRequestDto request, CancellationToken ct) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Application\Services\StaffUserManagementService.cs:line 107
+   at MellonBank.Web.Areas.Staff.Controllers.UsersController.CreateCustomer(CreateCustomerViewModel model) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Web\Areas\Staff\Controllers\UsersController.cs:line 37
+2026-04-16 11:03:00.717 +03:00 [INF] HTTP POST /Staff/Users/CreateCustomer responded 200 in 89.5800 ms
+2026-04-16 11:03:00.734 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.4659 ms
+2026-04-16 11:03:00.734 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 3.0489 ms
+2026-04-16 11:03:00.770 +03:00 [INF] HTTP GET /js/site.js responded 200 in 36.1601 ms
+2026-04-16 11:03:00.775 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 44.9699 ms
+2026-04-16 11:03:00.775 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 41.4442 ms
+2026-04-16 11:03:00.775 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 40.9691 ms
+2026-04-16 11:03:00.775 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 43.8112 ms
+2026-04-16 11:03:00.776 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 41.6182 ms
+2026-04-16 11:04:02.789 +03:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+2026-04-16 11:04:03.829 +03:00 [INF] HTTP GET / responded 200 in 158.3270 ms
+2026-04-16 11:04:04.004 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 163.7066 ms
+2026-04-16 11:04:04.004 +03:00 [INF] HTTP GET /css/site.css responded 200 in 163.8121 ms
+2026-04-16 11:04:04.004 +03:00 [INF] HTTP GET /js/site.js responded 200 in 123.2429 ms
+2026-04-16 11:04:04.011 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 171.7519 ms
+2026-04-16 11:04:04.012 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 172.6328 ms
+2026-04-16 11:04:04.013 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 173.0238 ms
+2026-04-16 11:04:05.721 +03:00 [INF] HTTP GET /Staff/Dashboard responded 200 in 43.8856 ms
+2026-04-16 11:04:05.731 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 3.1886 ms
+2026-04-16 11:04:05.735 +03:00 [INF] HTTP GET /js/site.js responded 200 in 5.8567 ms
+2026-04-16 11:04:05.731 +03:00 [INF] HTTP GET /css/site.css responded 200 in 3.2599 ms
+2026-04-16 11:04:05.736 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 10.1107 ms
+2026-04-16 11:04:05.741 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 13.4434 ms
+2026-04-16 11:04:05.758 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 28.3636 ms
+2026-04-16 11:04:07.430 +03:00 [INF] HTTP GET /Staff/Users/CreateCustomer responded 200 in 56.0093 ms
+2026-04-16 11:04:07.437 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.6482 ms
+2026-04-16 11:04:07.438 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.8286 ms
+2026-04-16 11:04:07.439 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 1.6405 ms
+2026-04-16 11:04:07.439 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 1.6239 ms
+2026-04-16 11:04:07.439 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 2.0238 ms
+2026-04-16 11:04:07.438 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.7970 ms
+2026-04-16 11:04:07.439 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 2.4569 ms
+2026-04-16 11:04:07.439 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 1.8565 ms
+2026-04-16 11:04:43.887 +03:00 [ERR] Failed executing DbCommand (12ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (DbType = Int32), @p2='?' (Size = 200), @p3='?' (Size = 9), @p4='?' (Size = 4000), @p5='?' (Size = 256), @p6='?' (DbType = Boolean), @p7='?' (Size = 100), @p8='?' (Size = 100), @p9='?' (DbType = Boolean), @p10='?' (DbType = DateTimeOffset), @p11='?' (Size = 256), @p12='?' (Size = 256), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (DbType = Boolean), @p16='?' (Size = 4000), @p17='?' (DbType = Boolean), @p18='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [Address], [Afm], [ConcurrencyStamp], [Email], [EmailConfirmed], [FirstName], [LastName], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18);
+2026-04-16 11:04:43.918 +03:00 [ERR] An exception occurred in the database while saving changes for context type 'MellonBank.Infrastructure.Persistence.MellonBankDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert duplicate key row in object 'dbo.AspNetUsers' with unique index 'IX_AspNetUsers_Afm'. The duplicate key value is (111111111).
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__195_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:978ae3d2-5c28-4bdc-9d6a-72f6888345c3
+Error Number:2601,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert duplicate key row in object 'dbo.AspNetUsers' with unique index 'IX_AspNetUsers_Afm'. The duplicate key value is (111111111).
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__195_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:978ae3d2-5c28-4bdc-9d6a-72f6888345c3
+Error Number:2601,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-04-16 11:04:44.081 +03:00 [ERR] Error creating customer
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert duplicate key row in object 'dbo.AspNetUsers' with unique index 'IX_AspNetUsers_Afm'. The duplicate key value is (111111111).
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__195_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:978ae3d2-5c28-4bdc-9d6a-72f6888345c3
+Error Number:2601,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`10.CreateAsync(TUser user, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateCoreAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user, String password)
+   at MellonBank.Infrastructure.Persistence.Services.IdentityService.CreateUserAsync(CreateUserRequestDto request, CancellationToken ct) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Infrastructure\Persistence\Services\IdentityService.cs:line 66
+   at MellonBank.Application.Services.StaffUserManagementService.CreateCustomerAsync(CreateUserRequestDto request, CancellationToken ct) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Application\Services\StaffUserManagementService.cs:line 104
+   at MellonBank.Web.Areas.Staff.Controllers.UsersController.CreateCustomer(CreateCustomerViewModel model) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Web\Areas\Staff\Controllers\UsersController.cs:line 37
+2026-04-16 11:04:44.145 +03:00 [INF] HTTP POST /Staff/Users/CreateCustomer responded 200 in 589.6513 ms
+2026-04-16 11:04:44.160 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.1350 ms
+2026-04-16 11:04:44.197 +03:00 [INF] HTTP GET /js/site.js responded 200 in 0.7023 ms
+2026-04-16 11:04:44.160 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 0.9668 ms
+2026-04-16 11:04:44.206 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 10.2437 ms
+2026-04-16 11:04:44.201 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 42.8894 ms
+2026-04-16 11:04:44.205 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 45.0413 ms
+2026-04-16 11:04:44.207 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 9.0559 ms
+2026-04-16 11:04:44.211 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 14.6791 ms
+2026-04-16 11:05:06.149 +03:00 [INF] HTTP POST /Staff/Users/CreateCustomer responded 302 in 131.8928 ms
+2026-04-16 11:05:06.209 +03:00 [INF] HTTP GET /Staff/Customers responded 200 in 53.4665 ms
+2026-04-16 11:05:06.225 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.0376 ms
+2026-04-16 11:05:06.290 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 65.5721 ms
+2026-04-16 11:05:06.290 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 65.5228 ms
+2026-04-16 11:05:06.261 +03:00 [INF] HTTP GET /js/site.js responded 200 in 36.2149 ms
+2026-04-16 11:05:06.230 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 5.7366 ms
+2026-04-16 11:05:06.261 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 37.8366 ms
+2026-04-16 11:06:36.702 +03:00 [INF] HTTP GET /Staff/Users/CreateCustomer responded 200 in 2.4889 ms
+2026-04-16 11:06:36.718 +03:00 [INF] HTTP GET /css/site.css responded 200 in 0.9516 ms
+2026-04-16 11:06:36.757 +03:00 [INF] HTTP GET /js/site.js responded 200 in 36.0593 ms
+2026-04-16 11:06:36.764 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 44.3503 ms
+2026-04-16 11:06:36.718 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.0636 ms
+2026-04-16 11:06:36.759 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 41.8270 ms
+2026-04-16 11:06:36.761 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 44.5050 ms
+2026-04-16 11:06:36.764 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 42.8678 ms
+2026-04-16 11:06:36.766 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 9.4718 ms
+2026-04-16 11:06:53.259 +03:00 [ERR] Failed executing DbCommand (2ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (DbType = Int32), @p2='?' (Size = 200), @p3='?' (Size = 9), @p4='?' (Size = 4000), @p5='?' (Size = 256), @p6='?' (DbType = Boolean), @p7='?' (Size = 100), @p8='?' (Size = 100), @p9='?' (DbType = Boolean), @p10='?' (DbType = DateTimeOffset), @p11='?' (Size = 256), @p12='?' (Size = 256), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (DbType = Boolean), @p16='?' (Size = 4000), @p17='?' (DbType = Boolean), @p18='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [Address], [Afm], [ConcurrencyStamp], [Email], [EmailConfirmed], [FirstName], [LastName], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18);
+2026-04-16 11:06:53.267 +03:00 [ERR] An exception occurred in the database while saving changes for context type 'MellonBank.Infrastructure.Persistence.MellonBankDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert duplicate key row in object 'dbo.AspNetUsers' with unique index 'IX_AspNetUsers_Afm'. The duplicate key value is (111111111).
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__195_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:978ae3d2-5c28-4bdc-9d6a-72f6888345c3
+Error Number:2601,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert duplicate key row in object 'dbo.AspNetUsers' with unique index 'IX_AspNetUsers_Afm'. The duplicate key value is (111111111).
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__195_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:978ae3d2-5c28-4bdc-9d6a-72f6888345c3
+Error Number:2601,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-04-16 11:06:53.401 +03:00 [ERR] Error creating customer
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert duplicate key row in object 'dbo.AspNetUsers' with unique index 'IX_AspNetUsers_Afm'. The duplicate key value is (111111111).
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__195_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:978ae3d2-5c28-4bdc-9d6a-72f6888345c3
+Error Number:2601,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`10.CreateAsync(TUser user, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateCoreAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user, String password)
+   at MellonBank.Infrastructure.Persistence.Services.IdentityService.CreateUserAsync(CreateUserRequestDto request, CancellationToken ct) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Infrastructure\Persistence\Services\IdentityService.cs:line 66
+   at MellonBank.Application.Services.StaffUserManagementService.CreateCustomerAsync(CreateUserRequestDto request, CancellationToken ct) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Application\Services\StaffUserManagementService.cs:line 104
+   at MellonBank.Web.Areas.Staff.Controllers.UsersController.CreateCustomer(CreateCustomerViewModel model) in C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Web\Areas\Staff\Controllers\UsersController.cs:line 37
+2026-04-16 11:06:53.444 +03:00 [INF] HTTP POST /Staff/Users/CreateCustomer responded 200 in 238.2975 ms
+2026-04-16 11:06:53.460 +03:00 [INF] HTTP GET /css/site.css responded 200 in 1.8041 ms
+2026-04-16 11:06:53.460 +03:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js responded 200 in 0.9129 ms
+2026-04-16 11:06:53.460 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 1.9125 ms
+2026-04-16 11:06:53.461 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 2.4139 ms
+2026-04-16 11:06:53.460 +03:00 [INF] HTTP GET /js/site.js responded 200 in 1.1895 ms
+2026-04-16 11:06:53.460 +03:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 1.4217 ms
+2026-04-16 11:06:53.502 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 44.7156 ms
+2026-04-16 11:06:53.502 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 43.9830 ms

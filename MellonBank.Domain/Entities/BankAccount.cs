@@ -8,9 +8,7 @@ namespace MellonBank.Domain.Entities
     {
         public string AccountNumber { get; private set; } = string.Empty;
         public decimal Balance { get; private set; }
-        public CurrencyType Currency { get; private set; }
-        //public bool IsActive { get; private set; } = true;
-        public string Branch { get; private set; } = string.Empty;
+        public CurrencyType Currency { get; private set; }        public string Branch { get; private set; } = string.Empty;
         public AccountType AccountType { get; private set; }
         public string UserId { get; private set; } = string.Empty;
         public bool IsActive { get; private set; } = true;

@@ -1,9 +1,10 @@
 ﻿using MellonBank.Domain.Enums;
+using MellonBank.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MellonBank.Infrastructure.Identity
+namespace MellonBank.Infrastructure.Seed
 {
     public static class IdentitySeeder
     {

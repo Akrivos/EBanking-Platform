@@ -49,6 +49,16 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
+          "dependencies": {
+            "NuGet.Packaging": {
+              "target": "Package",
+              "version": "[7.3.1, )"
+            },
+            "NuGet.Protocol": {
+              "target": "Package",
+              "version": "[7.3.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

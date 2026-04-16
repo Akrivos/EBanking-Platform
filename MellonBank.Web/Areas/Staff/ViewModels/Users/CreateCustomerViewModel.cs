@@ -1,4 +1,4 @@
-﻿using MellonBank.Domain.Enums;
+﻿using MellonBank.Application.Common.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace MellonBank.Web.Areas.Staff.ViewModels.Users
@@ -7,37 +7,39 @@ namespace MellonBank.Web.Areas.Staff.ViewModels.Users
     {
         [Required]
         [StringLength(100)]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
         [Required]
         [StringLength(100)]
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
 
         [Required]
         [StringLength(200)]
-        public string Address { get; set; }
+        public string Address { get; set; } = string.Empty;
 
         [Required]
         [StringLength(9)]
-        [RegularExpression(@"^\d{9}$", ErrorMessage = "AFM must be exactly 9 digits.")]
-        public string Afm { get; set; }
+        [RegularExpression(ValidationPatterns.Afm, ErrorMessage = ValidationMessages.Afm)]
+        public string Afm { get; set; } = string.Empty;
 
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         [Required]
-        [StringLength(20)]
-        public string PhoneNumber { get; set; }
+        [StringLength(16)]
+        [RegularExpression(ValidationPatterns.PhoneNumber,
+            ErrorMessage = ValidationMessages.PhoneNumber)]
+        public string PhoneNumber { get; set; } = string.Empty;
 
         [Required]
         [StringLength(100)]
-        public string Username { get; set; }
+        public string Username { get; set; } = string.Empty;
 
         [Required]
         [StringLength(100, MinimumLength = 6)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$",
-            ErrorMessage = "Password must contain uppercase, lowercase, number and special character.")]
-        public string Password { get; set; }
+        [RegularExpression(ValidationPatterns.StrongPassword,
+            ErrorMessage = ValidationMessages.StrongPassword)]
+        public string Password { get; set; } = string.Empty;
     }
 }

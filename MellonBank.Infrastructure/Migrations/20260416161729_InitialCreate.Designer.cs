@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MellonBank.Infrastructure.Migrations
 {
     [DbContext(typeof(MellonBankDbContext))]
-    [Migration("20260416074031_initials")]
-    partial class initials
+    [Migration("20260416161729_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

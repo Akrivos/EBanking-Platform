@@ -6,7 +6,7 @@ namespace MellonBank.Web.Areas.Staff.ViewModels.Accounts
     public class UpdateAccountViewModel
     {
         [Required]
-        public string AccountNumber { get; set; }
+        public string AccountNumber { get; set; } = string.Empty;
 
         [Required]
         [StringLength(100)]

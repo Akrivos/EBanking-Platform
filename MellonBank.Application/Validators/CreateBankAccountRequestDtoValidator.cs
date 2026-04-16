@@ -10,10 +10,6 @@ namespace MellonBank.Application.Validators
             RuleFor(x => x.CustomerAfm)
                 .NotEmpty()
                 .Length(9);
-        
-            RuleFor(x => x.AccountNumber)
-                .NotEmpty()
-                .MaximumLength(20);
 
             RuleFor(x => x.InitialBalance)
                 .GreaterThanOrEqualTo(0);

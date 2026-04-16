@@ -34,12 +34,12 @@ namespace MellonBank.Web.Areas.Staff.Controllers
 
                     return View(new List<GetCustomerDetailsViewModel>
                     {
-                        MapToViewModel(customer)
+                        MapToViewModel(customer!)
                     });
                 }
 
                 var customers = await _staffUserManagementService.GetAllCustomersAsync(ct);
-                var model = customers.Select(c => MapToViewModel(c)).ToList();
+                var model = customers.Select(c => MapToViewModel(c!)).ToList();
 
                 return View(model);
             }
@@ -59,7 +59,7 @@ namespace MellonBank.Web.Areas.Staff.Controllers
             try
             {
                 var customer = await _staffUserManagementService.GetCustomerByAfmAsync(afm, ct);
-                return View(MapToViewModel(customer));
+                return View(MapToViewModel(customer!));
             }
             catch (AppNotFoundException)
             {
@@ -79,7 +79,7 @@ namespace MellonBank.Web.Areas.Staff.Controllers
 
                 var updateCustomerViewModel = new UpdateCustomerDetailsViewModel
                 {
-                    Afm = customer.Afm,
+                    Afm = customer!.Afm,
                     FirstName = customer.FirstName,
                     LastName = customer.LastName,
                     Address = customer.Address,
@@ -133,7 +133,7 @@ namespace MellonBank.Web.Areas.Staff.Controllers
 
                 var model = new DeleteCustomerViewModel
                 {
-                    FirstName = customer.FirstName,
+                    FirstName = customer!.FirstName,
                     LastName = customer.LastName,
                     Afm = customer.Afm,
                     Email = customer.Email,

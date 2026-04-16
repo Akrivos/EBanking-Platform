@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MellonBank.Application.Common.Generators;
 using MellonBank.Application.Common.Models;
 using MellonBank.Application.DTOs.Requests;
 using MellonBank.Application.DTOs.Responses;
@@ -19,6 +20,7 @@ namespace MellonBank.Application.Services
         private readonly IIdentityService _identityService;
         private readonly IRoleService _roleManagerService;
         private readonly IBankAccountRepository _bankAccountRepository;
+        private readonly IAccountNumberGenerator _accountNumberGenerator;
         private readonly IUnitOfWork _unitOfWork;
 
         public AccountManagementService(
@@ -28,6 +30,7 @@ namespace MellonBank.Application.Services
             IIdentityService identityService,
             IRoleService roleManagerService,
             IBankAccountRepository bankAccountRepository,
+            IAccountNumberGenerator accountNumberGenerator,
             IUnitOfWork unitOfWork)
         {
             _createValidator = createValidator;
@@ -36,6 +39,7 @@ namespace MellonBank.Application.Services
             _identityService = identityService;
             _roleManagerService = roleManagerService;
             _bankAccountRepository = bankAccountRepository;
+            _accountNumberGenerator = accountNumberGenerator;
             _unitOfWork = unitOfWork;
         }
 
@@ -98,12 +102,15 @@ namespace MellonBank.Application.Services
             if (!isCustomer)
                 return Result<Guid>.Failure("Bank accounts can only be assigned to customers.");
 
-            var accountExists = await _bankAccountRepository.ExistsByAccountNumberAsync(request.AccountNumber, ct);
-            if (accountExists)
-                return Result<Guid>.Failure("An account with the same account number already exists.");
+            string accountNumber;
+            do
+            {
+                accountNumber = _accountNumberGenerator.Generate();
+            }
+            while (await _bankAccountRepository.ExistsByAccountNumberAsync(accountNumber, ct));
 
             var account = new BankAccount(
-                request.AccountNumber,
+                accountNumber,
                 request.InitialBalance,
                 request.Currency,
                 customer.Id,

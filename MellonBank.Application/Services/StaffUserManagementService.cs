@@ -30,7 +30,7 @@ namespace MellonBank.Application.Services
             _updateValidator = updateValidator;
         }
 
-        public async Task<UserResponseDto> GetCustomerByAfmAsync(string afm, CancellationToken ct = default)
+        public async Task<UserResponseDto?> GetCustomerByAfmAsync(string afm, CancellationToken ct = default)
         {
             EnsureStaffAccess();
 
@@ -59,11 +59,11 @@ namespace MellonBank.Application.Services
         {
             EnsureStaffAccess();
 
-            var users = await _identityService.GetUsersInRoleAsync(ct);
+            var users = await _identityService.GetUsersInRoleAsync(RoleType.Customer, ct);
 
             return users.Any()
                 ? users.Select(user => new UserResponseDto(
-                    FirstName: user.FirstName,
+                    FirstName: user!.FirstName,
                     LastName: user.LastName,
                     Afm: user.Afm,
                     PhoneNumber: user.PhoneNumber,

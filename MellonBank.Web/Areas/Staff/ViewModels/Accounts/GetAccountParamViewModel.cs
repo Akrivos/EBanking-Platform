@@ -5,6 +5,6 @@ namespace MellonBank.Web.Areas.Staff.ViewModels.Accounts
     public class GetAccountParamViewModel
     {
         [Required]
-        public string AccountNumber { get; set; }
+        public string AccountNumber { get; set; } = string.Empty;
     }
 }

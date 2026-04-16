@@ -48,13 +48,13 @@ namespace MellonBank.Application.Services
             var toAccountNumber = request.ToAccountNumber?.Trim();
 
             var fromAccount = await _bankAccountRepository
-                .GetByAccountNumberAndUserIdAsync(fromAccountNumber, userId, ct);
+                .GetByAccountNumberAndUserIdAsync(fromAccountNumber!, userId, ct);
 
             if (fromAccount is null)
                 return Result.Failure("Source account not found.");
 
             var toAccount = await _bankAccountRepository
-                .GetByAccountNumberAndUserIdAsync(toAccountNumber, userId, ct);
+                .GetByAccountNumberAndUserIdAsync(toAccountNumber!, userId, ct);
 
             if (toAccount is null)
                 return Result.Failure("Destination account not found.");
@@ -101,13 +101,13 @@ namespace MellonBank.Application.Services
             var toAccountNumber = request.ToAccountNumber?.Trim();
 
             var fromAccount = await _bankAccountRepository
-                .GetByAccountNumberAndUserIdAsync(fromAccountNumber, userId, ct);
+                .GetByAccountNumberAndUserIdAsync(fromAccountNumber!, userId, ct);
 
             if (fromAccount is null)
                 return Result.Failure("Source account not found.");
 
             var toAccount = await _bankAccountRepository
-                .GetByAccountNumberAsync(toAccountNumber, ct);
+                .GetByAccountNumberAsync(toAccountNumber!, ct);
 
             if (toAccount is null)
                 return Result.Failure("Destination account not found.");

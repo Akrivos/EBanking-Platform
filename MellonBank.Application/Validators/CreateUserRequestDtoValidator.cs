@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MellonBank.Application.Common.Validation;
 using MellonBank.Application.DTOs.Requests;
 
 namespace MellonBank.Application.Validators
@@ -17,7 +18,7 @@ namespace MellonBank.Application.Validators
 
             RuleFor(x => x.Afm)
                 .NotEmpty()
-                .Matches(@"^\d{9}$").WithMessage("AFM must be exactly 9 digits.");
+                .Matches(ValidationPatterns.Afm).WithMessage(ValidationMessages.Afm);
 
             RuleFor(x => x.Address)
                 .NotEmpty()
@@ -25,7 +26,7 @@ namespace MellonBank.Application.Validators
 
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty()
-                .MaximumLength(20);
+                .MaximumLength(16);
 
             RuleFor(x => x.Email)
                 .NotEmpty()

@@ -21,7 +21,7 @@ namespace MellonBank.Application.Validators
 
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty()
-                .MaximumLength(20);
+                .MaximumLength(16);
 
             RuleFor(x => x.Email)
                 .NotEmpty()

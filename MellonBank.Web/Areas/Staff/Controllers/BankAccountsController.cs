@@ -48,7 +48,6 @@ namespace MellonBank.Web.Areas.Staff.Controllers
             var result = await _accountManagementService.CreateAccountAsync(
                 new CreateBankAccountRequestDto(
                     model.CustomerAfm,
-                    model.AccountNumber,
                     model.InitialBalance,
                     CurrencyType.EUR,
                     model.Branch,
@@ -176,7 +175,7 @@ namespace MellonBank.Web.Areas.Staff.Controllers
                 Currency = account.Currency,
                 Branch = account.Branch,
                 AccountType = account.AccountType,
-                CustomerAfm = account.CustomerAfm
+                CustomerAfm = account.CustomerAfm!
             };
         }
     }

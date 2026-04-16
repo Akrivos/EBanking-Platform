@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MellonBank.Application.Common.Generators;
 using MellonBank.Application.Interfaces.Services;
 using MellonBank.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,8 @@ namespace MellonBank.Application
         public static void AddApplication(this IServiceCollection services)
         {
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            services.AddTransient<IAccountNumberGenerator, AccountNumberGenerator>();
 
             services.AddScoped<IStaffUserManagementService, StaffUserManagementService>();
             services.AddScoped<ICustomerAccountService, CustomerAccountService>();

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MellonBank.Application.Common.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace MellonBank.Web.Areas.Customer.ViewModels
 {
@@ -11,8 +12,8 @@ namespace MellonBank.Web.Areas.Customer.ViewModels
         [Required]
         [DataType(DataType.Password)]
         [StringLength(100, MinimumLength = 6)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$",
-            ErrorMessage = "Password must contain uppercase, lowercase, number and special character.")]
+        [RegularExpression(ValidationPatterns.StrongPassword,
+            ErrorMessage = ValidationMessages.StrongPassword)]
         public string NewPassword { get; set; } = string.Empty;
 
         [Required]

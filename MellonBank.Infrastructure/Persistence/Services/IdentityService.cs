@@ -28,26 +28,26 @@ namespace MellonBank.Infrastructure.Persistence.Services
                     u.LastName,
                     u.Address,
                     u.Afm,
-                    u.PhoneNumber ?? string.Empty,
-                    u.Email ?? string.Empty,
-                    u.UserName ?? string.Empty
+                    u.PhoneNumber!,
+                    u.Email!,
+                    u.UserName!
                 ))
                 .SingleOrDefaultAsync(ct);
         }
 
-        public async Task<IEnumerable<UserIdentityModel>> GetUsersInRoleAsync(CancellationToken ct = default)
+        public async Task<IEnumerable<UserIdentityModel?>> GetUsersInRoleAsync(RoleType roleName, CancellationToken ct = default)
         {
-            var users = await _userManager.GetUsersInRoleAsync(RoleType.Customer.ToString());
+            var users = await _userManager.GetUsersInRoleAsync(roleName.ToString());
 
-            return users.Select(user => new UserIdentityModel(
+            return users.OrderBy(u => u.FirstName).Select(user => new UserIdentityModel(
                 user.Id,
                 user.FirstName,
                 user.LastName,
                 user.Address,
                 user.Afm,
-                user.PhoneNumber ?? string.Empty,
-                user.Email ?? string.Empty,
-                user.UserName ?? string.Empty
+                user.PhoneNumber!,
+                user.Email!,
+                user.UserName!
             ));
         }
 

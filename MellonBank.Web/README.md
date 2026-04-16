@@ -21,7 +21,7 @@ The application simulates a simplified e-banking platform where:
 The solution is structured with the following layers:
 
 - **Web** – MVC UI, Razor views, controllers, areas, and view models
-- **Application** – use cases, DTOs, validators, interfaces, and business services
+- **Application** – use cases, DTOs, validators, interfaces, exceptions, and business services
 - **Domain** – entities, enums, domain rules, and exceptions
 - **Infrastructure** – EF Core persistence, Identity integration, external API services, and repositories
 
@@ -139,7 +139,6 @@ Contains:
 - Razor views
 - Areas (`Staff`, `Customer`, `Identity`)
 - ViewModels
-- UI mappings
 
 ### Application Layer
 
@@ -159,7 +158,6 @@ Contains:
 - enums
 - domain methods
 - domain exceptions
-- invariant enforcement
 
 ### Infrastructure Layer
 
@@ -259,12 +257,12 @@ Returned data includes the current conversion rates used internally by the appli
 - `/Staff/BankAccounts/Create` -> Create bank account
 - `/Staff/BankAccounts/Details?accountNumber={accountNumber}` -> Bank account details
 - `/Staff/BankAccounts/Edit?accountNumber={accountNumber}` -> Edit bank account
-- `/Staff/BankAccounts/Delete?accountNumber={accountNumber}` -> Delete bank account
+- `/Staff/BankAccounts/Delete?accountNumber={accountNumber}` -> Delete bank account (soft delete)
 
 ## Customer Area
 
 - `/Customer/Dashboard` -> Customer dashboard
-- `/Customer/Banking/MyAccounts` -> My accounts / account selection page
+- `/Customer/Banking/MyAccounts` -> My accounts
 - `/Customer/Banking/AccountDetails?accountNumber={accountNumber}` -> Account details
 - `/Customer/Banking/Balance?accountNumber={accountNumber}` -> Balance in EUR and USD
 - `/Customer/Banking/TransferToOwn?accountNumber={accountNumber}` -> Transfer between own accounts
@@ -370,6 +368,8 @@ dotnet ef database update --project MellonBank.Infrastructure --startup-project 
 ```bash
 dotnet run --project MellonBank.Web
 ```
+
+Launch the application and navigate to `http://localhost:5176` to access the home page.
 
 ---
 

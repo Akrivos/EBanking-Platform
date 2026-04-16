@@ -1,13 +1,9 @@
 ﻿using MellonBank.Application.DTOs.Requests;
-using MellonBank.Application.Exceptions;
 using MellonBank.Application.Interfaces.Services;
-using MellonBank.Domain.Exceptions;
-using MellonBank.Infrastructure.Persistence.Services;
 using MellonBank.Web.Areas.Customer.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Security.Claims;
 
 namespace MellonBank.Web.Areas.Customer.Controllers;
 
@@ -115,11 +111,20 @@ public class BankingController : Controller
 
         try
         {
-            await _transferService.TransferToOwnAccountAsync(new TransferToOwnAccountRequestDto(
-                FromAccountNumber: model.FromAccountNumber,
-                ToAccountNumber: model.ToAccountNumber,
-                Amount: model.Amount
-            ),ct);
+            var result = await _transferService.TransferToOwnAccountAsync(
+                new TransferToOwnAccountRequestDto(
+                    FromAccountNumber: model.FromAccountNumber,
+                    ToAccountNumber: model.ToAccountNumber,
+                    Amount: model.Amount
+                ),
+                ct);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, result.Error!);
+                return View(model);
+            }
+
 
             TempData["SuccessMessage"] = "Transfer completed successfully.";
             return RedirectToAction(nameof(MyAccounts));
@@ -128,7 +133,8 @@ public class BankingController : Controller
         {
             _logger.LogError(ex, "Error during transfer between own accounts.");
 
-            ModelState.AddModelError(string.Empty, "An error occurred while processing the transfer.");
+            ModelState.AddModelError(string.Empty, "An unexpected error occurred while processing the transfer.");
+
             return View(model);
         }
     }
@@ -169,6 +175,7 @@ public class BankingController : Controller
             Text = $"{a.AccountNumber} - {a.AccountType} - {a.Balance:N2} €"
         }).ToList();
 
+
         if (model.FromAccountNumber == model.ToAccountNumber)
         {
             ModelState.AddModelError(string.Empty, "Source and destination account must be different.");
@@ -179,32 +186,28 @@ public class BankingController : Controller
 
         try
         {
-            await _transferService.TransferToThirdPartyAsync(new TransferToThirdPartyRequestDto(
-                model.FromAccountNumber,
-                model.ToAccountNumber,
-                model.Amount
-            ),ct);
+            var result = await _transferService.TransferToThirdPartyAsync(
+                new TransferToThirdPartyRequestDto(
+                    model.FromAccountNumber,
+                    model.ToAccountNumber,
+                    model.Amount
+                ),
+                ct);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, result.Error!);
+                return View(model);
+            }
 
             TempData["SuccessMessage"] = "Transfer completed successfully.";
-
             return RedirectToAction(nameof(MyAccounts));
-        }
-        catch (InsufficientBalanceException)
-        {
-            ModelState.AddModelError(string.Empty, "The amout is not available in the selected account.");
-            return View(model);
-        }
-        catch (AppNotFoundException ex)
-        {
-            ModelState.AddModelError(string.Empty, ex.Message);
-            return View(model);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error during third-party transfer.");
 
-            ModelState.AddModelError(string.Empty, "An error occurred during the transfer");
-
+            ModelState.AddModelError(string.Empty, "An unexpected error occurred during the transfer.");
             return View(model);
         }
     }

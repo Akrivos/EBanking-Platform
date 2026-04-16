@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MellonBank.Application.Common.Models;
 using MellonBank.Application.DTOs.Requests;
 using MellonBank.Application.Exceptions;
 using MellonBank.Application.Interfaces.Services;
@@ -21,7 +22,7 @@ namespace MellonBank.Application.Services
             _identityService = identityService;
         }
 
-        public async Task<bool> ChangePasswordAsync(ChangePasswordRequestDto request, CancellationToken ct = default)
+        public async Task<Result> ChangePasswordAsync(ChangePasswordRequestDto request, CancellationToken ct = default)
         {
             var currentUser = _currentUserService.UserId;
             if (currentUser is null)
@@ -29,10 +30,13 @@ namespace MellonBank.Application.Services
 
             var validationResult = await _changePasswordValidator.ValidateAsync(request, ct);
             if (!validationResult.IsValid)
-                throw new AppValidationException(validationResult.ToDictionary());
+                return Result.Failure("Please correct the password fields.");
 
-            var result = await _identityService.ChangePasswordAsync(currentUser, request.CurrentPassword, request.NewPassword, ct);
-            return result;
+            return await _identityService.ChangePasswordAsync(
+                currentUser,
+                request.CurrentPassword,
+                request.NewPassword,
+                ct);
         }
     }
 }

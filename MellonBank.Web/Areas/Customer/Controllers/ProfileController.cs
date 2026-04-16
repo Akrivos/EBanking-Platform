@@ -36,20 +36,26 @@ public class ProfileController : Controller
 
         try
         {
-            await _profileService.ChangePasswordAsync(new ChangePasswordRequestDto(
-                model.CurrentPassword,
-                model.NewPassword,
-                model.ConfirmPassword), ct);
+            var result = await _profileService.ChangePasswordAsync(
+                new ChangePasswordRequestDto(
+                    model.CurrentPassword,
+                    model.NewPassword,
+                    model.ConfirmPassword),
+                ct);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, result.Error!);
+                return View(model);
+            }
 
             TempData["SuccessMessage"] = "Password changed successfully!";
-
             return RedirectToAction("Index", "Dashboard", new { area = "Customer" });
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error while changing password.");
-
-            ModelState.AddModelError(string.Empty, "An error occurred while changing the password.");
+            ModelState.AddModelError(string.Empty, "An unexpected error occurred while changing the password.");
             return View(model);
         }
     }

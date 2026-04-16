@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MellonBank.Application.Common.Models;
 using MellonBank.Application.DTOs.Requests;
 using MellonBank.Application.Exceptions;
 using MellonBank.Application.Interfaces.Persistence;
@@ -20,48 +21,61 @@ namespace MellonBank.Application.Services
         public TransferService(
             IValidator<TransferToOwnAccountRequestDto> ownAccountValidator,
             IValidator<TransferToThirdPartyRequestDto> thirdPartyValidator,
-            ICurrentUserService currentUserService, 
+            ICurrentUserService currentUserService,
             IBankAccountRepository bankAccountRepository,
             ITransactionRepository transactionRepository,
-            IUnitOfWork unitOfWork
-        )
+            IUnitOfWork unitOfWork)
         {
             _ownAccountValidator = ownAccountValidator;
             _thirdPartyValidator = thirdPartyValidator;
-            _bankAccountRepository = bankAccountRepository;
             _currentUserService = currentUserService;
+            _bankAccountRepository = bankAccountRepository;
             _transactionRepository = transactionRepository;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task TransferToOwnAccountAsync(
-           TransferToOwnAccountRequestDto request,
+        public async Task<Result> TransferToOwnAccountAsync(
+            TransferToOwnAccountRequestDto request,
             CancellationToken ct = default)
         {
-            var fromAccountNumber = request.FromAccountNumber?.Trim();
-            var toAccountNumber = request.ToAccountNumber?.Trim();
-            var amount = request.Amount;
-
             var validationResult = await _ownAccountValidator.ValidateAsync(request, ct);
             if (!validationResult.IsValid)
-                throw new AppValidationException(validationResult.ToDictionary());
+                return Result.Failure("Please provide valid transfer details.");
 
             var userId = GetCurrentUserIdOrThrow();
 
-            var fromAccount = await GetSourceAccountAsync(fromAccountNumber, userId, ct);
+            var fromAccountNumber = request.FromAccountNumber?.Trim();
+            var toAccountNumber = request.ToAccountNumber?.Trim();
 
-            var toAccount = await _bankAccountRepository.GetByAccountNumberAndUserIdAsync(toAccountNumber, userId, ct);
+            var fromAccount = await _bankAccountRepository
+                .GetByAccountNumberAndUserIdAsync(fromAccountNumber, userId, ct);
+
+            if (fromAccount is null)
+                return Result.Failure("Source account not found.");
+
+            var toAccount = await _bankAccountRepository
+                .GetByAccountNumberAndUserIdAsync(toAccountNumber, userId, ct);
 
             if (toAccount is null)
-                throw new AppNotFoundException("Destination account not found.");
+                return Result.Failure("Destination account not found.");
 
-            fromAccount.Debit(amount);
-            toAccount.Credit(amount);
+            if (fromAccount.Id == toAccount.Id)
+                return Result.Failure("Source and destination accounts cannot be the same.");
+
+            try
+            {
+                fromAccount.Debit(request.Amount);
+                toAccount.Credit(request.Amount);
+            }
+            catch (Exception)
+            {
+                return Result.Failure("Insufficient available balance.");
+            }
 
             var transaction = Transaction.CreateOwnTransfer(
                 fromAccount.Id,
                 toAccount.Id,
-                amount,
+                request.Amount,
                 $"Transfer from {fromAccount.AccountNumber} to {toAccount.AccountNumber}",
                 userId);
 
@@ -69,37 +83,53 @@ namespace MellonBank.Application.Services
 
             await _transactionRepository.AddAsync(transaction, ct);
             await _unitOfWork.SaveChangesAsync(ct);
+
+            return Result.Success();
         }
 
-        public async Task TransferToThirdPartyAsync(
+        public async Task<Result> TransferToThirdPartyAsync(
             TransferToThirdPartyRequestDto request,
             CancellationToken ct = default)
         {
-            var fromAccountNumber = request.FromAccountNumber?.Trim();
-            var toAccountNumber = request.ToAccountNumber?.Trim();
-            var amount = request.Amount;
-
             var validationResult = await _thirdPartyValidator.ValidateAsync(request, ct);
             if (!validationResult.IsValid)
-                throw new AppValidationException(validationResult.ToDictionary());
+                return Result.Failure("Please provide valid transfer details.");
 
             var userId = GetCurrentUserIdOrThrow();
 
-            var fromAccount = await GetSourceAccountAsync(fromAccountNumber!, userId, ct);
+            var fromAccountNumber = request.FromAccountNumber?.Trim();
+            var toAccountNumber = request.ToAccountNumber?.Trim();
 
-            var toAccount = await GetDestinationAccountAsync(toAccountNumber!, ct);
+            var fromAccount = await _bankAccountRepository
+                .GetByAccountNumberAndUserIdAsync(fromAccountNumber, userId, ct);
+
+            if (fromAccount is null)
+                return Result.Failure("Source account not found.");
+
+            var toAccount = await _bankAccountRepository
+                .GetByAccountNumberAsync(toAccountNumber, ct);
+
+            if (toAccount is null)
+                return Result.Failure("Destination account not found.");
 
             if (toAccount.UserId == userId)
-                throw new AppValidationException(
-                    "Destination account belongs to the current user. Use own account transfer instead.");
+                return Result.Failure(
+                    "Destination account belongs to you. Use own account transfer instead.");
 
-            fromAccount.Debit(amount);
-            toAccount.Credit(amount);
+            try
+            {
+                fromAccount.Debit(request.Amount);
+                toAccount.Credit(request.Amount);
+            }
+            catch (Exception)
+            {
+                return Result.Failure("Insufficient available balance.");
+            }
 
             var transaction = Transaction.CreateThirdPartyTransfer(
                 fromAccount.Id,
                 toAccount.Id,
-                amount,
+                request.Amount,
                 $"Third-party transfer from {fromAccount.AccountNumber} to {toAccount.AccountNumber}",
                 userId);
 
@@ -107,6 +137,8 @@ namespace MellonBank.Application.Services
 
             await _transactionRepository.AddAsync(transaction, ct);
             await _unitOfWork.SaveChangesAsync(ct);
+
+            return Result.Success();
         }
 
         private string GetCurrentUserIdOrThrow()
@@ -115,31 +147,6 @@ namespace MellonBank.Application.Services
                 throw new AppForbiddenException("User is not authenticated.");
 
             return _currentUserService.UserId;
-        }
-
-        private async Task<BankAccount> GetSourceAccountAsync(
-            string accountNumber,
-            string userId,
-            CancellationToken ct)
-        {
-            var account = await _bankAccountRepository.GetByAccountNumberAndUserIdAsync(accountNumber, userId, ct);
-
-            if (account is null)
-                throw new AppNotFoundException("Source account not found.");
-
-            return account;
-        }
-
-        private async Task<BankAccount> GetDestinationAccountAsync(
-            string accountNumber,
-            CancellationToken ct)
-        {
-            var account = await _bankAccountRepository.GetByAccountNumberAsync(accountNumber, ct);
-
-            if (account is null)
-                throw new AppNotFoundException("Destination account not found.");
-
-            return account;
         }
     }
 }

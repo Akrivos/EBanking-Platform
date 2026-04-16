@@ -1,4 +1,5 @@
-﻿using MellonBank.Application.DTOs.Requests;
+﻿using MellonBank.Application.Common.Models;
+using MellonBank.Application.DTOs.Requests;
 using MellonBank.Application.Interfaces.Services;
 using MellonBank.Application.Models.MellonBank.Application.Models;
 using MellonBank.Domain.Enums;
@@ -124,15 +125,22 @@ namespace MellonBank.Infrastructure.Persistence.Services
             return result.Succeeded;
         }
 
-        public async Task<bool> ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken ct = default)
+        public async Task<Result> ChangePasswordAsync(string userId, string currentPassword, string newPassword, CancellationToken ct = default)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user is null)
-                return false;
+                return Result.Failure("User not found.");
 
             var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
 
-            return result.Succeeded;
+            if (!result.Succeeded)
+            {
+                var errMessage = result.Errors.FirstOrDefault()?.Description ?? "Current password is incorrect or the new password is invalid.";
+
+                return Result.Failure(errMessage);
+            }
+
+            return Result.Success();
         }
 
         private async Task<ApplicationUser?> FindApplicationUserByAfmAsync(string afm, CancellationToken ct = default)

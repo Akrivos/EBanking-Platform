@@ -29,7 +29,7 @@ public class ProfileController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+    public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model, CancellationToken ct)
     {
         if (!ModelState.IsValid)
             return View(model);
@@ -39,7 +39,7 @@ public class ProfileController : Controller
             await _profileService.ChangePasswordAsync(new ChangePasswordRequestDto(
                 model.CurrentPassword,
                 model.NewPassword,
-                model.ConfirmPassword));
+                model.ConfirmPassword), ct);
 
             TempData["SuccessMessage"] = "Password changed successfully!";
 

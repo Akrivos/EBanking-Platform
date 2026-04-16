@@ -31,9 +31,9 @@ public class BankingController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> MyAccounts()
+    public async Task<IActionResult> MyAccounts(CancellationToken ct)
     {
-        var myAccounts = await _customerAccountService.GetAccountsAsync();
+        var myAccounts = await _customerAccountService.GetAccountsAsync(ct);
 
         var myAccountListViewModel = myAccounts.Select(a => new MyAccountListItemViewModel
         {
@@ -47,12 +47,12 @@ public class BankingController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> AccountDetails(string? accountNumber)
+    public async Task<IActionResult> AccountDetails(string? accountNumber, CancellationToken ct)
     {
         if (string.IsNullOrWhiteSpace(accountNumber))
             return BadRequest();
 
-        var account = await _customerAccountService.GetAccountDetailsAsync(accountNumber);
+        var account = await _customerAccountService.GetAccountDetailsAsync(accountNumber, ct);
 
         if (account is null)
             return NotFound();
@@ -70,9 +70,9 @@ public class BankingController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> TransferToOwn(string? accountNumber = null)
+    public async Task<IActionResult> TransferToOwn(CancellationToken ct, string? accountNumber = null)
     {
-        var accounts = (await _customerAccountService.GetAccountsAsync()).ToList();
+        var accounts = (await _customerAccountService.GetAccountsAsync(ct)).ToList();
 
         if (accounts.Count < 2)
         {
@@ -95,9 +95,9 @@ public class BankingController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> TransferToOwn(TransferToOwnViewModel model)
+    public async Task<IActionResult> TransferToOwn(TransferToOwnViewModel model, CancellationToken ct)
     {
-        var accounts = (await _customerAccountService.GetAccountsAsync()).ToList();
+        var accounts = (await _customerAccountService.GetAccountsAsync(ct)).ToList();
 
         model.AvailableAccounts = accounts.Select(a => new SelectListItem
         {
@@ -119,7 +119,7 @@ public class BankingController : Controller
                 FromAccountNumber: model.FromAccountNumber,
                 ToAccountNumber: model.ToAccountNumber,
                 Amount: model.Amount
-            ));
+            ),ct);
 
             TempData["SuccessMessage"] = "Transfer completed successfully.";
             return RedirectToAction(nameof(MyAccounts));
@@ -134,9 +134,9 @@ public class BankingController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> TransferToThirdParty(string? accountNumber = null)
+    public async Task<IActionResult> TransferToThirdParty(CancellationToken ct, string? accountNumber = null)
     {
-        var accounts = (await _customerAccountService.GetAccountsAsync()).ToList();
+        var accounts = (await _customerAccountService.GetAccountsAsync(ct)).ToList();
 
         if (!accounts.Any())
         {
@@ -159,9 +159,9 @@ public class BankingController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> TransferToThirdParty(TransferToThirdPartyViewModel model)
+    public async Task<IActionResult> TransferToThirdParty(TransferToThirdPartyViewModel model, CancellationToken ct)
     {
-        var accounts = (await _customerAccountService.GetAccountsAsync()).ToList();
+        var accounts = (await _customerAccountService.GetAccountsAsync(ct)).ToList();
 
         model.AvailableAccounts = accounts.Select(a => new SelectListItem
         {
@@ -183,14 +183,15 @@ public class BankingController : Controller
                 model.FromAccountNumber,
                 model.ToAccountNumber,
                 model.Amount
-            ));
+            ),ct);
 
             TempData["SuccessMessage"] = "Transfer completed successfully.";
+
             return RedirectToAction(nameof(MyAccounts));
         }
         catch (InsufficientBalanceException)
         {
-            ModelState.AddModelError(string.Empty, "The amount is not available in the selected account.");
+            ModelState.AddModelError(string.Empty, "The amout is not available in the selected account.");
             return View(model);
         }
         catch (AppNotFoundException ex)
@@ -202,7 +203,8 @@ public class BankingController : Controller
         {
             _logger.LogError(ex, "Error during third-party transfer.");
 
-            ModelState.AddModelError(string.Empty, "An error occurred during the transfer.");
+            ModelState.AddModelError(string.Empty, "An error occurred during the transfer");
+
             return View(model);
         }
     }
@@ -246,8 +248,7 @@ public class BankingController : Controller
             if (account is null)
                 return NotFound();
 
-            var convertedBalance = await _customerAccountService
-                .GetConvertedBalanceAsync(accountNumber, ct);
+            var convertedBalance = await _customerAccountService.GetConvertedBalanceAsync(accountNumber, ct);
 
             if (convertedBalance is null)
             {
@@ -273,6 +274,7 @@ public class BankingController : Controller
                 accountNumber);
 
             TempData["InfoMessage"] = "Unable to retrieve balance information at the moment.";
+
             return RedirectToAction(nameof(MyAccounts));
         }
     }

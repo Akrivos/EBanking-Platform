@@ -27,7 +27,6 @@ namespace MellonBank.Infrastructure
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
-                options.User.RequireUniqueEmail = true;
                 options.Password.RequiredLength = 6;
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireDigit = true;

@@ -11,6 +11,7 @@ namespace MellonBank.Web.Areas.Customer.ViewModels
 
         [Required]
         [Display(Name = "To Account")]
+        [StringLength(20)]
         public string ToAccountNumber { get; set; } = string.Empty;
 
         [Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than zero.")]

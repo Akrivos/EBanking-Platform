@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MellonBank.Application.Common.Models;
 using MellonBank.Application.DTOs.Requests;
 using MellonBank.Application.DTOs.Responses;
 using MellonBank.Application.Exceptions;
@@ -16,12 +17,11 @@ namespace MellonBank.Application.Services
         private readonly ICurrentUserService _currentUserService;
 
         public StaffUserManagementService(
-            IValidator<CreateUserRequestDto> createValidator, 
-            IValidator<UpdateUserRequestDto> updateValidator, 
+            IValidator<CreateUserRequestDto> createValidator,
+            IValidator<UpdateUserRequestDto> updateValidator,
             IIdentityService identityService,
             IRoleService roleManagerService,
-            ICurrentUserService currentUserService
-        )
+            ICurrentUserService currentUserService)
         {
             _identityService = identityService;
             _roleManagerService = roleManagerService;
@@ -32,12 +32,7 @@ namespace MellonBank.Application.Services
 
         public async Task<UserResponseDto> GetCustomerByAfmAsync(string afm, CancellationToken ct = default)
         {
-
-            if(_currentUserService.UserId is null)
-                throw new AppForbiddenException("User must be authenticated to access customer information.");
-
-            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
-                throw new AppForbiddenException("Only staff users can create customers.");
+            EnsureStaffAccess();
 
             if (string.IsNullOrWhiteSpace(afm))
                 throw new AppValidationException("AFM must be provided.");
@@ -46,9 +41,8 @@ namespace MellonBank.Application.Services
             if (user is null)
                 throw new AppNotFoundException($"Customer with AFM {afm} not found.");
 
-            if(! await _roleManagerService.IsInRoleAsync(user.Id, RoleType.Customer))
+            if (!await _roleManagerService.IsInRoleAsync(user.Id, RoleType.Customer))
                 throw new AppNotFoundException($"Customer with AFM {afm} not found.");
-
 
             return new UserResponseDto(
                 FirstName: user.FirstName,
@@ -63,85 +57,83 @@ namespace MellonBank.Application.Services
 
         public async Task<IEnumerable<UserResponseDto?>> GetAllCustomersAsync(CancellationToken ct = default)
         {
-            if (_currentUserService.UserId is null)
-                throw new AppForbiddenException("User must be authenticated to access customer information.");
-
-            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
-                throw new AppForbiddenException("Only staff users can view customers.");
+            EnsureStaffAccess();
 
             var users = await _identityService.GetUsersInRoleAsync(ct);
 
-            return users.Any() ? users.Select(user => new UserResponseDto(
-                FirstName: user.FirstName,
-                LastName: user.LastName,
-                Afm: user.Afm,
-                PhoneNumber: user.PhoneNumber,
-                Email: user.Email,
-                UserName: user.UserName,
-                Address: user.Address
-            )).ToList() : new List<UserResponseDto>();
+            return users.Any()
+                ? users.Select(user => new UserResponseDto(
+                    FirstName: user.FirstName,
+                    LastName: user.LastName,
+                    Afm: user.Afm,
+                    PhoneNumber: user.PhoneNumber,
+                    Email: user.Email,
+                    UserName: user.UserName,
+                    Address: user.Address
+                )).ToList()
+                : new List<UserResponseDto>();
         }
 
-        public async Task<string> CreateCustomerAsync(CreateUserRequestDto request, CancellationToken ct = default)
+        public async Task<Result<string>> CreateCustomerAsync(CreateUserRequestDto request, CancellationToken ct = default)
         {
-            if (_currentUserService.UserId is null)
-                throw new AppForbiddenException("User must be authenticated to access customer information.");
-
-            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
-                throw new AppForbiddenException("Only staff users can create customers.");
+            EnsureStaffAccess();
 
             if (request.Role != RoleType.Customer)
-                throw new AppValidationException("Invalid role specified for customer creation.");
+                return Result<string>.Failure("Invalid role specified for customer creation.");
 
-            var result = await _createValidator.ValidateAsync(request, ct);
-            if (!result.IsValid)
-                throw new AppValidationException(result.ToDictionary());
+            var validationResult = await _createValidator.ValidateAsync(request, ct);
+
+            if (!validationResult.IsValid)
+                return Result<string>.Failure("Validation failed.");
 
             bool roleExists = await _roleManagerService.RoleExistsAsync(request.Role, ct);
             if (!roleExists)
-                throw new AppValidationException($"Customer role does not exist.");
+                return Result<string>.Failure("Customer role does not exist.");
+
+            var existingUser = await _identityService.GetByAfmAsync(request.Afm, ct);
+            if (existingUser is not null)
+                return Result<string>.Failure($"Customer with AFM {request.Afm} already exists.");
 
             var userId = await _identityService.CreateUserAsync(request, ct);
-
             if (userId is null)
-                throw new Exception("An error occurred while creating the customer.");
-            
+                return Result<string>.Failure("An error occurred while creating the customer.");
+
             await _roleManagerService.AddToRoleAsync(userId, RoleType.Customer, ct);
 
-            return userId;
+            return Result<string>.Success(userId);
         }
 
-        public async Task<string> CreateStaffAsync(CreateUserRequestDto request, CancellationToken ct = default)
+        public async Task<Result<string>> CreateStaffAsync(CreateUserRequestDto request, CancellationToken ct = default)
         {
-            if (_currentUserService.UserId is null)
-                throw new AppForbiddenException("User must be authenticated to access customer information.");
-
-            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
-                throw new AppForbiddenException("Only staff users can create staff members.");
+            EnsureStaffAccess();
 
             if (request.Role != RoleType.Staff)
-                throw new AppValidationException("Invalid role specified for staff creation.");
+                return Result<string>.Failure("Invalid role specified for staff creation.");
 
-            var result = await _createValidator.ValidateAsync(request, ct);
-            if (!result.IsValid)
-                throw new AppValidationException(result.ToDictionary());
+            var validationResult = await _createValidator.ValidateAsync(request, ct);
+            if (!validationResult.IsValid)
+                return Result<string>.Failure("Validation failed.");
+
+            bool roleExists = await _roleManagerService.RoleExistsAsync(request.Role, ct);
+            if (!roleExists)
+                return Result<string>.Failure("Staff role does not exist.");
+
+            var existingUser = await _identityService.GetByAfmAsync(request.Afm, ct);
+            if (existingUser is not null)
+                return Result<string>.Failure($"User with AFM {request.Afm} already exists.");
 
             var userId = await _identityService.CreateUserAsync(request, ct);
-
             if (userId is null)
-                throw new Exception("An error occurred while creating the staff.");
+                return Result<string>.Failure("An error occurred while creating the staff user.");
 
             await _roleManagerService.AddToRoleAsync(userId, RoleType.Staff, ct);
-            return userId;
+
+            return Result<string>.Success(userId);
         }
 
-        public async Task UpdateCustomerAsync(string afm, UpdateUserRequestDto request, CancellationToken ct = default)
+        public async Task<Result> UpdateCustomerAsync(string afm, UpdateUserRequestDto request, CancellationToken ct = default)
         {
-            if (_currentUserService.UserId is null)
-                throw new AppForbiddenException("User must be authenticated to access customer information.");
-
-            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
-                throw new AppForbiddenException("Only staff users can update customers.");
+            EnsureStaffAccess();
 
             var user = await _identityService.GetByAfmAsync(afm, ct);
             if (user is null)
@@ -150,20 +142,18 @@ namespace MellonBank.Application.Services
             if (!await _roleManagerService.IsInRoleAsync(user.Id, RoleType.Customer))
                 throw new AppNotFoundException($"Customer with AFM {afm} not found.");
 
-            var result = await _updateValidator.ValidateAsync(request, ct);
-            if (!result.IsValid)
-                throw new AppValidationException(result.ToDictionary());
+            var validationResult = await _updateValidator.ValidateAsync(request, ct);
+            if (!validationResult.IsValid)
+                return Result.Failure("Validation failed.");
 
             await _identityService.UpdateUserAsync(afm, request, ct);
+
+            return Result.Success();
         }
 
-        public async Task DeleteCustomerAsync(string afm, CancellationToken ct = default)
+        public async Task<Result> DeleteCustomerAsync(string afm, CancellationToken ct = default)
         {
-            if (_currentUserService.UserId is null)
-                throw new AppForbiddenException("User must be authenticated to access customer information.");
-
-            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
-                throw new AppForbiddenException("Only staff users can delete customers.");
+            EnsureStaffAccess();
 
             var user = await _identityService.GetByAfmAsync(afm, ct);
             if (user is null)
@@ -173,7 +163,17 @@ namespace MellonBank.Application.Services
                 throw new AppNotFoundException($"Customer with AFM {afm} not found.");
 
             await _identityService.DeleteUserAsync(afm, ct);
+
+            return Result.Success();
         }
 
+        private void EnsureStaffAccess()
+        {
+            if (_currentUserService.UserId is null)
+                throw new AppForbiddenException("User must be authenticated to access customer information.");
+
+            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
+                throw new AppForbiddenException("Only staff users can perform this action.");
+        }
     }
 }

@@ -14,9 +14,11 @@ namespace MellonBank.Web.Areas.Staff.Controllers
         private readonly IStaffUserManagementService _staffUserManagementService;
         private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IStaffUserManagementService staffSserManagementService, ILogger<UsersController> logger)
+        public UsersController(
+            IStaffUserManagementService staffUserManagementService,
+            ILogger<UsersController> logger)
         {
-            _staffUserManagementService = staffSserManagementService;
+            _staffUserManagementService = staffUserManagementService;
             _logger = logger;
         }
 
@@ -27,24 +29,34 @@ namespace MellonBank.Web.Areas.Staff.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCustomer(CreateCustomerViewModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateCustomer(CreateCustomerViewModel model, CancellationToken ct)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
             try
             {
-                await _staffUserManagementService.CreateCustomerAsync(new CreateUserRequestDto(
-                    model.FirstName,
-                    model.LastName,
-                    model.Afm,
-                    model.Address,
-                    model.PhoneNumber,
-                    model.Email,
-                    model.Username,
-                    model.Password,
-                    RoleType.Customer
-                ));
+                var result = await _staffUserManagementService.CreateCustomerAsync(
+                    new CreateUserRequestDto(
+                        model.FirstName,
+                        model.LastName,
+                        model.Afm,
+                        model.Address,
+                        model.PhoneNumber,
+                        model.Email,
+                        model.Username,
+                        model.Password,
+                        RoleType.Customer
+                    ),ct);
+
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError(string.Empty, result.Error!);
+                    return View(model);
+                }
+
+                TempData["SuccessMessage"] = "Customer created successfully.";
 
                 return RedirectToAction("Index", "Customers", new { area = "Staff" });
             }
@@ -52,7 +64,7 @@ namespace MellonBank.Web.Areas.Staff.Controllers
             {
                 _logger.LogError(ex, "Error creating customer");
 
-                ModelState.AddModelError(string.Empty, "An error occurred while creating the customer.");
+                ModelState.AddModelError(string.Empty, "An unexpected error occurred while creating the customer.");
                 return View(model);
             }
         }
@@ -64,24 +76,34 @@ namespace MellonBank.Web.Areas.Staff.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateStaff(CreateStaffViewModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateStaff(CreateStaffViewModel model, CancellationToken ct)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
             try
             {
-                await _staffUserManagementService.CreateStaffAsync(new CreateUserRequestDto(
-                    model.FirstName,
-                    model.LastName,
-                    model.Afm,
-                    model.Address,
-                    model.PhoneNumber,
-                    model.Email,
-                    model.Username,
-                    model.Password,
-                    RoleType.Staff
-                ));
+                var result = await _staffUserManagementService.CreateStaffAsync(
+                    new CreateUserRequestDto(
+                        model.FirstName,
+                        model.LastName,
+                        model.Afm,
+                        model.Address,
+                        model.PhoneNumber,
+                        model.Email,
+                        model.Username,
+                        model.Password,
+                        RoleType.Staff
+                    ), ct);
+
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError(string.Empty, result.Error!);
+                    return View(model);
+                }
+
+                TempData["SuccessMessage"] = "Staff user created successfully.";
 
                 return RedirectToAction("Index", "Dashboard", new { area = "Staff" });
             }
@@ -89,7 +111,8 @@ namespace MellonBank.Web.Areas.Staff.Controllers
             {
                 _logger.LogError(ex, "Error creating staff user");
 
-                ModelState.AddModelError(string.Empty, "An error occurred while creating the staff user.");
+                ModelState.AddModelError(string.Empty, "An unexpected error occurred while creating the staff user.");
+
                 return View(model);
             }
         }

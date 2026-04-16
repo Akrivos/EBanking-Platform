@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MellonBank.Application.Common.Models;
 using MellonBank.Application.DTOs.Requests;
 using MellonBank.Application.DTOs.Responses;
 using MellonBank.Application.Exceptions;
@@ -19,6 +20,7 @@ namespace MellonBank.Application.Services
         private readonly IRoleService _roleManagerService;
         private readonly IBankAccountRepository _bankAccountRepository;
         private readonly IUnitOfWork _unitOfWork;
+
         public AccountManagementService(
             IValidator<CreateBankAccountRequestDto> createValidator,
             IValidator<UpdateBankAccountRequestDto> updateValidator,
@@ -26,8 +28,7 @@ namespace MellonBank.Application.Services
             IIdentityService identityService,
             IRoleService roleManagerService,
             IBankAccountRepository bankAccountRepository,
-            IUnitOfWork unitOfWork
-        )
+            IUnitOfWork unitOfWork)
         {
             _createValidator = createValidator;
             _updateValidator = updateValidator;
@@ -40,51 +41,27 @@ namespace MellonBank.Application.Services
 
         public async Task<IEnumerable<AccountDetailsResponseDto>> GetAllAsync(CancellationToken ct = default)
         {
-            if(_currentUserService.UserId is null)
-                throw new AppForbiddenException("User must be authenticated to access account details.");
-
-            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
-                throw new AppForbiddenException("Only staff users can create bank accounts.");
+            EnsureAuthenticatedStaff();
 
             return await _bankAccountRepository.GetAllAsync(ct);
         }
 
         public async Task<AccountDetailsResponseDto?> GetByAccountNumberAsync(string accountNumber, CancellationToken ct = default)
         {
-            if(_currentUserService.UserId is null)
-                throw new AppForbiddenException("User must be authenticated to access account details.");
-
-            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
-                throw new AppForbiddenException("Only staff users can create bank accounts.");
-
-            if (string.IsNullOrWhiteSpace(accountNumber))
-                throw new AppValidationException("Account number must be provided.");
+            EnsureAuthenticatedStaff();
+            ValidateAccountNumber(accountNumber);
 
             var account = await _bankAccountRepository.GetDetailsByAccountNumberAsync(accountNumber, ct);
             if (account is null)
                 throw new AppNotFoundException("Account with given number has not found.");
 
-            return new AccountDetailsResponseDto(
-                Id: account.Id,
-                AccountNumber: account.AccountNumber,
-                Balance: account.Balance,
-                Currency: account.Currency,
-                Branch: account.Branch,
-                AccountType: account.AccountType,
-                CustomerAfm: account.CustomerAfm
-            );
+            return account;
         }
 
         public async Task<AccountDetailsResponseDto?> GetByAccountNumberAndUserIdAsync(string accountNumber, string userId, CancellationToken ct = default)
         {
-            if (_currentUserService.UserId is null)
-                throw new AppForbiddenException("User must be authenticated to access account details.");
-
-            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
-                throw new AppForbiddenException("Only staff users can create bank accounts.");
-
-            if (string.IsNullOrWhiteSpace(accountNumber))
-                throw new AppValidationException("Account number must be provided.");
+            EnsureAuthenticatedStaff();
+            ValidateAccountNumber(accountNumber);
 
             if (string.IsNullOrWhiteSpace(userId))
                 throw new AppValidationException("User ID must be provided.");
@@ -103,30 +80,27 @@ namespace MellonBank.Application.Services
             );
         }
 
-        public async Task<Guid> CreateAccountAsync(CreateBankAccountRequestDto request, CancellationToken ct = default)
+        public async Task<Result<Guid>> CreateAccountAsync(CreateBankAccountRequestDto request, CancellationToken ct = default)
         {
-            if(_currentUserService.UserId is null)
-                throw new AppForbiddenException("User must be authenticated to create bank accounts.");
+            EnsureAuthenticatedStaff();
 
-            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
-                throw new AppForbiddenException("Only staff users can create bank accounts.");
-
-            var result = await _createValidator.ValidateAsync(request, ct);
-
-            if (!result.IsValid)
-                throw new AppValidationException(result.ToDictionary());
+            var validationResult = await _createValidator.ValidateAsync(request, ct);
+            if (!validationResult.IsValid)
+            {
+                return Result<Guid>.Failure(validationResult.Errors.First().ErrorMessage);
+            }
 
             var customer = await _identityService.GetByAfmAsync(request.CustomerAfm, ct);
             if (customer is null)
-                throw new AppNotFoundException("Customer not found.");
+                return Result<Guid>.Failure("Customer not found.");
 
             var isCustomer = await _roleManagerService.IsInRoleAsync(customer.Id, RoleType.Customer, ct);
             if (!isCustomer)
-                throw new AppConflictException("Bank accounts can only be assigned to customers.");
+                return Result<Guid>.Failure("Bank accounts can only be assigned to customers.");
 
             var accountExists = await _bankAccountRepository.ExistsByAccountNumberAsync(request.AccountNumber, ct);
             if (accountExists)
-                throw new AppConflictException("An account with the same account number already exists.");
+                return Result<Guid>.Failure("An account with the same account number already exists.");
 
             var account = new BankAccount(
                 request.AccountNumber,
@@ -139,50 +113,63 @@ namespace MellonBank.Application.Services
             await _bankAccountRepository.AddAsync(account, ct);
             await _unitOfWork.SaveChangesAsync(ct);
 
-            return account.Id;
+            return Result<Guid>.Success(account.Id);
         }
 
-        public async Task UpdateAccountAsync(string accountNumber, UpdateBankAccountRequestDto request, CancellationToken ct = default)
+        public async Task<Result> UpdateAccountAsync(string accountNumber, UpdateBankAccountRequestDto request, CancellationToken ct = default)
         {
-            if (_currentUserService.UserId is null)
-                throw new AppForbiddenException("User must be authenticated to create bank accounts.");
+            EnsureAuthenticatedStaff();
+            ValidateAccountNumber(accountNumber);
 
-            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
-                throw new AppForbiddenException("Only staff users can update bank accounts.");
+            var validationResult = await _updateValidator.ValidateAsync(request, ct);
+            if (!validationResult.IsValid)
+            {
+                return Result.Failure(validationResult.Errors.First().ErrorMessage);
+            }
 
-            if (string.IsNullOrWhiteSpace(accountNumber))
-                throw new AppValidationException("Account number must be provided.");
-
-            var result = await _updateValidator.ValidateAsync(request, ct);
-            if (!result.IsValid)
-                throw new AppValidationException(result.ToDictionary());
-
-            var account = await _bankAccountRepository.GetByAccountNumberAsync(accountNumber, ct);
+            var account = await GetRequiredAccountEntityByAccountNumberAsync(accountNumber, ct);
             if (account is null)
-                throw new AppNotFoundException("Account with given number has not found.");
+                return Result.Failure("Account with given number has not found.");
 
             account.UpdateDetails(request.Branch!, request.AccountType!.Value);
             await _unitOfWork.SaveChangesAsync(ct);
+
+            return Result.Success();
         }
 
-        public async Task DeleteAccountAsync(string accountNumber, CancellationToken ct = default)
+        public async Task<Result> DeleteAccountAsync(string accountNumber, CancellationToken ct = default)
         {
-            if (_currentUserService.UserId is null)
-                throw new AppForbiddenException("User must be authenticated to create bank accounts.");
+            EnsureAuthenticatedStaff();
+            ValidateAccountNumber(accountNumber);
 
-            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
-                throw new AppForbiddenException("Only staff users can delete bank accounts.");
-
-            if (string.IsNullOrWhiteSpace(accountNumber))
-                throw new AppValidationException("Account number must be provided.");
-
-            var account = await _bankAccountRepository.GetByAccountNumberAsync(accountNumber, ct);
+            var account = await GetRequiredAccountEntityByAccountNumberAsync(accountNumber, ct);
             if (account is null)
-                throw new AppNotFoundException("Account with given number has not found.");
+                return Result.Failure("Account with given number has not found.");
 
             account.Deactivate();
-
             await _unitOfWork.SaveChangesAsync(ct);
+
+            return Result.Success();
+        }
+
+        private void EnsureAuthenticatedStaff()
+        {
+            if (_currentUserService.UserId is null)
+                throw new AppForbiddenException("User must be authenticated to access account details.");
+
+            if (!_currentUserService.IsInRole(RoleType.Staff.ToString()))
+                throw new AppForbiddenException("Only staff users can manage bank accounts.");
+        }
+
+        private static void ValidateAccountNumber(string accountNumber)
+        {
+            if (string.IsNullOrWhiteSpace(accountNumber))
+                throw new AppValidationException("Account number must be provided.");
+        }
+
+        private async Task<BankAccount?> GetRequiredAccountEntityByAccountNumberAsync(string accountNumber, CancellationToken ct)
+        {
+            return await _bankAccountRepository.GetByAccountNumberAsync(accountNumber, ct);
         }
     }
 }

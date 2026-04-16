@@ -1,5 +1,6 @@
 ﻿using MellonBank.Application.DTOs.Requests;
 using MellonBank.Application.DTOs.Responses;
+using MellonBank.Application.Exceptions;
 using MellonBank.Application.Interfaces.Services;
 using MellonBank.Web.Areas.Staff.ViewModels.Customers;
 using Microsoft.AspNetCore.Authorization;
@@ -14,142 +15,158 @@ namespace MellonBank.Web.Areas.Staff.Controllers
         private readonly IStaffUserManagementService _staffUserManagementService;
         private readonly ILogger<CustomersController> _logger;
 
-        public CustomersController(IStaffUserManagementService staffUserManagementService, ILogger<CustomersController> logger)
+        public CustomersController(
+            IStaffUserManagementService staffUserManagementService,
+            ILogger<CustomersController> logger)
         {
             _staffUserManagementService = staffUserManagementService;
             _logger = logger;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string? afm)
+        public async Task<IActionResult> Index(CancellationToken ct, string? afm)
         {
-            if (!string.IsNullOrWhiteSpace(afm))
+            try
             {
-                var customer = await _staffUserManagementService.GetCustomerByAfmAsync(afm);
-
-                if (customer is null)
+                if (!string.IsNullOrWhiteSpace(afm))
                 {
-                    ViewBag.Error = "Customer not found.";
-                    return View(Enumerable.Empty<GetCustomerDetailsViewModel>());
+                    var customer = await _staffUserManagementService.GetCustomerByAfmAsync(afm, ct);
+
+                    return View(new List<GetCustomerDetailsViewModel>
+                    {
+                        MapToViewModel(customer)
+                    });
                 }
 
-                return View(new List<GetCustomerDetailsViewModel>
-                {
-                    MapToViewModel(customer)
-                });
+                var customers = await _staffUserManagementService.GetAllCustomersAsync(ct);
+                var model = customers.Select(c => MapToViewModel(c)).ToList();
+
+                return View(model);
             }
-
-            var customers = await _staffUserManagementService.GetAllCustomersAsync();
-
-            var model = customers.Select(c => MapToViewModel(c!)).ToList();
-
-            return View(model);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Details(string afm)
-        {
-            if (string.IsNullOrWhiteSpace(afm))
-                return BadRequest();
-
-            var customer = await _staffUserManagementService.GetCustomerByAfmAsync(afm);
-
-            if (customer is null)
-                return NotFound();
-
-            return View(MapToViewModel(customer));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Edit(string afm)
-        {
-            if (string.IsNullOrWhiteSpace(afm))
-                return BadRequest();
-
-            var customer = await _staffUserManagementService.GetCustomerByAfmAsync(afm);
-
-            if (customer is null)
-                return NotFound();
-
-            var updateCustomerViewModel = new UpdateCustomerDetailsViewModel
+            catch (AppNotFoundException)
             {
-                FirstName = customer.FirstName,
-                LastName = customer.LastName,
-                Address = customer.Address,
-                PhoneNumber = customer.PhoneNumber,
-                Email = customer.Email,
-            };
+                ViewBag.Error = "Customer not found.";
+                return View(Enumerable.Empty<GetCustomerDetailsViewModel>());
+            }
+        }
 
-            return View(updateCustomerViewModel);
+        [HttpGet]
+        public async Task<IActionResult> Details(string afm, CancellationToken ct)
+        {
+            if (string.IsNullOrWhiteSpace(afm))
+                return BadRequest();
+
+            try
+            {
+                var customer = await _staffUserManagementService.GetCustomerByAfmAsync(afm, ct);
+                return View(MapToViewModel(customer));
+            }
+            catch (AppNotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string afm, CancellationToken ct)
+        {
+            if (string.IsNullOrWhiteSpace(afm))
+                return BadRequest();
+
+            try
+            {
+                var customer = await _staffUserManagementService.GetCustomerByAfmAsync(afm, ct);
+
+                var updateCustomerViewModel = new UpdateCustomerDetailsViewModel
+                {
+                    Afm = customer.Afm,
+                    FirstName = customer.FirstName,
+                    LastName = customer.LastName,
+                    Address = customer.Address,
+                    PhoneNumber = customer.PhoneNumber,
+                    Email = customer.Email,
+                };
+
+                return View(updateCustomerViewModel);
+            }
+            catch (AppNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(UpdateCustomerDetailsViewModel model)
+        public async Task<IActionResult> Edit(UpdateCustomerDetailsViewModel model, CancellationToken ct)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            try
-            {
-                await _staffUserManagementService.UpdateCustomerAsync(model.Afm, new UpdateUserRequestDto(
+            var result = await _staffUserManagementService.UpdateCustomerAsync(
+                model.Afm,
+                new UpdateUserRequestDto(
                     model.FirstName,
                     model.LastName,
                     model.Address,
                     model.PhoneNumber,
-                    model.Email
-                ));
+                    model.Email), ct);
 
-                return RedirectToAction("Index", "Customers", new { area = "Staff" });
-            }
-            catch (Exception)
+            if (!result.Succeeded)
             {
-                ModelState.AddModelError(string.Empty, "An error occurred while updating the customer.");
+                ModelState.AddModelError(string.Empty, result.Error!);
                 return View(model);
             }
+
+            TempData["SuccessMessage"] = "Customer updated successfully.";
+            return RedirectToAction(nameof(Index), new { area = "Staff" });
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(string afm)
+        public async Task<IActionResult> Delete(string afm, CancellationToken ct)
         {
             if (string.IsNullOrWhiteSpace(afm))
                 return BadRequest();
 
-            var customer = await _staffUserManagementService.GetCustomerByAfmAsync(afm);
-
-            if (customer is null)
-                return NotFound();
-
-            var model = new DeleteCustomerViewModel
+            try
             {
-                FirstName = customer.FirstName,
-                LastName = customer.LastName,
-                Afm = customer.Afm,
-                Email = customer.Email,
-                PhoneNumber = customer.PhoneNumber
-            };
+                var customer = await _staffUserManagementService.GetCustomerByAfmAsync(afm, ct);
 
-            return View(model);
+                var model = new DeleteCustomerViewModel
+                {
+                    FirstName = customer.FirstName,
+                    LastName = customer.LastName,
+                    Afm = customer.Afm,
+                    Email = customer.Email,
+                    PhoneNumber = customer.PhoneNumber
+                };
+
+                return View(model);
+            }
+            catch (AppNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(DeleteCustomerViewModel model)
+        public async Task<IActionResult> DeleteConfirmed(DeleteCustomerViewModel model, CancellationToken ct)
         {
             if (!ModelState.IsValid)
                 return View("Delete", model);
 
-            try
-            {
-                await _staffUserManagementService.DeleteCustomerAsync(model.Afm);
+            var result = await _staffUserManagementService.DeleteCustomerAsync(
+                model.Afm,
+                ct);
 
-                return RedirectToAction("Index", "Customers", new { area = "Staff" });
-            }
-            catch (Exception)
+            if (!result.Succeeded)
             {
-                ModelState.AddModelError(string.Empty, "An error occurred while deleting the customer.");
+                ModelState.AddModelError(string.Empty, result.Error!);
                 return View("Delete", model);
             }
+
+            TempData["SuccessMessage"] = "Customer deleted successfully.";
+            return RedirectToAction(nameof(Index), new { area = "Staff" });
         }
 
         [HttpGet]

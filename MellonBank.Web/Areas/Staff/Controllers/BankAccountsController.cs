@@ -1,10 +1,8 @@
 ﻿using MellonBank.Application.DTOs.Requests;
 using MellonBank.Application.DTOs.Responses;
 using MellonBank.Application.Interfaces.Services;
-using MellonBank.Domain.Entities;
 using MellonBank.Domain.Enums;
 using MellonBank.Web.Areas.Staff.ViewModels.Accounts;
-using MellonBank.Web.Areas.Staff.ViewModels.Customers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,9 +24,9 @@ namespace MellonBank.Web.Areas.Staff.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken ct)
         {
-            var accounts = await _accountManagementService.GetAllAsync();
+            var accounts = await _accountManagementService.GetAllAsync(ct);
             var model = accounts.Select(ac => MapToViewModel(ac)).ToList();
 
             return View(model);
@@ -42,41 +40,38 @@ namespace MellonBank.Web.Areas.Staff.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateBankAccountViewModel model)
+        public async Task<IActionResult> Create(CreateBankAccountViewModel model, CancellationToken ct)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            try
-            {
-                await _accountManagementService.CreateAccountAsync(
-                    new CreateBankAccountRequestDto(
-                        model.CustomerAfm,
-                        model.AccountNumber,
-                        model.InitialBalance,
-                        CurrencyType.EUR,
-                        model.Branch,
-                        model.AccountType
-                    ));
+            var result = await _accountManagementService.CreateAccountAsync(
+                new CreateBankAccountRequestDto(
+                    model.CustomerAfm,
+                    model.AccountNumber,
+                    model.InitialBalance,
+                    CurrencyType.EUR,
+                    model.Branch,
+                    model.AccountType
+                ),ct);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
+            if (!result.Succeeded)
             {
-                _logger.LogError(ex, "Error creating bank account.");
-
-                ModelState.AddModelError(string.Empty, "An error occurred while creating the account.");
+                ModelState.AddModelError(string.Empty, result.Error!);
                 return View(model);
             }
+
+            TempData["SuccessMessage"] = "Account created successfully.";
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(string accountNumber)
+        public async Task<IActionResult> Details(string accountNumber, CancellationToken ct)
         {
             if (string.IsNullOrWhiteSpace(accountNumber))
                 return BadRequest();
 
-            var account = await _accountManagementService.GetByAccountNumberAsync(accountNumber);
+            var account = await _accountManagementService.GetByAccountNumberAsync(accountNumber, ct);
 
             if (account is null)
                 return NotFound();
@@ -85,12 +80,12 @@ namespace MellonBank.Web.Areas.Staff.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string accountNumber)
+        public async Task<IActionResult> Edit(string accountNumber, CancellationToken ct)
         {
             if (string.IsNullOrWhiteSpace(accountNumber))
                 return BadRequest();
 
-            var account = await _accountManagementService.GetByAccountNumberAsync(accountNumber);
+            var account = await _accountManagementService.GetByAccountNumberAsync(accountNumber, ct);
 
             if (account is null)
                 return NotFound();
@@ -107,37 +102,35 @@ namespace MellonBank.Web.Areas.Staff.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(UpdateAccountViewModel model)
+        public async Task<IActionResult> Edit(UpdateAccountViewModel model, CancellationToken ct)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            try
-            {
-                await _accountManagementService.UpdateAccountAsync(model.AccountNumber,
-                    new UpdateBankAccountRequestDto(
-                        model.Branch,
-                        model.AccountType
-                    ));
+            var result = await _accountManagementService.UpdateAccountAsync(
+                model.AccountNumber,
+                new UpdateBankAccountRequestDto(
+                    model.Branch,
+                    model.AccountType
+                ), ct);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
+            if (!result.Succeeded)
             {
-                _logger.LogError(ex, "Error updating bank account {AccountNumber}", model.AccountNumber);
-
-                ModelState.AddModelError(string.Empty, "An error occurred while updating the account.");
+                ModelState.AddModelError(string.Empty, result.Error!);
                 return View(model);
             }
+
+            TempData["SuccessMessage"] = "Account updated successfully.";
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(string accountNumber)
+        public async Task<IActionResult> Delete(string accountNumber, CancellationToken ct)
         {
             if (string.IsNullOrWhiteSpace(accountNumber))
                 return BadRequest();
 
-            var account = await _accountManagementService.GetByAccountNumberAsync(accountNumber);
+            var account = await _accountManagementService.GetByAccountNumberAsync(accountNumber, ct);
 
             if (account is null)
                 return NotFound();
@@ -157,24 +150,21 @@ namespace MellonBank.Web.Areas.Staff.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(DeleteAccountViewModel model)
+        public async Task<IActionResult> DeleteConfirmed(DeleteAccountViewModel model, CancellationToken ct)
         {
             if (!ModelState.IsValid)
                 return View("Delete", model);
 
-            try
-            {
-                await _accountManagementService.DeleteAccountAsync(model.AccountNumber);
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error deleting bank account {AccountNumber}", model.AccountNumber);
+            var result = await _accountManagementService.DeleteAccountAsync(model.AccountNumber, ct);
 
-                ModelState.AddModelError(string.Empty, "An error occurred while deleting the account.");
-
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, result.Error!);
                 return View("Delete", model);
             }
+
+            TempData["SuccessMessage"] = "Account deleted successfully.";
+            return RedirectToAction(nameof(Index));
         }
 
         private static GetAccountDetailsViewModel MapToViewModel(AccountDetailsResponseDto account)

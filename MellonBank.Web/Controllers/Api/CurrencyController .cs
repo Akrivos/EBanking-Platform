@@ -15,9 +15,9 @@ namespace MellonBank.Web.Controllers.Api
         }
 
         [HttpGet("GetRates")]
-        public async Task<IActionResult> GetRates()
+        public async Task<IActionResult> GetRates(CancellationToken ct)
         {
-            var rates = await _currencyService.GetRatesAsync();
+            var rates = await _currencyService.GetRatesAsync(ct);
 
             if (rates is null)
                 return NotFound();

@@ -897,4 +897,4 @@ C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\refint
 C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\MellonBank.Web.pdb
 C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\MellonBank.Web.genruntimeconfig.cache
 C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\ref\MellonBank.Web.dll
-C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Web\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Users\Akis\Desktop\MellonBank-Project\MellonBank.Web\bin\Debug\net10.0\Microsoft.Extensions.FileProviders.Embedded.dll

@@ -37,6 +37,7 @@ namespace MellonBank.Web
 
             app.UseMiddleware<GlobalExceptionMiddleware>();
 
+            // Seed Data
             using (var scope = app.Services.CreateScope())
             {
                 var scopeService = scope.ServiceProvider;

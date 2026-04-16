@@ -1,0 +1,21 @@
+2026-04-16 10:07:44.015 +03:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+2026-04-16 10:07:44.920 +03:00 [INF] HTTP GET / responded 200 in 178.8436 ms
+2026-04-16 10:07:45.074 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 137.8284 ms
+2026-04-16 10:07:45.074 +03:00 [INF] HTTP GET /css/site.css responded 200 in 137.9407 ms
+2026-04-16 10:07:45.074 +03:00 [INF] HTTP GET /js/site.js responded 200 in 135.1246 ms
+2026-04-16 10:07:45.111 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 174.6954 ms
+2026-04-16 10:07:45.111 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 174.6990 ms
+2026-04-16 10:07:45.115 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 178.1423 ms
+2026-04-16 10:07:45.160 +03:00 [INF] HTTP GET /favicon.ico responded 200 in 9.9310 ms
+2026-04-16 10:11:51.183 +03:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+2026-04-16 10:11:52.402 +03:00 [INF] HTTP GET / responded 200 in 144.9730 ms
+2026-04-16 10:11:52.606 +03:00 [INF] HTTP GET /MellonBank.Web.styles.css responded 200 in 194.4865 ms
+2026-04-16 10:11:52.606 +03:00 [INF] HTTP GET /css/site.css responded 200 in 194.6683 ms
+2026-04-16 10:11:52.606 +03:00 [INF] HTTP GET /js/site.js responded 200 in 170.0605 ms
+2026-04-16 10:11:52.615 +03:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 178.8541 ms
+2026-04-16 10:11:52.615 +03:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 178.7064 ms
+2026-04-16 10:11:52.616 +03:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 204.7860 ms
+2026-04-16 10:12:15.697 +03:00 [INF] HTTP GET /api/currency/getrates responded 307 in 1.9876 ms
+2026-04-16 10:12:31.517 +03:00 [INF] HTTP GET /api/currency/getrates responded 307 in 0.0666 ms
+2026-04-16 10:16:08.936 +03:00 [WRN] Failed to determine the https port for redirect.
+2026-04-16 10:16:09.183 +03:00 [INF] HTTP GET /api/currency/getrates responded 200 in 250.1505 ms

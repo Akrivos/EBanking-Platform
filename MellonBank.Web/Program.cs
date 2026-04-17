@@ -21,6 +21,7 @@ namespace MellonBank.Web
                 .WriteTo.Console()
                 .WriteTo.File("logs/app-.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
+
             builder.Host.UseSerilog();
 
             services.AddHttpContextAccessor();

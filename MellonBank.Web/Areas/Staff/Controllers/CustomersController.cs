@@ -45,7 +45,7 @@ namespace MellonBank.Web.Areas.Staff.Controllers
             }
             catch (AppNotFoundException)
             {
-                ViewBag.Error = "Customer not found.";
+                ViewBag.Error = $"No customer was found with AFM {afm}.";
                 return View(Enumerable.Empty<GetCustomerDetailsViewModel>());
             }
         }

@@ -1,6 +1,6 @@
 ﻿namespace MellonBank.Application.DTOs.Requests
 {
-    public record UpdateUserRequestDto(
+    public sealed record UpdateUserRequestDto(
         string FirstName,
         string LastName,
         string Address,

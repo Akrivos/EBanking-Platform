@@ -3,7 +3,7 @@ using MellonBank.Application.DTOs.Requests;
 
 namespace MellonBank.Application.Validators
 {
-    public class ChangePasswordRequstDtoValidator : AbstractValidator<ChangePasswordRequestDto>
+    public sealed class ChangePasswordRequstDtoValidator : AbstractValidator<ChangePasswordRequestDto>
     {
         public ChangePasswordRequstDtoValidator()
         {

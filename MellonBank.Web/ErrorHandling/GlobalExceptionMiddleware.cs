@@ -6,7 +6,6 @@ namespace MellonBank.Web.ErrorHandling
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<GlobalExceptionMiddleware> _logger;
-        private readonly IHostEnvironment _env;
 
         public GlobalExceptionMiddleware(
             RequestDelegate next,
@@ -15,7 +14,6 @@ namespace MellonBank.Web.ErrorHandling
         {
             _next = next;
             _logger = logger;
-            _env = env;
         }
 
         public async Task InvokeAsync(HttpContext context)

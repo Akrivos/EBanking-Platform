@@ -81,6 +81,11 @@ namespace MellonBank.Infrastructure.Persistence.Repositories
             return await _dbContext.BankAccounts.AnyAsync(ba => ba.AccountNumber == accountNumber, ct);
         }
 
+        public async Task<bool> AnyAccountByUserIdAsync(string userId, CancellationToken ct = default)
+        {
+            return await _dbContext.BankAccounts.AnyAsync(ba => ba.UserId == userId, ct);
+        }
+
         public async Task DeleteByAccountNumberAsync(string accountNumber, CancellationToken ct = default)
         {
             var account = await GetByAccountNumberAsync(accountNumber, ct);

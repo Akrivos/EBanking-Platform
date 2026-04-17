@@ -21,8 +21,7 @@ namespace MellonBank.Infrastructure
             var connectionString = configuration.GetConnectionString("DefaultConnection") ?? 
                 throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-            services.AddDbContext<MellonBankDbContext>(options =>
-                options.UseSqlServer(connectionString));
+            services.AddDbContext<MellonBankDbContext>(options => options.UseSqlServer(connectionString));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -36,8 +35,7 @@ namespace MellonBank.Infrastructure
             .AddEntityFrameworkStores<MellonBankDbContext>()
             .AddDefaultTokenProviders();
 
-            services.Configure<ExchangeRateApiOptions>(
-                configuration.GetSection("ExchangeRateProvider"));
+            services.Configure<ExchangeRateApiOptions>(configuration.GetSection("ExchangeRateProvider"));
 
             services.AddHttpClient<IExchangeRateProviderService, ExchangeRateProviderService>();
 

@@ -6,7 +6,7 @@ using MellonBank.Domain.Enums;
 
 namespace MellonBank.Application.Services
 {
-    public class CustomerAccountService : ICustomerAccountService
+    public sealed class CustomerAccountService : ICustomerAccountService
     {
         private readonly IExchangeRateProviderService _exchangeRateProvider;
         private readonly IBankAccountRepository _bankAccountRepository;

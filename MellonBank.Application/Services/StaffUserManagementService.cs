@@ -3,31 +3,35 @@ using MellonBank.Application.Common.Models;
 using MellonBank.Application.DTOs.Requests;
 using MellonBank.Application.DTOs.Responses;
 using MellonBank.Application.Exceptions;
+using MellonBank.Application.Interfaces.Repositories;
 using MellonBank.Application.Interfaces.Services;
 using MellonBank.Domain.Enums;
 
 namespace MellonBank.Application.Services
 {
-    public class StaffUserManagementService : IStaffUserManagementService
+    public sealed class StaffUserManagementService : IStaffUserManagementService
     {
         private readonly IValidator<CreateUserRequestDto> _createValidator;
         private readonly IValidator<UpdateUserRequestDto> _updateValidator;
         private readonly IIdentityService _identityService;
         private readonly IRoleService _roleManagerService;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IBankAccountRepository _bankAccountRepository;
 
         public StaffUserManagementService(
             IValidator<CreateUserRequestDto> createValidator,
             IValidator<UpdateUserRequestDto> updateValidator,
             IIdentityService identityService,
             IRoleService roleManagerService,
-            ICurrentUserService currentUserService)
+            ICurrentUserService currentUserService,
+            IBankAccountRepository bankAccountRepository)
         {
             _identityService = identityService;
             _roleManagerService = roleManagerService;
             _currentUserService = currentUserService;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
+           _bankAccountRepository = bankAccountRepository;
         }
 
         public async Task<UserResponseDto?> GetCustomerByAfmAsync(string afm, CancellationToken ct = default)
@@ -119,6 +123,7 @@ namespace MellonBank.Application.Services
                 return Result<string>.Failure("Staff role does not exist.");
 
             var existingUser = await _identityService.GetByAfmAsync(request.Afm, ct);
+
             if (existingUser is not null)
                 return Result<string>.Failure($"User with AFM {request.Afm} already exists.");
 
@@ -161,6 +166,11 @@ namespace MellonBank.Application.Services
 
             if (!await _roleManagerService.IsInRoleAsync(user.Id, RoleType.Customer))
                 throw new AppNotFoundException($"Customer with AFM {afm} not found.");
+
+            var hasAccounts = await _bankAccountRepository.AnyAccountByUserIdAsync(user.Id, ct);
+
+            if (hasAccounts)
+                return Result.Failure("This customer cannot be deleted because they are associated with one or more bank accounts.");
 
             await _identityService.DeleteUserAsync(afm, ct);
 

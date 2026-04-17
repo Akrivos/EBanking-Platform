@@ -9,7 +9,7 @@ using MellonBank.Domain.Entities;
 
 namespace MellonBank.Application.Services
 {
-    public class TransferService : ITransferService
+    public sealed class TransferService : ITransferService
     {
         private readonly IValidator<TransferToOwnAccountRequestDto> _ownAccountValidator;
         private readonly IValidator<TransferToThirdPartyRequestDto> _thirdPartyValidator;

@@ -1,6 +1,6 @@
 ﻿namespace MellonBank.Application.DTOs.Responses
 {
-    public record UserResponseDto(
+    public sealed record UserResponseDto(
         string FirstName,
         string LastName,
         string Afm,

@@ -2,5 +2,5 @@
 
 namespace MellonBank.Application.DTOs.Requests
 {
-    public record UpdateBankAccountRequestDto(string? Branch, AccountType? AccountType);
+    public sealed record UpdateBankAccountRequestDto(string? Branch, AccountType? AccountType);
 }

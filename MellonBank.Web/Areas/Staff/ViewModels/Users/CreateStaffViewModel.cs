@@ -27,7 +27,7 @@ namespace MellonBank.Web.Areas.Staff.ViewModels.Users
         public string Email { get; set; } = string.Empty;
 
         [Required]
-        [StringLength(16)]
+        [StringLength(15)]
         [RegularExpression(ValidationPatterns.PhoneNumber,
             ErrorMessage = ValidationMessages.PhoneNumber)]
         public string PhoneNumber { get; set; } = string.Empty;

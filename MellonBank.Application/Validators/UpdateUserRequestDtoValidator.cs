@@ -3,7 +3,7 @@ using MellonBank.Application.DTOs.Requests;
 
 namespace MellonBank.Application.Validators
 {
-    public class UpdateUserRequestDtoValidator : AbstractValidator<UpdateUserRequestDto>
+    public sealed class UpdateUserRequestDtoValidator : AbstractValidator<UpdateUserRequestDto>
     {
         public UpdateUserRequestDtoValidator()
         {
@@ -21,7 +21,7 @@ namespace MellonBank.Application.Validators
 
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty()
-                .MaximumLength(16);
+                .MaximumLength(15);
 
             RuleFor(x => x.Email)
                 .NotEmpty()

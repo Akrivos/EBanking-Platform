@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using MellonBank.Application.Common.Generators;
 using MellonBank.Application.Common.Models;
 using MellonBank.Application.DTOs.Requests;
 using MellonBank.Application.DTOs.Responses;
@@ -12,7 +11,7 @@ using MellonBank.Domain.Enums;
 
 namespace MellonBank.Application.Services
 {
-    public class AccountManagementService : IAccountManagementService
+    public sealed class AccountManagementService : IAccountManagementService
     {
         private readonly IValidator<CreateBankAccountRequestDto> _createValidator;
         private readonly IValidator<UpdateBankAccountRequestDto> _updateValidator;

@@ -29,6 +29,7 @@ namespace MellonBank.Infrastructure.Seed
 
             var adminUserName = configuration["SeedSettings:StaffUserName"];
             var adminEmail = configuration["SeedSettings:StaffEmail"];
+
             var adminPassword = configuration["SeedSettings:StaffPassword"];
 
             var existingUser = await userManager.FindByNameAsync(adminUserName!);

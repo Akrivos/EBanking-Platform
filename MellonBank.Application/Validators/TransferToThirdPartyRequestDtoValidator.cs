@@ -3,7 +3,7 @@ using MellonBank.Application.DTOs.Requests;
 
 namespace MellonBank.Application.Validators
 {
-    public class TransferToThirdPartyRequestDtoValidator : AbstractValidator<TransferToThirdPartyRequestDto>
+    public sealed class TransferToThirdPartyRequestDtoValidator : AbstractValidator<TransferToThirdPartyRequestDto>
     {
         public TransferToThirdPartyRequestDtoValidator()
         {

@@ -1,8 +1,6 @@
 ﻿namespace MellonBank.Application.Models
 {
-    namespace MellonBank.Application.Models
-    {
-        public record UserIdentityModel(
+    public sealed record UserIdentityModel(
             string Id,
             string FirstName,
             string LastName,
@@ -12,5 +10,4 @@
             string Email,
             string UserName
         );
-    }
 }

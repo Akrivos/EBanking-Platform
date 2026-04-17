@@ -3,7 +3,7 @@
 
 namespace MellonBank.Application.DTOs.Responses
 {
-    public record CustomerAccountDetailsResponseDto(
+    public sealed record CustomerAccountDetailsResponseDto(
         string AccountNumber,
         decimal Balance,
         CurrencyType Currency,

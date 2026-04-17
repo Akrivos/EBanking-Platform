@@ -1,6 +1,6 @@
 ﻿namespace MellonBank.Application.DTOs.Responses
 {
-    public record BalanceInCurrenciesResponseDto(
+    public sealed record BalanceInCurrenciesResponseDto(
         string AccountNumber,
         decimal BalanceEuro,
         decimal EuroToUsdRate,

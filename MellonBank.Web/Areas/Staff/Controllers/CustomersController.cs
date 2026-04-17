@@ -155,9 +155,7 @@ namespace MellonBank.Web.Areas.Staff.Controllers
             if (!ModelState.IsValid)
                 return View("Delete", model);
 
-            var result = await _staffUserManagementService.DeleteCustomerAsync(
-                model.Afm,
-                ct);
+            var result = await _staffUserManagementService.DeleteCustomerAsync(model.Afm, ct);
 
             if (!result.Succeeded)
             {

@@ -2,7 +2,7 @@
 
 namespace MellonBank.Application.DTOs.Requests
 {
-    public record CreateUserRequestDto(
+    public sealed record CreateUserRequestDto(
         string FirstName,
         string LastName,
         string Afm,

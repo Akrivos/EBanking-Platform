@@ -1,6 +1,6 @@
 ﻿using MellonBank.Application.Common.Models;
 using MellonBank.Application.DTOs.Requests;
-using MellonBank.Application.Models.MellonBank.Application.Models;
+using MellonBank.Application.Models;
 using MellonBank.Domain.Enums;
 
 namespace MellonBank.Application.Interfaces.Services

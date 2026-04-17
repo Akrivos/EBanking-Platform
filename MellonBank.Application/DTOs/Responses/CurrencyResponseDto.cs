@@ -1,6 +1,6 @@
 ﻿namespace MellonBank.Application.DTOs.Responses
 {
-    public record CurrencyResponseDto(
+    public sealed record CurrencyResponseDto(
         decimal Aud,
         decimal Chf,
         decimal Gbp,

@@ -30,6 +30,7 @@ namespace MellonBank.Domain.Entities
             CHF = chf;
             GBP = gbp;
             USD = usd;
+            RetrievedAtUtc = DateTime.UtcNow;
         }
 
     }

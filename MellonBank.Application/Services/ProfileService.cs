@@ -6,7 +6,7 @@ using MellonBank.Application.Interfaces.Services;
 
 namespace MellonBank.Application.Services
 {
-    public class ProfileService : IProfileService
+    public sealed class ProfileService : IProfileService
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly IValidator<ChangePasswordRequestDto> _changePasswordValidator;

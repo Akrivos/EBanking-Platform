@@ -2,7 +2,7 @@
 
 namespace MellonBank.Application.DTOs.Responses
 {
-    public record AccountDetailsResponseDto(
+    public sealed record AccountDetailsResponseDto(
         Guid Id,
         string AccountNumber,
         decimal Balance,

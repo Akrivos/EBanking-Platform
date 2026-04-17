@@ -3,7 +3,7 @@ using MellonBank.Application.DTOs.Requests;
 
 namespace MellonBank.Application.Validators
 {
-    public class UpdateBankAccountRequestDtoValidator : AbstractValidator<UpdateBankAccountRequestDto>
+    public sealed class UpdateBankAccountRequestDtoValidator : AbstractValidator<UpdateBankAccountRequestDto>
     {
         public UpdateBankAccountRequestDtoValidator()
         {

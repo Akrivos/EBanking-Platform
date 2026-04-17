@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace MellonBank.Infrastructure.Persistence.Services
 {
-    public class RoleService : IRoleService
+    public sealed class RoleService : IRoleService
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;

@@ -1,6 +1,6 @@
 ﻿namespace MellonBank.Application.DTOs.Requests
 {
-    public record ChangePasswordRequestDto(
+    public sealed record ChangePasswordRequestDto(
         string CurrentPassword,
         string NewPassword,
         string ConfirmNewPassword

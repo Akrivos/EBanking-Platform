@@ -1,7 +1,7 @@
 ﻿using MellonBank.Application.Common.Models;
 using MellonBank.Application.DTOs.Requests;
 using MellonBank.Application.Interfaces.Services;
-using MellonBank.Application.Models.MellonBank.Application.Models;
+using MellonBank.Application.Models;
 using MellonBank.Domain.Enums;
 using MellonBank.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MellonBank.Infrastructure.Persistence.Services
 {
-    public class IdentityService : IIdentityService
+    public sealed class IdentityService : IIdentityService
     {
         private readonly UserManager<ApplicationUser> _userManager;
 

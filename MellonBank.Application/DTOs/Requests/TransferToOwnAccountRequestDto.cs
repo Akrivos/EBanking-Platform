@@ -1,6 +1,6 @@
 ﻿namespace MellonBank.Application.DTOs.Requests
 {
-    public record TransferToOwnAccountRequestDto(
+    public sealed record TransferToOwnAccountRequestDto(
         string FromAccountNumber,
         string ToAccountNumber,
         decimal Amount

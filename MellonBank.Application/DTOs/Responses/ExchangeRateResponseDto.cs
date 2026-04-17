@@ -2,7 +2,7 @@
 
 namespace MellonBank.Application.DTOs.Responses
 {
-    public record ExchangeRateResponseDto(
+    public sealed record ExchangeRateResponseDto(
         CurrencyType BaseCurrency,
         CurrencyType TargetCurrency,
         decimal Rate,

@@ -1,9 +1,0 @@
-<Solution>
-  <Folder Name="/Solution Items/">
-    <File Path="README.md" />
-  </Folder>
-  <Project Path="MellonBank.Application/MellonBank.Application.csproj" Id="e5826cde-7ca4-4827-b36e-4939a1e02118" />
-  <Project Path="MellonBank.Domain/MellonBank.Domain.csproj" Id="5ba10a37-e7d4-4910-a826-6a56b3f05d59" />
-  <Project Path="MellonBank.Infrastructure/MellonBank.Infrastructure.csproj" Id="4537bd7e-0300-4432-ac75-f388fec70c73" />
-  <Project Path="MellonBank.Web/MellonBank.Web.csproj" />
-</Solution>

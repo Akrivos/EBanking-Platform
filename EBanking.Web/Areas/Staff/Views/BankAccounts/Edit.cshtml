@@ -1,0 +1,48 @@
+﻿@model EBanking.Web.Areas.Staff.ViewModels.Accounts.UpdateAccountViewModel
+@using EBanking.Domain.Enums
+@using EBanking.Web
+@using EBanking.Web.Models
+
+@{
+    ViewData["Title"] = "Edit Account";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-1">Edit Bank Account</h2>
+    <p class="text-muted mb-4">Update the selected bank account details.</p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                <input asp-for="AccountNumber" type="hidden" />
+
+                <div class="mb-3">
+                    <label asp-for="Branch" class="form-label">Branch</label>
+                    <input asp-for="Branch" class="form-control" />
+                    <span asp-validation-for="Branch" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="AccountType" class="form-label">Account Type</label>
+                    <select asp-for="AccountType" asp-items="Html.GetEnumSelectList<AccountType>()" class="form-select">
+                        <option value="">Select account type</option>
+                    </select>
+                    <span asp-validation-for="AccountType" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

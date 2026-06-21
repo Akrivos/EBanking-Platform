@@ -1,6 +1,6 @@
-# MellonBank
+# EBanking
 
-MellonBank is an ASP.NET Core MVC e-banking application. The project follows a layered **Clean Architecture** approach and provides two separate environments:
+EBanking is an ASP.NET Core MVC e-banking application. The project follows a layered **Clean Architecture** approach and provides two separate environments:
 
 - **Staff Panel** for bank employees
 - **Customer Panel** for bank customers
@@ -214,7 +214,7 @@ As an additional optional feature, the application includes a public Currency AP
 
 ### Purpose
 
-This endpoint returns the supported exchange currencies used by MellonBank for EUR conversions.
+This endpoint returns the supported exchange currencies used by EBanking for EUR conversions.
 
 Supported currencies
 
@@ -323,7 +323,7 @@ Example:
 
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=.;Database=MellonBankDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+  "DefaultConnection": "Server=.;Database=EBankingDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
 }
 ```
 
@@ -351,14 +351,14 @@ You can either let the application apply migrations automatically at startup, or
 ### Manual EF Core migration commands
 
 ```bash
-dotnet ef migrations add InitialCreate --project MellonBank.Infrastructure --startup-project MellonBank.Web --output-dir Migrations
-dotnet ef database update --project MellonBank.Infrastructure --startup-project MellonBank.Web
+dotnet ef migrations add InitialCreate --project EBanking.Infrastructure --startup-project EBanking.Web --output-dir Migrations
+dotnet ef database update --project EBanking.Infrastructure --startup-project EBanking.Web
 ```
 
 If migrations already exist, you only need:
 
 ```bash
-dotnet ef database update --project MellonBank.Infrastructure --startup-project MellonBank.Web
+dotnet ef database update --project EBanking.Infrastructure --startup-project EBanking.Web
 ```
 
 ---
@@ -366,7 +366,7 @@ dotnet ef database update --project MellonBank.Infrastructure --startup-project 
 ## 5. Run the application
 
 ```bash
-dotnet run --project MellonBank.Web
+dotnet run --project EBanking.Web
 ```
 
 Launch the application and navigate to `http://localhost:5176` to access the home page.

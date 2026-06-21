@@ -1,0 +1,31 @@
+﻿using FluentValidation;
+using EBanking.Application.DTOs.Requests;
+
+namespace EBanking.Application.Validators
+{
+    public sealed class UpdateUserRequestDtoValidator : AbstractValidator<UpdateUserRequestDto>
+    {
+        public UpdateUserRequestDtoValidator()
+        {
+            RuleFor(x => x.FirstName)
+                .NotEmpty()
+                .MaximumLength(100);
+
+            RuleFor(x => x.LastName)
+                .NotEmpty()
+                .MaximumLength(100);
+
+            RuleFor(x => x.Address)
+                .NotEmpty()
+                .MaximumLength(200);
+
+            RuleFor(x => x.PhoneNumber)
+                .NotEmpty()
+                .MaximumLength(15);
+
+            RuleFor(x => x.Email)
+                .NotEmpty()
+                .EmailAddress();
+        }
+    }
+}

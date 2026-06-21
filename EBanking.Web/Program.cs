@@ -1,0 +1,80 @@
+using EBanking.Application;
+using EBanking.Application.Interfaces.Services;
+using EBanking.Infrastructure;
+using EBanking.Infrastructure.Initialization;
+using EBanking.Web.ErrorHandling;
+using EBanking.Web.Services;
+using Serilog;
+
+namespace EBanking.Web
+{
+    public class Program
+    {
+        public async static Task Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+            var services = builder.Services;
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.File("logs/app-.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
+            builder.Host.UseSerilog();
+
+            services.AddHttpContextAccessor();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+            services.AddControllersWithViews();
+            services.AddApplication();
+            services.AddInfrastructure(builder.Configuration);
+            services.AddAuthentication();
+            services.AddAuthorization();
+            services.AddRazorPages();
+
+            var app = builder.Build();
+
+            app.UseMiddleware<GlobalExceptionMiddleware>();
+
+            // Seed Data
+            using (var scope = app.Services.CreateScope())
+            {
+                var scopeService = scope.ServiceProvider;
+                var config = scopeService.GetRequiredService<IConfiguration>();
+
+                await ApplicationInitializer.InitializeAsync(scopeService, config);
+            }
+
+            app.UseSerilogRequestLogging();
+
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.MapStaticAssets();
+
+            app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}")
+                .WithStaticAssets();
+
+            app.MapRazorPages();
+
+            app.Run();
+        }
+    }
+}

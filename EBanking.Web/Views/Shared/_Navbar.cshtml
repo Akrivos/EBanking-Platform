@@ -1,0 +1,131 @@
+﻿<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container-fluid">
+
+        <a class="navbar-brand d-flex align-items-center gap-2"
+               asp-area=""
+               asp-controller="Home"
+               asp-action="Index">
+
+            <img src="~/images/ebanking-logo.png"
+                 style="height:40px;" />
+
+            <span class="fw-bold">EBanking</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMain">
+
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                           asp-area=""
+                           asp-controller="Home"
+                           asp-action="Index">
+                        Home
+                    </a>
+                </li>
+
+                @if (User.Identity!.IsAuthenticated && User.IsInRole("Staff"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link"
+                               asp-area="Staff"
+                               asp-controller="Dashboard"
+                               asp-action="Index">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                               asp-area="Staff"
+                               asp-controller="Customers"
+                               asp-action="Index">
+                            Customers
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                               asp-area="Staff"
+                               asp-controller="BankAccounts"
+                               asp-action="Index">
+                            Accounts
+                        </a>
+                    </li>
+                }
+
+                @if (User.Identity!.IsAuthenticated && User.IsInRole("Customer"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link"
+                               asp-area="Customer"
+                               asp-controller="Dashboard"
+                               asp-action="Index">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                               asp-area="Customer"
+                               asp-controller="Banking"
+                               asp-action="MyAccounts">
+                            My Accounts
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                               asp-area="Customer"
+                               asp-controller="Profile"
+                               asp-action="ChangePassword">
+                            Change Password
+                        </a>
+                    </li>
+                }
+
+            </ul>
+
+
+            <ul class="navbar-nav">
+
+                @if (!User.Identity!.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link"
+                               asp-area="Identity"
+                               asp-page="/Account/Login">
+                            Login
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <span class="nav-link text-white">
+                            Hello @User.Identity.Name!
+                        </span>
+                    </li>
+
+                    <li class="nav-item">
+                        <form method="post"
+                              asp-area="Identity"
+                              asp-page="/Account/Logout">
+                            <button type="submit"
+                                    class="btn btn-link nav-link text-white">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+                }
+
+            </ul>
+
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,62 @@
+﻿using EBanking.Application.DTOs.Requests;
+using EBanking.Application.Interfaces.Services;
+using EBanking.Web.Areas.Customer.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace EBanking.Web.Areas.Customer.Controllers;
+
+[Area("Customer")]
+[Authorize(Roles = "Customer")]
+public class ProfileController : Controller
+{
+    private readonly ILogger<ProfileController> _logger;
+    private readonly IProfileService _profileService;
+
+    public ProfileController(
+        ILogger<ProfileController> logger,
+        IProfileService profileService)
+    {
+        _logger = logger;
+        _profileService = profileService;
+    }
+
+    [HttpGet]
+    public IActionResult ChangePassword()
+    {
+        return View(new ChangePasswordViewModel());
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model, CancellationToken ct)
+    {
+        if (!ModelState.IsValid)
+            return View(model);
+
+        try
+        {
+            var result = await _profileService.ChangePasswordAsync(
+                new ChangePasswordRequestDto(
+                    model.CurrentPassword,
+                    model.NewPassword,
+                    model.ConfirmPassword),
+                ct);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, result.Error!);
+                return View(model);
+            }
+
+            TempData["SuccessMessage"] = "Password changed successfully!";
+            return RedirectToAction("Index", "Dashboard", new { area = "Customer" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error while changing password.");
+            ModelState.AddModelError(string.Empty, "An unexpected error occurred while changing the password.");
+            return View(model);
+        }
+    }
+}

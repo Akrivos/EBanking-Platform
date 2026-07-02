@@ -1,0 +1,161 @@
+﻿@model EBanking.Web.Areas.Customer.ViewModels.TransactionListItemViewModel
+@using EBanking.Domain.Enums
+
+@{
+    ViewData["Title"] = "Transaction Details";
+}
+
+<div class="container py-4">
+
+    <div class="card shadow border-0">
+
+        <div class="card-header bg-primary text-white">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h4 class="mb-0">
+                    Transaction Details
+                </h4>
+
+                <span class="badge bg-light text-dark">
+                    @Model.ReferenceCode
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-4">
+
+                <div class="col-md-6">
+
+                    <h6 class="text-muted">
+                        Source Account
+                    </h6>
+
+                    <div class="fs-5">
+                        @Model.FromAccountNumber
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <h6 class="text-muted">
+                        Destination Account
+                    </h6>
+
+                    <div class="fs-5">
+                        @Model.ToAccountNumber
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <h6 class="text-muted">
+                        Amount
+                    </h6>
+
+                    <div class="fs-4 fw-bold @Model.AmountCssClass">
+                        @Model.AmountPrefix €@Model.Amount.ToString("N2")
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <h6 class="text-muted">
+                        Direction
+                    </h6>
+
+                    <span class="badge @Model.DirectionBadgeCssClass">
+                        @Model.DirectionText
+                    </span>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <h6 class="text-muted">
+                        Type
+                    </h6>
+
+                    <div>
+                        @Model.Type
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <h6 class="text-muted">
+                        Status
+                    </h6>
+
+                    @if (Model.Status == TransactionStatus.Completed)
+                    {
+                        <span class="badge bg-success">
+                            Completed
+                        </span>
+                    }
+                    else if (Model.Status == TransactionStatus.Pending)
+                    {
+                        <span class="badge bg-warning text-dark">
+                            Pending
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">
+                            Failed
+                        </span>
+                    }
+
+                </div>
+
+                <div class="col-md-12">
+
+                    <h6 class="text-muted">
+                        Description
+                    </h6>
+
+                    <p class="mb-0">
+                        @(string.IsNullOrWhiteSpace(Model.Description)
+                            ? "No description provided."
+                            : Model.Description)
+                    </p>
+
+                </div>
+
+                <div class="col-md-12">
+
+                    <h6 class="text-muted">
+                        Executed At
+                    </h6>
+
+                    <p class="mb-0">
+                        @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card-footer bg-white">
+
+            <a asp-action="Index"
+               asp-route-accountNumber="@Model.AccountNumber"
+               class="btn btn-outline-secondary">
+                Back To Transactions
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

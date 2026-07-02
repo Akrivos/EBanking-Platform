@@ -21,6 +21,7 @@ namespace EBanking.Application
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IAccountManagementService, AccountManagementService>();
             services.AddScoped<ITransferService, TransferService>();
+            services.AddScoped<ITransactionService, TransactionService>();
         }
     }
 }

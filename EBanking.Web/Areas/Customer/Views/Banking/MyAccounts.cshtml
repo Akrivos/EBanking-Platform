@@ -37,46 +37,57 @@
                     <div class="card h-100 shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">@account.AccountNumber</h5>
+
                             <p class="card-text mb-1">
                                 <strong>Type:</strong> @account.AccountType
                             </p>
+
                             <p class="card-text mb-1">
                                 <strong>Branch:</strong> @account.Branch
                             </p>
+
                             <p class="card-text mb-3">
                                 <strong>Balance:</strong> @account.Balance.ToString("N2") €
                             </p>
 
                             <div class="d-grid gap-2">
                                 <a asp-area="Customer"
-                                       asp-controller="Banking"
-                                       asp-action="AccountDetails"
-                                       asp-route-accountNumber="@account.AccountNumber"
-                                       class="btn btn-outline-secondary">
+                                   asp-controller="Banking"
+                                   asp-action="AccountDetails"
+                                   asp-route-accountNumber="@account.AccountNumber"
+                                   class="btn btn-outline-secondary">
                                     View Details
                                 </a>
 
                                 <a asp-area="Customer"
-                                       asp-controller="Banking"
-                                       asp-action="Balance"
-                                       asp-route-accountNumber="@account.AccountNumber"
-                                       class="btn btn-outline-success">
+                                   asp-controller="Transactions"
+                                   asp-action="Index"
+                                   asp-route-accountNumber="@account.AccountNumber"
+                                   class="btn btn-outline-dark">
+                                    View Transactions
+                                </a>
+
+                                <a asp-area="Customer"
+                                   asp-controller="Banking"
+                                   asp-action="Balance"
+                                   asp-route-accountNumber="@account.AccountNumber"
+                                   class="btn btn-outline-success">
                                     Check Balance
                                 </a>
 
                                 <a asp-area="Customer"
-                                       asp-controller="Banking"
-                                       asp-action="TransferToOwn"
-                                       asp-route-accountNumber="@account.AccountNumber"
-                                       class="btn btn-outline-primary">
+                                   asp-controller="Banking"
+                                   asp-action="TransferToOwn"
+                                   asp-route-accountNumber="@account.AccountNumber"
+                                   class="btn btn-outline-primary">
                                     Transfer to My Account
                                 </a>
 
                                 <a asp-area="Customer"
-                                       asp-controller="Banking"
-                                       asp-action="TransferToThirdParty"
-                                       asp-route-accountNumber="@account.AccountNumber"
-                                       class="btn btn-outline-warning">
+                                   asp-controller="Banking"
+                                   asp-action="TransferToThirdParty"
+                                   asp-route-accountNumber="@account.AccountNumber"
+                                   class="btn btn-outline-warning">
                                     Transfer to Third Party
                                 </a>
                             </div>
